@@ -12,9 +12,11 @@
     <div class="auth-container d-flex justify-content-center align-items-center min-vh-100 bg-light">
         <div class="auth-card p-4 bg-white rounded shadow" style="max-width: 400px; width: 100%;">
             <div class="text-center mb-4">
-                <h2 class="fw-bold text-primary">
-                    <i class="fas fa-utensils me-2"></i>Imperial Spice
-                </h2>
+                <a class="navbar-brand" href="{{ route('home') }}">
+                    <h2 class="fw-bold" style="color: var(--primary-color);">
+                        <i class="fas fa-utensils me-2"></i>Imperial Spice
+                    </h2>
+                </a>
                 <p class="text-muted">Welcome back! Please sign in to your account.</p>
             </div>
 
@@ -57,7 +59,7 @@
                 </button>
 
                 <div class="text-center">
-                    <a href="#" class="text-decoration-none">Forgot Password?</a>
+                    <a href="{{ route('password.request') }}" class="text-decoration-none">Forgot Password?</a>
                 </div>
 
                 <hr class="my-4">

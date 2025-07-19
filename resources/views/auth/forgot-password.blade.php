@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot Password - Imperial Spice</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="auth-card p-4 p-md-5">
+            
+            <div class="text-center mb-4">
+                <a class="navbar-brand" href="{{ route('home') }}">
+                    <h2 class="fw-bold" style="color: var(--primary-color);">
+                        <i class="fas fa-utensils me-2"></i>Imperial Spice
+                    </h2>
+                </a>
+                <p class="text-muted mt-2">Forgot your password? No problem. <br>Let's get you a new one.</p>
+            </div>
+
+            {{-- Session messages for success or error --}}
+            @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+            @endif
+
+            @if($errors->any())
+                <div class="alert alert-danger">
+                    {{ $errors->first() }}
+                </div>
+            @endif
+
+            <form method="POST" action="{{ route('password.verify') }}">
+                @csrf
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email Address</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        <input type="email" name="email" class="form-control" id="email" value="{{ old('email') }}" placeholder="Enter your registered email" required autofocus>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="phone" class="form-label">Phone Number</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                        <input type="text" name="phone" class="form-control" id="phone" placeholder="Enter your registered phone" required>
+                    </div>
+                    <small class="form-text text-muted">We'll use this to verify your identity.</small>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 mb-3 fw-bold">
+                    <i class="fas fa-paper-plane me-2"></i>Send Reset Link
+                </button>
+
+                <hr class="my-4">
+
+                <div class="text-center">
+                    <p class="mb-0">Remembered your password?
+                        <a href="{{ route('login') }}" class="fw-bold text-decoration-none" style="color: var(--secondary-color);">Sign In</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

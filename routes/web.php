@@ -10,6 +10,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Delivery\DeliveryDashboardController;
 use App\Http\Controllers\DeliveryController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\UserController;
@@ -34,6 +35,11 @@ Route::middleware(RedirectIfAuthenticatedWithRole::class)->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
     Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
     Route::post('/register', [AuthController::class, 'register']);
+    Route::get('/forgot-password', [ForgotPasswordController::class, 'showRequestForm'])->name('password.request');
+    Route::post('/forgot-password', [ForgotPasswordController::class, 'verifyUser'])->name('password.verify');
+
+    Route::get('/reset-password/{email}', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
+    Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('password.update');
 });
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
