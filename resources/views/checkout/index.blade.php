@@ -109,7 +109,7 @@
                         </div>
                         <div class="d-flex justify-content-between mb-2 d-none" id="delivery-charge-row">
                             <span>Delivery Charge:</span>
-                            <span id="delivery-charge">€50.00</span>
+                            <span id="delivery-charge">€{{ number_format($deliveryFee ?? 0, 2) }}</span>
                         </div>
                         <hr>
                         <div class="d-flex justify-content-between fw-bold h5">
@@ -133,7 +133,7 @@
             const totalElement = document.getElementById('total');
 
             const initialTotal = {{ $total ?? 0 }};
-            const deliveryCharge = 50.00;
+            const deliveryCharge = {{ $deliveryFee ?? 0 }};
 
             deliveryTab.addEventListener('shown.bs.tab', function () {
                 deliveryChargeRow.classList.remove('d-none');

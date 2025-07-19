@@ -24,8 +24,9 @@ class CheckoutController extends Controller
         $taxRate = 0.10; // 10% IVA
         $tax = $subtotal * $taxRate;
         $total = $subtotal + $tax;
+        $deliveryFee = 50.00; // Hardcoded delivery fee for delivery orders
 
-        return view('checkout.index', compact('cartItems', 'subtotal', 'tax', 'total'));
+        return view('checkout.index', compact('cartItems', 'subtotal', 'tax', 'total','deliveryFee'));
     }
 
     // Store dine-in order
