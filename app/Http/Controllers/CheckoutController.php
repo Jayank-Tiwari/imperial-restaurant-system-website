@@ -16,8 +16,12 @@ class CheckoutController extends Controller
         $user = Auth::user();
         $cartItems = CartItem::with('menuItem')->where('user_id', $user->id)->get();
 
+        if ($cartItems->isEmpty()) {
+            return redirect()->route('cart.index')->with('error', 'Your cart is empty. Please add items before checkout.');
+        }
+
         $subtotal = $cartItems->sum(fn($item) => $item->menuItem->price * $item->quantity);
-        $taxRate = 0.1;
+        $taxRate = 0.10; // 10% IVA
         $tax = $subtotal * $taxRate;
         $total = $subtotal + $tax;
 
@@ -47,7 +51,10 @@ class CheckoutController extends Controller
             return back()->with('error', 'Selected table is currently unavailable. Please choose another.');
         }
 
-        $total = $cartItems->sum(fn($item) => $item->menuItem->price * $item->quantity);
+        $subtotal = $cartItems->sum(fn($item) => $item->menuItem->price * $item->quantity);
+        $taxRate = 0.10;
+        $tax = $subtotal * $taxRate;
+        $total = $subtotal + $tax;
 
         // Create dine-in order
         $order = Order::create([
@@ -95,12 +102,17 @@ class CheckoutController extends Controller
         }
 
         $subtotal = $cartItems->sum(fn($item) => $item->menuItem->price * $item->quantity);
-        $deliveryFee = 3.99;
-        $total = $subtotal + $deliveryFee;
+        $taxRate = 0.10;
+        $tax = $subtotal * $taxRate;
+        $deliveryFee = 50.00; // The hardcoded 50 euro delivery fee
+        $total = $subtotal + $tax + $deliveryFee;
 
-        // Temporarily store order details in session
+        // Temporarily store all order details in session
         Session::put('delivery_order', [
             'user_id' => $user->id,
+            'subtotal' => $subtotal,
+            'tax' => $tax,
+            'delivery_fee' => $deliveryFee,
             'total' => $total,
             'address' => $request->address,
             'postal_code' => $request->postal_code,
@@ -114,7 +126,7 @@ class CheckoutController extends Controller
     {
         $data = Session::pull('delivery_order');
         if (!$data) {
-            return redirect()->route('menu')->with('error', 'No pending order.');
+            return redirect()->route('menu')->with('error', 'No pending order found.');
         }
 
         $user = Auth::user();

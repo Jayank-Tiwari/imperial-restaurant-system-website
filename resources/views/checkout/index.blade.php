@@ -20,7 +20,6 @@
                     <div class="alert alert-danger text-center">{{ session('error') }}</div>
                 @endif
 
-                <!-- Enhanced Nav Tabs -->
                 <ul class="nav nav-tabs nav-fill mb-4" id="checkoutTabs" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active fw-semibold" id="dinein-tab" data-bs-toggle="tab" data-bs-target="#dinein"
@@ -37,7 +36,6 @@
                 </ul>
 
                 <div class="tab-content" id="checkoutTabsContent">
-                    <!-- Dine-In Form -->
                     <div class="tab-pane fade show active" id="dinein" role="tabpanel">
                         <div class="card border-0">
                             <div class="card-header bg-success text-white">
@@ -65,7 +63,6 @@
                         </div>
                     </div>
 
-                    <!-- Delivery Form -->
                     <div class="tab-pane fade" id="delivery" role="tabpanel">
                         <div class="card border-0">
                             <div class="card-header bg-primary text-white">
@@ -96,7 +93,6 @@
                 </div>
             </div>
 
-            <!-- Bill Summary -->
             <div class="col-lg-4 mt-4 mt-lg-0">
                 <div class="card position-sticky" style="top: 100px;">
                     <div class="card-header">
@@ -105,35 +101,59 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-2">
                             <span>Subtotal (Excl. IVA):</span>
-                            <span>€{{ number_format($subtotal ?? 0, 2) }}</span>
+                            <span id="subtotal">€{{ number_format($subtotal ?? 0, 2) }}</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <span>IVA (10%):</span>
-                            <span>€{{ number_format($tax ?? 0, 2) }}</span>
+                            <span id="tax">€{{ number_format($tax ?? 0, 2) }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2 d-none" id="delivery-charge-row">
+                            <span>Delivery Charge:</span>
+                            <span id="delivery-charge">€50.00</span>
                         </div>
                         <hr>
                         <div class="d-flex justify-content-between fw-bold h5">
                             <span>Total:</span>
-                            <span>€{{ number_format($total ?? 0, 2) }}</span>
+                            <span id="total">€{{ number_format($total ?? 0, 2) }}</span>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
     {{-- Scripts --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const deliveryTab = document.getElementById('delivery-tab');
+            const dineinTab = document.getElementById('dinein-tab');
+
+            const deliveryChargeRow = document.getElementById('delivery-charge-row');
+            const totalElement = document.getElementById('total');
+
+            const initialTotal = {{ $total ?? 0 }};
+            const deliveryCharge = 50.00;
+
+            deliveryTab.addEventListener('shown.bs.tab', function () {
+                deliveryChargeRow.classList.remove('d-none');
+                const newTotal = initialTotal + deliveryCharge;
+                totalElement.textContent = `€${newTotal.toFixed(2)}`;
+            });
+
+            dineinTab.addEventListener('shown.bs.tab', function () {
+                deliveryChargeRow.classList.add('d-none');
+                totalElement.textContent = `€${initialTotal.toFixed(2)}`;
+            });
+        });
+
         // Add animation to form elements on focus
         const inputs = document.querySelectorAll('.form-control, .form-select');
         inputs.forEach(input => {
-            input.addEventListener('focus', function() {
+            input.addEventListener('focus', function () {
                 this.parentElement.classList.add('focused');
             });
-
-            input.addEventListener('blur', function() {
+            input.addEventListener('blur', function () {
                 this.parentElement.classList.remove('focused');
             });
         });
@@ -141,7 +161,7 @@
         // Add tab switch animation
         const tabButtons = document.querySelectorAll('[data-bs-toggle="tab"]');
         tabButtons.forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 document.getElementById('checkoutTabsContent').style.opacity = 0;
                 setTimeout(() => {
                     document.getElementById('checkoutTabsContent').style.opacity = 1;
