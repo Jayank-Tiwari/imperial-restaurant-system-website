@@ -49,5 +49,5 @@
         @else
             <div class="alert alert-info">You haven’t placed any orders yet.</div>
         @endif
-    </main>
+        </main>
     @endsection

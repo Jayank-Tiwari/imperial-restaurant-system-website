@@ -1,96 +1,164 @@
  @extends('layout.app')
 
-@section('title', 'About - Imperial Spice')
-@section('active', 'about')
+ @section('title', 'About - Imperial Spice')
+ @section('active', 'about')
 
-@section('content')
+ @section('content')
 
- 
- <div class="px-40 flex flex-1 justify-center py-5">
-     <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
-         <div class="@container">
-             <div class="@[480px]:px-4 @[480px]:py-3">
-                 <div class="bg-cover bg-center flex flex-col justify-end overflow-hidden bg-[#fbf9f9] @[480px]:rounded-xl min-h-80"
-                     style='background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 25%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDTGQMG-JocQ0DAjslMeLC2g-Eowak2IMlUvElfozvV6sZ5_zB6ytgp57hHNMIQx0dtDiJGlpXdZApcI1J7dXK_bjpensLY58cX-sMqiH37J97qrs0tMPuj5Ov9no4zHXpYKIqF3rARNxq15afjrVF0JG3a3NM3zC3IjvJIHSEkP78m4Ga4zA1vcnA_Mx40udZ3SyVMZ8oV7xzJEiVLyEjbMfaR_m81IXtWGGjz1UU_lftyepZgDTVGbfjxXH_SG1kzm8v4i9kKCsE");'>
-                     <div class="flex p-4">
-                         <p class="text-white tracking-light text-[28px] font-bold leading-tight">Our Story</p>
+     <section class="py-5 mt-5" style="background-color: var(--gray-light);">
+         <div class="container">
+             <div class="text-center">
+                 <h1 class="display-4 fw-bold" style="color: var(--secondary-color);">Our Culinary Journey</h1>
+                 <p class="lead text-muted">Discover our story, meet our team, and learn about our passion for culinary
+                     excellence.</p>
+             </div>
+         </div>
+     </section>
+
+
+     <section class="py-5 position-relative">
+         <div class="floating-decoration decoration-2" style="opacity: 0.05;"></div>
+         <div class="container">
+             <div class="row align-items-center g-5">
+                 <div class="col-lg-6" data-aos="fade-right">
+                     <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80"
+                         class="img-fluid" style="border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);"
+                         alt="Restaurant Interior">
+                 </div>
+                 <div class="col-lg-6" data-aos="fade-left">
+                     <h2 class="fw-bold mb-4" style="color: var(--secondary-color);">From a Simple Dream to a Culinary
+                         Destination</h2>
+                     <p class="mb-4 text-secondary">Founded in 2015, Delicious Bites began as a dream to create an
+                         extraordinary dining experience. What started in a small kitchen has blossomed into a beloved
+                         local gem, known for our commitment to quality, innovation, and a welcoming atmosphere.</p>
+                     <p class="mb-4">We believe great food connects people. That's why we pour our hearts into every
+                         dish, using only the freshest, locally-sourced ingredients to craft meals that are both
+                         comforting and exciting.</p>
+                     <div class="d-flex gap-4">
+                         <div class="text-center">
+                             <i class="fas fa-award fs-2 mb-2" style="color: var(--primary-color);"></i>
+                             <h5 class="fw-bold mb-0">Award Winning</h5>
+                             <p class="text-muted small">Best Restaurant 2023</p>
+                         </div>
+                         <div class="text-center">
+                             <i class="fas fa-users fs-2 mb-2" style="color: var(--primary-color);"></i>
+                             <h5 class="fw-bold mb-0">50,000+</h5>
+                             <p class="text-muted small">Happy Customers</p>
+                         </div>
                      </div>
                  </div>
              </div>
          </div>
-         <p class="text-[#191011] text-base font-normal leading-normal pb-3 pt-1 px-4">
-             At Flavors, our journey began with a simple passion: to create a dining experience that transcends the
-             ordinary. Inspired by the rich culinary traditions of the
-             Mediterranean, we embarked on a quest to source the finest ingredients and craft dishes that celebrate the
-             vibrant flavors of the region. Our story is one of
-             dedication, innovation, and a commitment to excellence, ensuring every meal is a memorable occasion.
-         </p>
-         <h2 class="text-[#191011] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Meet Our Team
-         </h2>
-         <div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
-             <div class="flex flex-col gap-3 pb-3">
-                 <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
-                     style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDXiuogtqq1ASViKoJldN50XYlr9xkXYanLiVebPkvAxF4uVr1AhuFtGW08AjC0x8JEZTc0Et8b7RkR6XUHLcyW8qWePHnKWBZVgx7fG2jGYclQkA9jawFz5jrcqSqg5-hWR60HPQitHK1s14SXEpRkE_C0ksGgr9bMdgUWjkmxYfUXMho7Fi8uQdWiZgzVdWkGpVYRaf-pJlq-8Uo_aNjq5NhGftpl4L85WmQ0S77atYHxApmkZWGHakyYTnHhYx8A7ZcGBMvgKj4");'>
-                 </div>
-                 <div>
-                     <p class="text-[#191011] text-base font-medium leading-normal">Chef Isabella Rossi</p>
-                     <p class="text-[#8b5b5d] text-sm font-normal leading-normal">Executive Chef</p>
-                 </div>
+     </section>
+
+
+     <section class="py-5" style="background-color: var(--gray-light);">
+         <div class="container">
+             <div class="text-center mb-5">
+                 <h2 class="fw-bold">The Pillars of Our Kitchen</h2>
+                 <p class="text-muted">What drives us to deliver excellence every single day.</p>
              </div>
-             <div class="flex flex-col gap-3 pb-3">
-                 <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
-                     style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCPkZZu9OZ6qxQOPP70fI2-xS_H0M57MmfpKgDYTxQA6xfig9ysIg244Hg6hF6jSopgwleeHM5EkL4jXqY_vtzK7-Bbv4tpGgFXO4NDdtn0WmjbVEpux4_5K_gSskSkOAVQ7vWViwTP1RzUU_wkuNq5bbC8318Z9x5aZd3Uf-PgRmVG-R-aJerebjkhnYMvANEGI8k9warmS8CKp5IFEpAvtVh3oXMT5FL0WYQRPQsd6sHBUbbIpRPbacDknXg6bKYoMQ5cnZr4CIU");'>
+             <div class="row g-4 text-center">
+                 <div class="col-md-4" data-aos="fade-up">
+                     <div class="card p-4 h-100">
+                         <i class="fas fa-leaf fs-1 mb-3 mx-auto" style="color: var(--secondary-color);"></i>
+                         <h5 class="fw-bold">Fresh & Sustainable</h5>
+                         <p class="mb-0">We are committed to using the freshest ingredients, sourced responsibly from
+                             local farmers to ensure peak flavor and support our community.</p>
+                     </div>
                  </div>
-                 <div>
-                     <p class="text-[#191011] text-base font-medium leading-normal">Chef Marco Bianchi</p>
-                     <p class="text-[#8b5b5d] text-sm font-normal leading-normal">Sous Chef</p>
+                 <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                     <div class="card p-4 h-100">
+                         <i class="fas fa-heart fs-1 mb-3 mx-auto" style="color: var(--primary-color);"></i>
+                         <h5 class="fw-bold">Made with Passion</h5>
+                         <p class="mb-0">Every dish is a work of art, prepared with meticulous attention to detail
+                             and a deep-rooted passion for the culinary arts.</p>
+                     </div>
                  </div>
-             </div>
-             <div class="flex flex-col gap-3 pb-3">
-                 <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
-                     style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBf_RIsZnwa_ym-YSEZ8PHgp0cmS3_8Q9Gg5xdg4me8G0a-TZ7aUx7kquvKZc5h9mCrKyPXgK7gx9Nip1JQw3uS5CVo7tnCvYx34r_AF5WGGBYP69g2MKBsX8yIRNjrIiMdrtWB5GXwQ-PzLGnta8toudW-vENyh6mxUKiB6T32xdl6GaoRh5BeCMGSwY0JtxEbPjkYmYSSTnnH35dwvbVZOgvZ4Yq15q7ir5mL_KuGeZYQFV225d1bLE2kWj74EEE66yAs5gTKaBk");'>
-                 </div>
-                 <div>
-                     <p class="text-[#191011] text-base font-medium leading-normal">Chef Sofia Lombardi</p>
-                     <p class="text-[#8b5b5d] text-sm font-normal leading-normal">Pastry Chef</p>
+                 <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                     <div class="card p-4 h-100">
+                         <i class="fas fa-handshake-angle fs-1 mb-3 mx-auto" style="color: var(--secondary-color);"></i>
+                         <h5 class="fw-bold">Warm Hospitality</h5>
+                         <p class="mb-0">We believe a great meal is an experience. Our team is dedicated to providing
+                             warm, friendly service that makes you feel right at home.</p>
+                     </div>
                  </div>
              </div>
          </div>
-         <h2 class="text-[#191011] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Our Space
-         </h2>
-         <div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
-             <div class="flex flex-col gap-3">
-                 <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
-                     style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBlDxqZiukdNv2b_8-9pW2n_eB2ekNMRazcD22SSCTRv5FgQepifkZkEDrtt65I1vRH3FpqWDOx-LH6RoXQYYHySSyR9fDRVek5DAqKeNKtsdboYOJL-hNW01-GBUrF4LwBIoGZsBz7CDY11yxTSTc1cOsxjzeN-gFVyi8sOF-2-gPB6a2odRKOy3oyQtq-Awvkuqf0XbkQIfHAmayiqR-mlnmZzUWLve8MIaGqXO6bK-FF55W3Jgf_zNPbDLzPz-xNoUnr7uxbvbY");'>
-                 </div>
+     </section>
+
+
+     <section class="py-5 position-relative">
+         <div class="floating-decoration decoration-1" style="opacity: 0.05;"></div>
+         <div class="container">
+             <div class="text-center mb-5">
+                 <h2 class="fw-bold">The Talent Behind the Taste</h2>
+                 <p class="text-muted">Meet the creative minds who bring our culinary vision to life.</p>
              </div>
-             <div class="flex flex-col gap-3">
-                 <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
-                     style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuASJn-KoN5Zhtqeos1OMO9k11DI1On1oGR-aNYmesfiZg9vxSwLbaBajmXyOltZvyrbKYAIquPbSgRKJ-vLJH5LnGc8ojI3axyVAj_mj0baxoVXxAMtves5QHkNgnN_-a4T71E2CL7kVmYuEUEvp2JLgsc-AHQaIhbMecDkdbB1Xi41kwDrpviKwfC9XugLkh7FgP2_cUWmDmnUvuYCDm65zGQ3Akcf5pvt31B4UTI69UCOkyMNy3tCy9MsWVsImkaW-Gggdjk8S2s");'>
+             <div class="row g-4 justify-content-center">
+                 <div class="col-lg-4 col-md-6" data-aos="zoom-in">
+                     <div class="card text-center p-4">
+                         <img src="/placeholder.svg?height=150&width=150" class="rounded-circle mb-3 mx-auto"
+                             alt="Executive Chef" style="border: 4px solid var(--primary-color);">
+                         <h5 class="card-title fw-bold">Chef Marco Rodriguez</h5>
+                         <p class="mb-3" style="color: var(--primary-color); font-weight: 600;">Executive Chef</p>
+                         <p class="card-text text-muted small">With 15+ years in fine dining, Chef Marco's fusion
+                             cuisine is the heart of our menu, blending tradition with bold innovation.</p>
+                     </div>
                  </div>
-             </div>
-             <div class="flex flex-col gap-3">
-                 <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
-                     style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC6WLCtz4S8BXqgiQPDELQ5plFPAHNBh3pRiNkweNCq7W8FtMK6s7YjHLXDObhAUh7eT38bzhDcEAxDj7z7UJ4I_F0Ykc2C6HXaSLcmCDeV-o8-snNStUuvrt5T1iXOHR8mBIJUL0AN6OWKUzNyw5pWL3vh8gILGaaRBEGkY11j8juxp96ssiCVVH15CMIgxDjGBTHnh4pC1wMh6qqqxTCDL2-7HU3ua7spvBySrNcSVtoviR9gnnttIvAECYqUKKOwSquuHlBXQ7A");'>
+                 <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
+                     <div class="card text-center p-4">
+                         <img src="/placeholder.svg?height=150&width=150" class="rounded-circle mb-3 mx-auto"
+                             alt="Pastry Chef" style="border: 4px solid var(--primary-color);">
+                         <h5 class="card-title fw-bold">Chef Sarah Kim</h5>
+                         <p class="mb-3" style="color: var(--primary-color); font-weight: 600;">Pastry Chef</p>
+                         <p class="card-text text-muted small">Sarah's artistic desserts are legendary. Each sweet
+                             creation is a perfect, delightful end to your dining experience.</p>
+                     </div>
                  </div>
-             </div>
-             <div class="flex flex-col gap-3">
-                 <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
-                     style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDCa8_n49io02li6t31x6l32W0gNJQz9-RDY7x6OWIXr6KFjcWfZJS3X9jNhmFikmmoSPKTPuM_M2KvEJvrEGZBIPeHp-HTfzTJ_Av5VWxfOM6IuSY0Rh6fM_vJAQ_KplCkyzPobrlIZp6cJM1AC5AEw4-iFdWkPJgzajjAbsyRfjQVVDCwNIU_N3iMgUNqNFSpj1RisMnqLsX6lk7bWUV_gsqwj-DPXqU5HqiUyVl1ZJrUAvGfzKlEbBwc9wu7E_FmUAk_kyu7O3w");'>
-                 </div>
-             </div>
-             <div class="flex flex-col gap-3">
-                 <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
-                     style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDetQzol88boIfiyQmNsBlex56M3rBKHsyklrTlcgDxVz8GL0Oy8lpRN0HL0D-zZdiVHFz9w5q-1qmmMHnvfRJreg1SrRRsvnVaISwuVjD66UzKVtHtVUshP7AWniW9W1GSHFOOzeVhRNf4FVMsUdUuG8yxO8N0wFI7hU66uD8AwNJ2q6TTzeOTFmq0t5Mn02Sm_w7pmRfftfv534tyOjEdFLIraHsbQoqMxjT3cX0Nhw32SIHuk8GuQbnxSgyruJtUunnJCtHGWEY");'>
-                 </div>
-             </div>
-             <div class="flex flex-col gap-3">
-                 <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
-                     style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDHiPAfzl0m__P7zdJDiO4HkWbwyiSOcT6EhJmjbnN3MyUIiytQn9OwzjLOcUL-2p4E3wtlWWhCAYAbcBvGH7X0MGOf5xaPjEV9nlUTNnFz6NfSx3r28jUk8BzdSLsRDe0RJ1CjCNcxHhxXiW8y-v4YrsgQ_3gKOflh8xECVIH8y6TWBDiKhQn1zqWajYvRd9L7j6FKTjz7Q_QLZ5gdhV6Dr3-cq-adlm5DgrnxuCA_mwhV8HNXLQ7kQpY5vz2ifikP-5OGizJWqqs");'>
+                 <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+                     <div class="card text-center p-4">
+                         <img src="/placeholder.svg?height=150&width=150" class="rounded-circle mb-3 mx-auto"
+                             alt="Sous Chef" style="border: 4px solid var(--primary-color);">
+                         <h5 class="card-title fw-bold">Chef David Thompson</h5>
+                         <p class="mb-3" style="color: var(--primary-color); font-weight: 600;">Sous Chef</p>
+                         <p class="card-text text-muted small">David's expertise in Mediterranean flavors and his
+                             commitment to quality ensures every plate is consistently exceptional.</p>
+                     </div>
                  </div>
              </div>
          </div>
-     </div>
- </div>
+     </section>
+
+     <section class="py-5" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));">
+         <div class="container text-center text-white">
+             <h2 class="display-5 fw-bold mb-3">Ready to Join Us?</h2>
+             <p class="lead mb-4">Experience the flavors, the passion, and the hospitality for yourself.</p>
+             <a href="booking.html" class="btn btn-light text-primary fw-bold"
+                 style="padding: 14px 40px; border-radius: 50px;">
+                 <i class="fas fa-calendar-alt me-2"></i>Book Your Table Now
+             </a>
+         </div>
+     </section>
+
+
+
+
+     <script>
+         // JS to update cart count (from your old file)
+         function updateCartCount() {
+             const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+             document.getElementById('cartCount').textContent = cart.length;
+         }
+         updateCartCount();
+     </script>
+     <script>
+         AOS.init({
+             duration: 800,
+             once: true
+         });
+     </script>
+
+
 
  @endsection
