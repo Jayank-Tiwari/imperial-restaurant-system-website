@@ -5,10 +5,15 @@
 
 @section('content')
 
-    <section class="hero-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-10 mx-auto text-center">
+    <section class="hero-section"
+        style="background-image: url('{{ asset('assets/img/Adobe Express - file.jpg') }}'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 100vh; position: relative;">
+        <div class="overlay"
+            style="background-color: rgba(0, 0, 0, 0.5); height: 100%; width: 100%; position: absolute; top: 0; left: 0;">
+        </div>
+
+        <div class="container h-100 position-relative z-1">
+            <div class="row h-100 align-items-center justify-content-center text-center">
+                <div class="col-lg-10">
                     <h1 class="display-3 fw-bold mb-4 text-white" data-aos="fade-up">
                         A Symphony of Spices, A Culinary Masterpiece
                     </h1>
@@ -28,6 +33,7 @@
             </div>
         </div>
     </section>
+
 
     <section class="py-5" style="background-color: var(--gray-light);">
         <div class="container">
@@ -51,7 +57,7 @@
 
                                     {{-- The button already has the required data-id --}}
                                     <button class="btn btn-sm btn-primary add-to-cart" data-id="{{ $dish->id }}">
-                                        <i class="fas fa-plus me-1"></i>Add to Cart
+                                        Add to Cart
                                     </button>
                                 </div>
                             </div>
@@ -104,9 +110,8 @@
                     </div>
                 </div>
                 <div class="col-lg-6" data-aos="fade-left">
-                    <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80"
-                        class="img-fluid" style="border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);"
-                        alt="Restaurant Ambiance">
+                    <img src="{{ asset('assets/img/whyus.jpg') }}" class="img-fluid"
+                        style="border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);" alt="Restaurant Ambiance">
                 </div>
             </div>
         </div>
@@ -186,21 +191,20 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // --- ADD TO CART LOGIC (Synchronized with menu page) ---
+            // --- ADD TO CART LOGIC ---
             document.querySelectorAll('.add-to-cart').forEach(button => {
                 button.addEventListener('click', function() {
                     const menuItemId = this.dataset.id;
                     const originalButtonHtml = this.innerHTML;
 
-                    if (!menuItemId) {
-                        console.error('Menu item ID not found on the button!');
-                        return;
-                    }
+                    // Immediately disable the button to prevent multiple clicks
+                    this.disabled = true;
 
                     fetch('{{ route('cart.add') }}', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
+                                'Accept': 'application/json', // Important for Laravel to know we expect a JSON response
                                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
                             },
                             body: JSON.stringify({
@@ -209,28 +213,28 @@
                             })
                         })
                         .then(response => {
+                            // If the response is not OK (e.g., 401, 403, 500), handle it as an error
                             if (!response.ok) {
-                                // Check for authentication error
-                                if (response.status === 401) {
+                                if (response.status === 401) { // 401 Unauthorized
                                     alert('Please log in to add items to your cart.');
-                                    window.location.href =
-                                    '{{ route('login') }}'; // Redirect to login page
+                                    window.location.href = '{{ route('login') }}';
                                 } else {
-                                    // Handle other server errors
-                                    alert('An error occurred. Please try again later.');
+                                    // For other errors like 500 Internal Server Error
+                                    alert('Something went wrong. Please try again.');
                                 }
-                                throw new Error('Request failed with status ' + response
-                                .status);
+                                // This makes the promise chain jump to the .catch() block
+                                throw new Error('Server responded with an error: ' + response
+                                    .status);
                             }
+                            // If the response is OK, proceed to parse it as JSON
                             return response.json();
                         })
                         .then(data => {
-                            // UI feedback on success
+                            // This block only runs on a successful response (status 2xx)
                             this.innerHTML = '<i class="fas fa-check"></i> Added!';
                             this.classList.replace('btn-primary', 'btn-success');
-                            this.disabled = true;
 
-                            // Update navbar cart count if it exists and the data is returned
+                            // Update the cart counter in the navbar
                             const cartCountElement = document.getElementById('cartCount');
                             if (cartCountElement && data.cartCount !== undefined) {
                                 cartCountElement.textContent = data.cartCount;
@@ -244,11 +248,15 @@
                             }, 2000);
                         })
                         .catch(error => {
-                            // Log detailed error to console without showing a generic alert
-                            console.error('Cart error:', error.message);
+                            // This will catch network errors or the error thrown from the !response.ok check
+                            console.error('Add to cart failed:', error.message);
+
+                            // Re-enable the button if an error occurred so the user can try again
+                            this.disabled = false;
                         });
                 });
             });
         });
     </script>
+
 @endsection

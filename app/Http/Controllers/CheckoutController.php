@@ -14,13 +14,14 @@ class CheckoutController extends Controller
     public function show()
     {
         $user = Auth::user();
-        $cartItems = CartItem::where('user_id', $user->id)->with('menuItem')->get();
+        $cartItems = CartItem::with('menuItem')->where('user_id', $user->id)->get();
 
-        if ($cartItems->isEmpty()) {
-            return redirect()->route('cart.index')->with('error', 'Your cart is empty. Please add items before proceeding to checkout.');
-        }
+        $subtotal = $cartItems->sum(fn($item) => $item->menuItem->price * $item->quantity);
+        $taxRate = 0.1;
+        $tax = $subtotal * $taxRate;
+        $total = $subtotal + $tax;
 
-        return view('checkout.index', compact('cartItems'));
+        return view('checkout.index', compact('cartItems', 'subtotal', 'tax', 'total'));
     }
 
     // Store dine-in order
@@ -50,20 +51,20 @@ class CheckoutController extends Controller
 
         // Create dine-in order
         $order = Order::create([
-            'user_id'       => $user->id,
-            'payment_status'=> 'pending',
-            'order_status'  => 'confirmed',
-            'total_amount'  => $total,
+            'user_id' => $user->id,
+            'payment_status' => 'pending',
+            'order_status' => 'confirmed',
+            'total_amount' => $total,
             'delivery_type' => 'dinein',
-            'table_no'      => $request->table_no,
+            'table_no' => $request->table_no,
         ]);
 
         // Add order items
         foreach ($cartItems as $item) {
             $order->orderItems()->create([
                 'menu_item_id' => $item->menu_item_id,
-                'quantity'     => $item->quantity,
-                'price'        => $item->menuItem->price,
+                'quantity' => $item->quantity,
+                'price' => $item->menuItem->price,
             ]);
         }
 
@@ -76,8 +77,8 @@ class CheckoutController extends Controller
     public function storeDelivery(Request $request)
     {
         $request->validate([
-            'address'      => 'required|string',
-            'postal_code'  => 'required|string',
+            'address' => 'required|string',
+            'postal_code' => 'required|string',
         ]);
 
         $validPostalCodes = ['08800', '08801', '08802']; // Hardcoded 4km radius zip codes
@@ -99,9 +100,9 @@ class CheckoutController extends Controller
 
         // Temporarily store order details in session
         Session::put('delivery_order', [
-            'user_id'     => $user->id,
-            'total'       => $total,
-            'address'     => $request->address,
+            'user_id' => $user->id,
+            'total' => $total,
+            'address' => $request->address,
             'postal_code' => $request->postal_code,
         ]);
 
@@ -120,19 +121,19 @@ class CheckoutController extends Controller
         $cartItems = CartItem::where('user_id', $data['user_id'])->with('menuItem')->get();
 
         $order = Order::create([
-            'user_id'        => $data['user_id'],
+            'user_id' => $data['user_id'],
             'payment_status' => 'paid',
-            'order_status'   => 'confirmed',
-            'total_amount'   => $data['total'],
-            'delivery_type'  => 'delivery',
+            'order_status' => 'confirmed',
+            'total_amount' => $data['total'],
+            'delivery_type' => 'delivery',
             'delivery_address' => $data['address'],
         ]);
 
         foreach ($cartItems as $item) {
             $order->orderItems()->create([
                 'menu_item_id' => $item->menu_item_id,
-                'quantity'     => $item->quantity,
-                'price'        => $item->menuItem->price,
+                'quantity' => $item->quantity,
+                'price' => $item->menuItem->price,
             ]);
         }
 

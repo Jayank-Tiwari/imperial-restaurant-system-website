@@ -61,7 +61,7 @@
         </a>
     </li>
     <li class="nav-item mt-4">
-        <a class="nav-link" href="home.html">
+        <a class="nav-link" href="{{ route('home') }}" target="_blank">
             <i class="bi bi-arrow-left me-2"></i> Back to Website
         </a>
     </li>
