@@ -18,10 +18,10 @@
                 <div class="col-lg-2">
                     <h6 class="fw-bold mb-3">Quick Links</h6>
                     <ul class="list-unstyled">
-                        <li><a href="index.html" class="text-white-50 text-decoration-none">Home</a></li>
-                        <li><a href="about.html" class="text-white-50 text-decoration-none">About</a></li>
-                        <li><a href="menu.html" class="text-white-50 text-decoration-none">Menu</a></li>
-                        <li><a href="booking.html" class="text-white-50 text-decoration-none">Reservations</a></li>
+                        <li><a href="{{ route('home') }}" class="text-white-50 text-decoration-none">Home</a></li>
+                        <li><a href="{{ route('about') }}" class="text-white-50 text-decoration-none">About</a></li>
+                        <li><a href="{{ route('menu') }}" class="text-white-50 text-decoration-none">Menu</a></li>
+                        <li><a href="{{ route('booking') }}" class="text-white-50 text-decoration-none">Reservations</a></li>
                     </ul>
                 </div>
                 
@@ -47,7 +47,7 @@
             <hr class="my-4">
             
             <div class="text-center">
-                <p class="mb-0">&copy; 2024 Delicious Bites. All rights reserved.</p>
+                <p class="mb-0">&copy; 2024 Imperial Spice. All rights reserved.</p>
             </div>
         </div>
     </footer>
