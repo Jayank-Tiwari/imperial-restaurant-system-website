@@ -1,7 +1,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
     <div class="container">
-        <a class="navbar-brand" href="index.html">
+        <a class="navbar-brand" href="{{ route('home') }}">
             <i class="fas fa-utensils me-2"></i>Imperial Spice
         </a>
 
@@ -36,6 +36,7 @@
                         </span>
                     </a>
                 </li>
+                
 
                 @if (!Auth::check())
                     <li class="nav-item">

@@ -5,7 +5,7 @@
             <div class="row g-4">
                 <div class="col-lg-4">
                     <h5 class="fw-bold mb-3">
-                        <i class="fas fa-utensils me-2"></i>Delicious Bites
+                        <i class="fas fa-utensils me-2"></i>Imperial Spice
                     </h5>
                     <p>Experience culinary excellence in the heart of the city. We serve the finest dishes with passion and dedication.</p>
                     <div class="d-flex gap-3">

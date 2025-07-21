@@ -38,7 +38,7 @@
                                 <h5 class="card-title">{{ $item->name }}</h5>
                                 <p class="card-text flex-grow-1">{{ $item->description }}</p>
                                 <div class="d-flex justify-content-between align-items-center mt-auto">
-                                    <span class="h5 text-primary mb-0">₹{{ number_format($item->price, 2) }}</span>
+                                    <span class="h5 text-primary mb-0">€{{ number_format($item->price, 2) }}</span>
                                     <button class="btn btn-primary btn-sm add-to-cart">
                                         <i class="fas fa-plus me-1"></i>Add to Cart
                                     </button>

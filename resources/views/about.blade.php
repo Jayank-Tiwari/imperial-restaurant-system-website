@@ -352,22 +352,22 @@
             </div>
             <div class="gallery-grid">
                 <div class="gallery-item" data-aos="fade-up"><img
-                        src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=600&q=80"
+                        src="{{ asset('assets/img/gallery.jpg') }}"
                         alt="Restaurant Ambiance">
                     <div class="overlay">The Royal Ambiance</div>
                 </div>
                 <div class="gallery-item" data-aos="fade-up" data-aos-delay="100"><img
-                        src="https://images.unsplash.com/photo-1565975239537-296537453393?auto=format&fit=crop&w=600&q=80"
+                        src="{{ asset('assets/img/dinin.jpg') }}"
                         alt="Indian Kebabs">
                     <div class="overlay">Artfully Plated Kebabs</div>
                 </div>
                 <div class="gallery-item" data-aos="fade-up" data-aos-delay="200"><img
-                        src="https://images.unsplash.com/photo-1596797038539-2c995a9ab644?auto=format&fit=crop&w=600&q=80"
+                        src="{{ asset('assets/img/about.jpg') }}"
                         alt="Cocktails at the bar">
                     <div class="overlay">Our Signature Cocktails</div>
                 </div>
                 <div class="gallery-item" data-aos="fade-up" data-aos-delay="300"><img
-                        src="https://images.unsplash.com/photo-1549488344-cbb6c34cf08b?auto=format&fit=crop&w=600&q=80"
+                        src="{{ asset('assets/img/whyus.jpg') }}"
                         alt="Live Music">
                     <div class="overlay">An Evening with Live Music</div>
                 </div>

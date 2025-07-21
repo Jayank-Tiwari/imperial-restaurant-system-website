@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->priority([RoleMiddleware::class]);
         $middleware->priority([RedirectIfAuthenticatedWithRole::class]);
+        
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

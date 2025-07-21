@@ -19,6 +19,7 @@ use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
@@ -107,3 +108,4 @@ Route::post('/checkout/dinein', [CheckoutController::class, 'storeDineIn'])->nam
 Route::post('/checkout/delivery', [CheckoutController::class, 'storeDelivery'])->name('checkout.delivery');
 Route::match(['get', 'post'], 'checkout/payment-success', [StripeController::class, 'paymentSuccess'])->name('checkout.payment.success');
 Route::get('/stripe/checkout', [StripeController::class, 'checkout'])->name('stripe.checkout');
+
