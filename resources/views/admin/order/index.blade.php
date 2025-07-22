@@ -1,12 +1,12 @@
 @extends('admin.sidebar')
 
-@section('title', 'Orders - Imperial Spice')
+@section('title', __('messages.orders') . ' - ' . __('messages.imperial_spice'))
 @section('active', 'order')
 
 @section('content')
     <div class="container-fluid px-3 px-md-4">
         <div class="d-flex justify-content-between align-items-center flex-wrap pt-3 pb-3 border-bottom">
-            <h1 class="h2 mb-2">Order Management</h1>
+            <h1 class="h2 mb-2">@lang('messages.order_management')</h1>
         </div>
 
         <!-- Filter Buttons -->
@@ -14,18 +14,18 @@
             <div class="row gy-2 gx-3 align-items-center">
                 <!-- Order Status Filter -->
                 <div class="col-auto">
-                    <label class="form-label mb-0 fw-bold">Order Status:</label>
+                    <label class="form-label mb-0 fw-bold">@lang('messages.order_status'):</label>
                 </div>
                 <div class="col-auto">
                     <div class="btn-group" role="group">
                         <a href="{{ route('admin.order.index') }}"
                             class="btn btn-outline-primary {{ request('status') == 'all' || !request('status') ? 'active' : '' }}">
-                            All
+                            @lang('messages.all')
                         </a>
                         @foreach (['pending', 'confirmed', 'preparing', 'out_for_delivery', 'delivered', 'cancelled'] as $status)
                             <a href="{{ route('admin.order.index', array_merge(request()->except('page'), ['status' => $status])) }}"
                                 class="btn btn-outline-secondary {{ request('status') == $status ? 'active' : '' }}">
-                                {{ ucfirst(str_replace('_', ' ', $status)) }}
+                                @lang('messages.order_status_' . $status)
                             </a>
                         @endforeach
                     </div>
@@ -33,14 +33,14 @@
 
                 <!-- Payment Status Filter -->
                 <div class="col-auto">
-                    <label class="form-label mb-0 fw-bold">Payment:</label>
+                    <label class="form-label mb-0 fw-bold">@lang('messages.payment'):</label>
                 </div>
                 <div class="col-auto">
                     <select name="payment" class="form-select form-select-sm" onchange="this.form.submit()">
-                        <option value="">All</option>
+                        <option value="">@lang('messages.all')</option>
                         @foreach (['pending', 'paid', 'failed'] as $pay)
                             <option value="{{ $pay }}" {{ request('payment') == $pay ? 'selected' : '' }}>
-                                {{ ucfirst($pay) }}
+                                @lang('messages.payment_status_' . $pay)
                             </option>
                         @endforeach
                     </select>
@@ -58,22 +58,22 @@
         <!-- Orders Table -->
         <div class="card shadow-sm">
             <div class="card-header py-3 bg-primary text-white d-flex justify-content-between align-items-center">
-                <h6 class="mb-0">All Orders</h6>
+                <h6 class="mb-0">@lang('messages.all_orders')</h6>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
                     <table class="table table-striped table-hover align-middle text-center mb-0">
                         <thead class="table-light">
                             <tr>
-                                <th>Order #</th>
-                                <th>Customer</th>
-                                <th>Date</th>
-                                <th class="text-start">Items</th>
-                                <th>Total</th>
-                                <th>Type</th>
-                                <th>Order Status</th>
-                                <th>Payment</th>
-                                <th>Action</th>
+                                <th>@lang('messages.order_number')</th>
+                                <th>@lang('messages.customer')</th>
+                                <th>@lang('messages.date')</th>
+                                <th class="text-start">@lang('messages.items')</th>
+                                <th>@lang('messages.total')</th>
+                                <th>@lang('messages.type')</th>
+                                <th>@lang('messages.order_status')</th>
+                                <th>@lang('messages.payment')</th>
+                                <th>@lang('messages.action')</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -110,7 +110,7 @@
                                                 @foreach (['pending', 'confirmed', 'preparing', 'out_for_delivery', 'cancelled', 'delivered'] as $status)
                                                     <option value="{{ $status }}"
                                                         {{ $order->order_status == $status ? 'selected' : '' }}>
-                                                        {{ ucfirst(str_replace('_', ' ', $status)) }}
+                                                        @lang('messages.order_status_' . $status)
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -126,7 +126,7 @@
                                                 @foreach (['pending', 'paid', 'failed'] as $payStatus)
                                                     <option value="{{ $payStatus }}"
                                                         {{ $order->payment_status == $payStatus ? 'selected' : '' }}>
-                                                        {{ ucfirst($payStatus) }}
+                                                        @lang('messages.payment_status_' . $payStatus)
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -135,13 +135,13 @@
                                     <td>
                                         <a href="{{ route('admin.order.show', $order->id) }}"
                                             class="btn btn-sm btn-outline-primary">
-                                            View
+                                            @lang('messages.view')
                                         </a>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="9" class="text-center py-4 text-muted">No orders found for this status.
+                                    <td colspan="9" class="text-center py-4 text-muted">@lang('messages.no_orders_found_for_status')
                                     </td>
                                 </tr>
                             @endforelse

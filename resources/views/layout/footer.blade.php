@@ -18,10 +18,10 @@
                 <div class="col-lg-2">
                     <h6 class="fw-bold mb-3">Quick Links</h6>
                     <ul class="list-unstyled">
-                        <li><a href="{{ route('home') }}" class="text-white-50 text-decoration-none">Home</a></li>
-                        <li><a href="{{ route('about') }}" class="text-white-50 text-decoration-none">About</a></li>
-                        <li><a href="{{ route('menu') }}" class="text-white-50 text-decoration-none">Menu</a></li>
-                        <li><a href="{{ route('booking') }}" class="text-white-50 text-decoration-none">Reservations</a></li>
+                        <li><a href="{{ route('home') }}" class="text-white-50 text-decoration-none">@lang('messages.home')</a></li>
+                        <li><a href="{{ route('about') }}" class="text-white-50 text-decoration-none">@lang('messages.about')</a></li>
+                        <li><a href="{{ route('menu') }}" class="text-white-50 text-decoration-none">@lang('messages.menu')</a></li>
+                        <li><a href="{{ route('booking') }}" class="text-white-50 text-decoration-none">@lang('messages.reservations')</a></li>
                     </ul>
                 </div>
                 
@@ -35,7 +35,7 @@
                 </div>
                 
                 <div class="col-lg-3">
-                    <h6 class="fw-bold mb-3">Opening Hours</h6>
+                    <h6 class="fw-bold mb-3">@lang('messages.opening_hours')</h6>
                     <ul class="list-unstyled">
                         <li class="mb-1">Mon - Thu: 11:00 AM - 10:00 PM</li>
                         <li class="mb-1">Fri - Sat: 11:00 AM - 11:00 PM</li>
@@ -47,7 +47,7 @@
             <hr class="my-4">
             
             <div class="text-center">
-                <p class="mb-0">&copy; 2024 Imperial Spice. All rights reserved.</p>
+                <p class="mb-0">&copy; @lang('messages.copyright')</p>
             </div>
         </div>
     </footer>

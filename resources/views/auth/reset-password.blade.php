@@ -20,7 +20,7 @@
                         <i class="fas fa-utensils me-2"></i>Imperial Spice
                     </h2>
                 </a>
-                <p class="text-muted mt-2">Create a new, secure password for your account.</p>
+                <p class="text-muted mt-2">@lang('messages.create_new_password')</p>
             </div>
 
             {{-- Display validation errors --}}
@@ -40,10 +40,10 @@
                 <input type="hidden" name="email" value="{{ $email }}">
 
                 <div class="mb-3">
-                    <label for="password" class="form-label">New Password</label>
+                    <label for="password" class="form-label">@lang('messages.new_password')</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                        <input type="password" name="password" class="form-control" id="password" placeholder="Enter new password" required>
+                        <input type="password" name="password" class="form-control" id="password" placeholder="@lang('messages.enter_new_password')" required>
                         <button class="btn btn-outline-secondary" type="button" id="togglePassword">
                             <i class="fas fa-eye"></i>
                         </button>
@@ -51,10 +51,10 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="password_confirmation" class="form-label">Confirm New Password</label>
+                    <label for="password_confirmation" class="form-label">@lang('messages.confirm_your_password')</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                        <input type="password" name="password_confirmation" class="form-control" id="password_confirmation" placeholder="Confirm new password" required>
+                        <input type="password" name="password_confirmation" class="form-control" id="password_confirmation" placeholder="@lang('messages.confirm_your_password')" required>
                         <button class="btn btn-outline-secondary" type="button" id="togglePasswordConfirmation">
                             <i class="fas fa-eye"></i>
                         </button>
@@ -62,14 +62,14 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary w-100 mb-3 fw-bold">
-                    <i class="fas fa-check-circle me-2"></i>Update Password
+                    <i class="fas fa-check-circle me-2"></i>@lang('messages.update_password')
                 </button>
 
                 <hr class="my-4">
 
                 <div class="text-center">
-                    <p class="mb-0">Changed your mind?
-                        <a href="{{ route('login') }}" class="fw-bold text-decoration-none" style="color: var(--secondary-color);">Back to Sign In</a>
+                    <p class="mb-0">@lang('messages.already_have_account')
+                        <a href="{{ route('login') }}" class="fw-bold text-decoration-none" style="color: var(--secondary-color);">@lang('messages.login')</a>
                     </p>
                 </div>
             </form>

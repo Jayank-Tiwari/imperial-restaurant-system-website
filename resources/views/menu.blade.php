@@ -8,8 +8,8 @@
 <!-- Hero Section -->
 <section class="py-5 mt-5" style="background-image: url('{{ asset('assets/img/menu-page.png') }}'); background-size: cover; background-position: center;">
     <div class="container text-center">
-        <h1 class="display-4 fw-bold text-white">Our Menu</h1>
-        <p class="lead text-white">Discover our carefully crafted dishes made with the finest ingredients</p>
+        <h1 class="display-4 fw-bold text-white">@lang('messages.our_menu')</h1>
+        <p class="lead text-white">@lang('messages.discover_our_dishes')</p>
     </div>
 </section>
 
@@ -17,7 +17,7 @@
 <section class="py-4 bg-white sticky-top shadow-sm">
     <div class="container text-center">
         <div class="btn-group" role="group" id="menuFilter">
-            <button type="button" class="btn btn-outline-primary active" data-filter="all">All Items</button>
+            <button type="button" class="btn btn-outline-primary active" data-filter="all">@lang('messages.all_items')</button>
             @foreach($menuItems->keys() as $cat)
                 <button type="button" class="btn btn-outline-primary" data-filter="{{ $cat }}">{{ ucfirst($cat) }}</button>
             @endforeach
@@ -40,7 +40,7 @@
                                 <div class="d-flex justify-content-between align-items-center mt-auto">
                                     <span class="h5 text-primary mb-0">€{{ number_format($item->price, 2) }}</span>
                                     <button class="btn btn-primary btn-sm add-to-cart">
-                                        <i class="fas fa-plus me-1"></i>Add to Cart
+                                        <i class="fas fa-plus me-1"></i>@lang('messages.add_to_cart')
                                     </button>
                                 </div>
                             </div>

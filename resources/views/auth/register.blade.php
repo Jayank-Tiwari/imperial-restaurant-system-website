@@ -19,7 +19,7 @@
                         <i class="fas fa-utensils me-2"></i>Imperial Spice
                     </h2>
                 </a>
-                <p class="text-muted">Create your account to get started!</p>
+                <p class="text-muted">@lang('messages.create_account_intro')</p>
             </div>
 
             {{-- Display Errors --}}
@@ -37,7 +37,7 @@
                 @csrf
 
                 <div class="mb-3">
-                    <label for="name" class="form-label">Full Name</label>
+                    <label for="name" class="form-label">@lang('messages.full_name')</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-user"></i></span>
                         <input type="text" name="name" id="name" class="form-control" required
@@ -46,7 +46,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email Address</label>
+                    <label for="email" class="form-label">@lang('messages.email')</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                         <input type="email" name="email" id="email" class="form-control" required
@@ -55,7 +55,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="phone" class="form-label">Phone Number</label>
+                    <label for="phone" class="form-label">@lang('messages.phone_number')</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-phone"></i></span>
                         <input type="number" name="phone" id="phone" class="form-control" required
@@ -64,7 +64,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
+                    <label for="password" class="form-label">@lang('messages.password')</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-lock"></i></span>
                         <input type="password" name="password" id="password" class="form-control" required>
@@ -72,7 +72,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="password_confirmation" class="form-label">Confirm Password</label>
+                    <label for="password_confirmation" class="form-label">@lang('messages.confirm_password')</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-lock"></i></span>
                         <input type="password" name="password_confirmation" id="password_confirmation"
@@ -83,12 +83,12 @@
                 <input type="hidden" name="role" id="role" value="user">
 
                 <button type="submit" class="btn btn-primary w-100 mb-3">
-                    <i class="fas fa-user-plus me-2"></i>Create Account
+                    <i class="fas fa-user-plus me-2"></i>@lang('messages.create_account')
                 </button>
 
                 <div class="text-center">
-                    <p class="mb-0">Already have an account?
-                        <a href="{{ route('login') }}" class="text-primary text-decoration-none fw-bold">Sign In</a>
+                    <p class="mb-0">@lang('messages.already_have_account')
+                        <a href="{{ route('login') }}" class="text-primary text-decoration-none fw-bold">@lang('messages.login')</a>
                     </p>
                 </div>
             </form>

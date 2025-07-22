@@ -18,7 +18,12 @@ use App\Http\Middleware\RedirectIfAuthenticatedWithRole;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Session;
 
+Route::get('locale/{locale}', function ($locale) {
+    Session::put('locale', $locale);
+    return redirect()->back();
+})->name('locale.switch');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 

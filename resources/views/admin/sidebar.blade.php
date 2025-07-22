@@ -19,14 +19,14 @@
                 aria-controls="mobileSidebar">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <span class="navbar-brand mb-0 h1">🍽️ Admin</span>
+            <span class="navbar-brand mb-0 h1">🍽️ @lang('messages.admin')</span>
         </div>
     </nav>
 
     <!-- Offcanvas Sidebar for Mobile -->
     <div class="offcanvas offcanvas-start d-md-none" tabindex="-1" id="mobileSidebar">
         <div class="offcanvas-header bg-dark text-white">
-            <h5 class="offcanvas-title">🍽️ Imperial Spiece</h5>
+            <h5 class="offcanvas-title">🍽️ @lang('messages.imperial_spice')</h5>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body p-0">

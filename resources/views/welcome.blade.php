@@ -15,18 +15,17 @@
             <div class="row h-100 align-items-center justify-content-center text-center">
                 <div class="col-lg-10">
                     <h1 class="display-3 fw-bold mb-4 text-white" data-aos="fade-up">
-                        A Symphony of Spices, A Culinary Masterpiece
+                        @lang('messages.hero_title')
                     </h1>
                     <p class="lead mb-4 text-white-50" data-aos="fade-up" data-aos-delay="100">
-                        Indulge in an unforgettable dining experience where traditional flavors meet contemporary elegance.
-                        Welcome to Imperial Spice.
+                        @lang('messages.hero_subtitle')
                     </p>
                     <div class="d-flex gap-3 justify-content-center flex-wrap" data-aos="fade-up" data-aos-delay="200">
                         <a href="{{ url('/booking') }}" class="btn btn-primary btn-lg">
-                            <i class="fas fa-calendar-check me-2"></i>Book Your Table
+                            <i class="fas fa-calendar-check me-2"></i>@lang('messages.book_a_table')
                         </a>
                         <a href="{{ url('/menu') }}" class="btn btn-outline-light btn-lg">
-                            <i class="fas fa-book-open me-2"></i>Explore Menu
+                            <i class="fas fa-book-open me-2"></i>@lang('messages.view_full_menu')
                         </a>
                     </div>
                 </div>
@@ -38,8 +37,8 @@
     <section class="py-5" style="background-color: var(--gray-light);">
         <div class="container">
             <div class="text-center mb-5" data-aos="fade-up">
-                <h2 class="fw-bold">Our Signature Creations</h2>
-                <p class="text-muted">A selection of our most loved and highly recommended dishes.</p>
+                <h2 class="fw-bold">@lang('messages.our_top_dishes')</h2>
+                <p class="text-muted">@lang('messages.our_top_dishes_description')</p>
             </div>
 
             <div class="row g-4">
@@ -53,11 +52,11 @@
                                 <p class="card-text text-muted small flex-grow-1">{{ $dish->description }}</p>
                                 <div class="mt-auto d-flex justify-content-between align-items-center pt-3">
                                     <span class="h5 fw-bold mb-0"
-                                        style="color: var(--primary-color);">₹{{ number_format($dish->price, 2) }}</span>
+                                        style="color: var(--primary-color);">@lang('messages.currency'){{ number_format($dish->price, 2) }}</span>
 
                                     {{-- The button already has the required data-id --}}
                                     <button class="btn btn-sm btn-primary add-to-cart" data-id="{{ $dish->id }}">
-                                        Add to Cart
+                                        @lang('messages.add_to_cart')
                                     </button>
                                 </div>
                             </div>
@@ -68,7 +67,7 @@
 
             <div class="text-center mt-5">
                 <a href="{{ url('/menu') }}" class="btn btn-secondary btn-lg">
-                    <i class="fas fa-utensils me-2"></i>View The Full Menu
+                    <i class="fas fa-utensils me-2"></i>@lang('messages.view_full_menu')
                 </a>
             </div>
         </div>
@@ -78,33 +77,28 @@
         <div class="container">
             <div class="row align-items-center g-5">
                 <div class="col-lg-6" data-aos="fade-right">
-                    <h2 class="fw-bold mb-4">An Unforgettable Dining Experience Awaits</h2>
-                    <p class="text-muted mb-4">At Imperial Spice, we are dedicated to more than just food. We curate
-                        experiences that delight the senses and create lasting memories. Here's what sets us apart:</p>
+                    <h2 class="fw-bold mb-4">@lang('messages.unforgettable_dining_experience')</h2>
+                    <p class="text-muted mb-4">@lang('messages.unforgettable_dining_experience_description')</p>
                     <div class="vstack gap-4">
                         <div class="d-flex align-items-start">
                             <i class="fas fa-pepper-hot fs-4 mt-1 me-3" style="color: var(--primary-color);"></i>
                             <div>
-                                <h6 class="fw-bold mb-1">Authentic & Bold Flavors</h6>
-                                <p class="mb-0 text-muted small">Our chefs masterfully blend traditional recipes with
-                                    modern
-                                    techniques to create uniquely flavorful dishes.</p>
+                                <h6 class="fw-bold mb-1">@lang('messages.authentic_bold_flavors')</h6>
+                                <p class="mb-0 text-muted small">@lang('messages.authentic_bold_flavors_desc')</p>
                             </div>
                         </div>
                         <div class="d-flex align-items-start">
                             <i class="fas fa-gem fs-4 mt-1 me-3" style="color: var(--primary-color);"></i>
                             <div>
-                                <h6 class="fw-bold mb-1">Elegant & Inviting Ambiance</h6>
-                                <p class="mb-0 text-muted small">Dine in a sophisticated yet comfortable setting, perfect
-                                    for everything from intimate dinners to grand celebrations.</p>
+                                <h6 class="fw-bold mb-1">@lang('messages.elegant_inviting_ambiance')</h6>
+                                <p class="mb-0 text-muted small">@lang('messages.elegant_inviting_ambiance_desc')</p>
                             </div>
                         </div>
                         <div class="d-flex align-items-start">
                             <i class="fas fa-star fs-4 mt-1 me-3" style="color: var(--primary-color);"></i>
                             <div>
-                                <h6 class="fw-bold mb-1">Impeccable Service</h6>
-                                <p class="mb-0 text-muted small">Our attentive staff is dedicated to providing you with
-                                    exceptional service, ensuring a seamless and enjoyable visit.</p>
+                                <h6 class="fw-bold mb-1">@lang('messages.impeccable_service')</h6>
+                                <p class="mb-0 text-muted small">@lang('messages.impeccable_service_desc')</p>
                             </div>
                         </div>
                     </div>
@@ -119,8 +113,8 @@
     <section class="py-5" style="background-color: var(--gray-light);">
         <div class="container">
             <div class="text-center mb-5" data-aos="fade-up">
-                <h2 class="fw-bold">From Our Valued Guests</h2>
-                <p class="text-muted">Don't just take our word for it. Here's what our diners have to say.</p>
+                <h2 class="fw-bold">@lang('messages.what_our_customers_say')</h2>
+                <p class="text-muted">@lang('messages.our_customers_say_description')</p>
             </div>
 
             <div class="row g-4">
@@ -131,13 +125,12 @@
                                 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
                                     class="fas fa-star"></i><i class="fas fa-star"></i>
                             </div>
-                            <p class="mb-4"><em>"Absolutely amazing! The food was exceptional and the service was
-                                    impeccable. A true gem in the city. Will definitely be coming back!"</em></p>
+                            <p class="mb-4"><em>@lang('messages.testimonial_1')</em></p>
                             <div class="d-flex align-items-center">
                                 <img src="/placeholder.svg?height=50&width=50" class="rounded-circle me-3" alt="Customer">
                                 <div>
-                                    <h6 class="mb-0 fw-bold">Sarah Johnson</h6>
-                                    <small class="text-muted">Food Blogger</small>
+                                    <h6 class="mb-0 fw-bold">@lang('messages.testimonial_1_author')</h6>
+                                    <small class="text-muted">@lang('messages.testimonial_1_author_role')</small>
                                 </div>
                             </div>
                         </div>
@@ -151,14 +144,13 @@
                                 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
                                     class="fas fa-star"></i><i class="fas fa-star"></i>
                             </div>
-                            <p class="mb-4"><em>"The perfect venue for our anniversary dinner. The ambiance was romantic,
-                                    and every dish was a masterpiece. Highly recommended!"</em></p>
+                            <p class="mb-4"><em>@lang('messages.testimonial_2')</em></p>
                             <div class="d-flex align-items-center">
                                 <img src="/placeholder.svg?height=50&width=50" class="rounded-circle me-3"
                                     alt="Customer">
                                 <div>
-                                    <h6 class="mb-0 fw-bold">Michael Chen</h6>
-                                    <small class="text-muted">Regular Customer</small>
+                                    <h6 class="mb-0 fw-bold">@lang('messages.testimonial_2_author')</h6>
+                                    <small class="text-muted">@lang('messages.testimonial_2_author_role')</small>
                                 </div>
                             </div>
                         </div>
@@ -172,14 +164,13 @@
                                 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
                                     class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
                             </div>
-                            <p class="mb-4"><em>"The tasting menu is a must-try! A fantastic journey of flavors. The
-                                    staff was incredibly knowledgeable and friendly."</em></p>
+                            <p class="mb-4"><em>@lang('messages.testimonial_3')</em></p>
                             <div class="d-flex align-items-center">
                                 <img src="/placeholder.svg?height=50&width=50" class="rounded-circle me-3"
                                     alt="Customer">
                                 <div>
-                                    <h6 class="mb-0 fw-bold">Emily Rodriguez</h6>
-                                    <small class="text-muted">First-time Visitor</small>
+                                    <h6 class="mb-0 fw-bold">@lang('messages.testimonial_3_author')</h6>
+                                    <small class="text-muted">@lang('messages.testimonial_3_author_role')</small>
                                 </div>
                             </div>
                         </div>
@@ -216,14 +207,14 @@
                             // If the response is not OK (e.g., 401, 403, 500), handle it as an error
                             if (!response.ok) {
                                 if (response.status === 401) { // 401 Unauthorized
-                                    alert('Please log in to add items to your cart.');
+                                    alert(@lang('messages.login_to_add_cart'));
                                     window.location.href = '{{ route('login') }}';
                                 } else {
                                     // For other errors like 500 Internal Server Error
-                                    alert('Something went wrong. Please try again.');
+                                    alert(@lang('messages.something_went_wrong'));
                                 }
                                 // This makes the promise chain jump to the .catch() block
-                                throw new Error('Server responded with an error: ' + response
+                                throw new Error(@lang('messages.something_went_wrong') + response
                                     .status);
                             }
                             // If the response is OK, proceed to parse it as JSON
@@ -249,7 +240,7 @@
                         })
                         .catch(error => {
                             // This will catch network errors or the error thrown from the !response.ok check
-                            console.error('Add to cart failed:', error.message);
+                            console.error(@lang('messages.something_went_wrong'), error.message);
 
                             // Re-enable the button if an error occurred so the user can try again
                             this.disabled = false;

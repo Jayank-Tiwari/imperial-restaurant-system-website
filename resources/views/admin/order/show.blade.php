@@ -1,14 +1,14 @@
 @extends('admin.sidebar')
 
-@section('title', 'Order #'.$order->id.' - Imperial Spice')
+@section('title', __('messages.order_number') . ' #'.$order->id.' - ' . __('messages.imperial_spice'))
 @section('active', 'order')
 
 @section('content')
 <div class="container-fluid py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Order #{{ $order->id }}</h2>
+        <h2>@lang('messages.order_number') #{{ $order->id }}</h2>
         <a href="{{ route('admin.order.index') }}" class="btn btn-sm btn-secondary">
-            <i class="bi bi-arrow-left me-1"></i> Back to Orders
+            <i class="bi bi-arrow-left me-1"></i> @lang('messages.back_to_orders')
         </a>
     </div>
 
@@ -17,40 +17,40 @@
         <div class="col-md-6">
             <div class="card shadow-sm mb-3">
                 <div class="card-header bg-primary text-white">
-                    Customer Info
+                    @lang('messages.customer_info')
                 </div>
                 <div class="card-body">
-                    <p><strong>Name:</strong> {{ $order->user->name }}</p>
-                    <p><strong>Email:</strong> {{ $order->user->email }}</p>
-                    <p><strong>Phone:</strong> {{ $order->user->phone ?? 'N/A' }}</p>
-                    <p><strong>Order Placed At:</strong> {{ $order->created_at->format('d M Y - h:i A') }}</p>
+                    <p><strong>@lang('messages.name'):</strong> {{ $order->user->name }}</p>
+                    <p><strong>@lang('messages.email_address'):</strong> {{ $order->user->email }}</p>
+                    <p><strong>@lang('messages.phone_number'):</strong> {{ $order->user->phone ?? __('messages.not_available') }}</p>
+                    <p><strong>@lang('messages.order_placed_at'):</strong> {{ $order->created_at->format('d M Y - h:i A') }}</p>
                 </div>
             </div>
 
             <div class="card shadow-sm">
                 <div class="card-header bg-info text-white">
-                    Order Details
+                    @lang('messages.order_details')
                 </div>
                 <div class="card-body">
-                    <p><strong>Order Type:</strong> 
+                    <p><strong>@lang('messages.type'):</strong> 
                         <span class="badge bg-{{ $order->delivery_type == 'dinein' ? 'success' : ($order->delivery_type == 'delivery' ? 'warning text-dark' : 'info') }}">
-                            {{ ucfirst($order->delivery_type) }}
+                            @lang('messages.' . $order->delivery_type)
                         </span>
                     </p>
                     @if($order->delivery_type == 'dinein')
-                        <p><strong>Table No:</strong> {{ $order->table_no }}</p>
+                        <p><strong>@lang('messages.table_no'):</strong> {{ $order->table_no }}</p>
                     @elseif($order->delivery_type == 'delivery')
-                        <p><strong>Delivery Address:</strong> {{ $order->delivery_address }}</p>
+                        <p><strong>@lang('messages.delivery_address'):</strong> {{ $order->delivery_address }}</p>
                     @endif
-                    <p><strong>Status:</strong> 
-                        <span class="badge bg-secondary">{{ ucfirst(str_replace('_', ' ', $order->order_status)) }}</span>
+                    <p><strong>@lang('messages.status'):</strong> 
+                        <span class="badge bg-secondary">@lang('messages.order_status_' . $order->order_status)</span>
                     </p>
-                    <p><strong>Payment Status:</strong> 
+                    <p><strong>@lang('messages.payment_status'):</strong> 
                         <span class="badge bg-{{ $order->payment_status == 'paid' ? 'success' : 'danger' }}">
-                            {{ ucfirst($order->payment_status) }}
+                            @lang('messages.payment_status_' . $order->payment_status)
                         </span>
                     </p>
-                    <p><strong>Total Amount:</strong> ₹{{ number_format($order->total_amount, 2) }}</p>
+                    <p><strong>@lang('messages.total_amount'):</strong> ₹{{ number_format($order->total_amount, 2) }}</p>
                 </div>
             </div>
         </div>
@@ -59,16 +59,16 @@
         <div class="col-md-6">
             <div class="card shadow-sm">
                 <div class="card-header bg-dark text-white">
-                    Ordered Items
+                    @lang('messages.ordered_items')
                 </div>
                 <div class="card-body p-0">
                     <table class="table table-bordered table-striped mb-0">
                         <thead class="table-light">
                             <tr>
-                                <th>Item</th>
-                                <th>Qty</th>
-                                <th>Price</th>
-                                <th>Subtotal</th>
+                                <th>@lang('messages.item')</th>
+                                <th>@lang('messages.qty')</th>
+                                <th>@lang('messages.price')</th>
+                                <th>@lang('messages.subtotal')</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -83,7 +83,7 @@
                         </tbody>
                         <tfoot>
                             <tr class="fw-bold">
-                                <td colspan="3" class="text-end">Total</td>
+                                <td colspan="3" class="text-end">@lang('messages.total')</td>
                                 <td>₹{{ number_format($order->total_amount, 2) }}</td>
                             </tr>
                         </tfoot>

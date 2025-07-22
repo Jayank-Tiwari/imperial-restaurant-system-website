@@ -20,7 +20,7 @@
                         <i class="fas fa-utensils me-2"></i>Imperial Spice
                     </h2>
                 </a>
-                <p class="text-muted mt-2">Forgot your password? No problem. <br>Let's get you a new one.</p>
+                <p class="text-muted mt-2">@lang('messages.forgot_password_intro')</p>
             </div>
 
             {{-- Session messages for success or error --}}
@@ -40,31 +40,31 @@
                 @csrf
 
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email Address</label>
+                    <label for="email" class="form-label">@lang('messages.email')</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                        <input type="email" name="email" class="form-control" id="email" value="{{ old('email') }}" placeholder="Enter your registered email" required autofocus>
+                        <input type="email" name="email" class="form-control" id="email" value="{{ old('email') }}" placeholder="@lang('messages.enter_your_registered_email')" required autofocus>
                     </div>
                 </div>
 
                 <div class="mb-4">
-                    <label for="phone" class="form-label">Phone Number</label>
+                    <label for="phone" class="form-label">@lang('messages.phone_number')</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                        <input type="text" name="phone" class="form-control" id="phone" placeholder="Enter your registered phone" required>
+                        <input type="text" name="phone" class="form-control" id="phone" placeholder="@lang('messages.enter_your_registered_phone')" required>
                     </div>
-                    <small class="form-text text-muted">We'll use this to verify your identity.</small>
+                    <small class="form-text text-muted">@lang('messages.phone_verification_info')</small>
                 </div>
 
                 <button type="submit" class="btn btn-primary w-100 mb-3 fw-bold">
-                    <i class="fas fa-paper-plane me-2"></i>Send Reset Link
+                    <i class="fas fa-paper-plane me-2"></i>@lang('messages.send_reset_link')
                 </button>
 
                 <hr class="my-4">
 
                 <div class="text-center">
-                    <p class="mb-0">Remembered your password?
-                        <a href="{{ route('login') }}" class="fw-bold text-decoration-none" style="color: var(--secondary-color);">Sign In</a>
+                    <p class="mb-0">@lang('messages.remembered_your_password')
+                        <a href="{{ route('login') }}" class="fw-bold text-decoration-none" style="color: var(--secondary-color);">@lang('messages.login')</a>
                     </p>
                 </div>
             </form>

@@ -17,7 +17,7 @@
                         <i class="fas fa-utensils me-2"></i>Imperial Spice
                     </h2>
                 </a>
-                <p class="text-muted">Welcome back! Please sign in to your account.</p>
+                <p class="text-muted">@lang('messages.welcome_back')</p>
             </div>
 
             {{-- Error message --}}
@@ -31,7 +31,7 @@
                 @csrf
 
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email Address</label>
+                    <label for="email" class="form-label">@lang('messages.email')</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                         <input type="email" name="email" class="form-control" id="email" required autofocus>
@@ -39,7 +39,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
+                    <label for="password" class="form-label">@lang('messages.password')</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-lock"></i></span>
                         <input type="password" name="password" class="form-control" id="password" required>
@@ -51,22 +51,22 @@
 
                 <div class="mb-3 form-check">
                     <input type="checkbox" name="remember" class="form-check-input" id="rememberMe">
-                    <label class="form-check-label" for="rememberMe">Remember Me</label>
+                    <label class="form-check-label" for="rememberMe">@lang('messages.remember_me')</label>
                 </div>
 
                 <button type="submit" class="btn btn-primary w-100 mb-3">
-                    <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                    <i class="fas fa-sign-in-alt me-2"></i>@lang('messages.login')
                 </button>
 
                 <div class="text-center">
-                    <a href="{{ route('password.request') }}" class="text-decoration-none">Forgot Password?</a>
+                    <a href="{{ route('password.request') }}" class="text-decoration-none">@lang('messages.forgot_password')</a>
                 </div>
 
                 <hr class="my-4">
 
                 <div class="text-center">
-                    <p class="mb-0">Don't have an account?
-                        <a href="{{ route('register') }}" class="text-primary text-decoration-none fw-bold">Sign Up</a>
+                    <p class="mb-0">@lang('messages.dont_have_account')
+                        <a href="{{ route('register') }}" class="text-primary text-decoration-none fw-bold">@lang('messages.sign_up')</a>
                     </p>
                 </div>
             </form>

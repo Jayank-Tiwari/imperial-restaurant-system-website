@@ -163,8 +163,8 @@
     <section class="py-5 mt-5" style="background-color: var(--gray-light);">
         <div class="container">
             <div class="text-center">
-                <h1 class="display-4 fw-bold" style="color: var(--secondary-color);">The Finest Indian Cuisine</h1>
-                <p class="lead text-muted">A royal gastronomical adventure in the heart of New Delhi.</p>
+                <h1 class="display-4 fw-bold" style="color: var(--secondary-color);">@lang('messages.finest_indian_cuisine')</h1>
+                <p class="lead text-muted">@lang('messages.authentic_taste')</p>
             </div>
         </div>
     </section>
@@ -175,29 +175,25 @@
         <div class="container">
             <div class="row align-items-center g-5">
                 <div class="col-lg-6" data-aos="fade-right">
-                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=774&q=80"
-                        class="img-fluid" style="border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);"
+                    <img src="{{ asset('assets/img/about.jpg') }}" class="img-fluid"
+                        style="border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);"
                         alt="The Imperial Spice Restaurant Interior">
                 </div>
                 <div class="col-lg-6" data-aos="fade-left">
-                    <h2 class="fw-bold mb-3" style="color: var(--secondary-color);">A Legacy of Royal Indian Dining</h2>
-                    <p class="mb-3 text-secondary"><strong>The Imperial Spice</strong> is one of the most acclaimed fine
-                        dining restaurants in Delhi, celebrated for taking guests on a unique gastronomical adventure. Our
-                        menu is a tribute to culinary secrets passed down through generations, reimagined with a modern
-                        twist.</p>
-                    <p class="mb-4">We are dedicated to creating a "royal experience" for every guest, combining an
-                        opulent ambiance with exquisite flavors and impeccable service. From live music to our signature
-                        dishes, every detail is crafted for an unforgettable visit.</p>
+                    <h2 class="fw-bold mb-3" style="color: var(--secondary-color);">@lang('messages.our_culinary_story')</h2>
+                    <p class="mb-3 text-secondary"><strong>The Imperial Spice</strong> @lang('messages.is_a_celebrated_indian_restaurant')</p>
+                    <p class="mb-4">@lang('messages.is_a_celebrated_indian_restaurant2')</p>
                     <div class="d-flex gap-5">
                         <div class="text-center">
-                            <div class="counter-value" data-count="8">0</div>
-                            <h5 class="fw-bold mb-0">Years of Excellence</h5>
-                            <p class="text-muted small">Serving since 2016</p>
+                            {{-- Current year 2025 - 2021 = 4 years --}}
+                            <div class="counter-value" data-count="4">4</div>
+                            <h5 class="fw-bold mb-0">@lang('messages.years_of_excellence')</h5>
+                            <p class="text-muted small">@lang('messages.serving_since') 2021</p>
                         </div>
                         <div class="text-center">
-                            <div class="counter-value" data-count="80000">0</div>
-                            <h5 class="fw-bold mb-0">Happy Guests</h5>
-                            <p class="text-muted small">Creating memories</p>
+                            <div class="counter-value" data-count="10000">10000</div>
+                            <h5 class="fw-bold mb-0">@lang('messages.happy_guests')</h5>
+                            <p class="text-muted small">@lang('messages.creating_memories')</p>
                         </div>
                     </div>
                 </div>
@@ -209,32 +205,29 @@
     <section class="py-5" style="background-color: var(--gray-light);">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="fw-bold">Our Philosophy</h2>
-                <p class="text-muted">The principles that guide every dish we create.</p>
+                <h2 class="fw-bold">@lang('messages.our_philosophy')</h2>
+                <p class="text-muted">@lang('messages.our_philosophy_description')</p>
             </div>
             <div class="row g-4 text-center">
                 <div class="col-md-4" data-aos="fade-up">
                     <div class="card p-4 h-100">
                         <i class="fas fa-scroll fs-1 mb-3 mx-auto" style="color: var(--secondary-color);"></i>
-                        <h5 class="fw-bold">Generational Recipes</h5>
-                        <p class="mb-0">We honor the culinary secrets passed down through generations, forming the
-                            authentic soul of our menu.</p>
+                        <h5 class="fw-bold">@lang('messages.generational_recipes')</h5>
+                        <p class="mb-0">@lang('messages.generational_recipes_description')</p>
                     </div>
                 </div>
                 <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
                     <div class="card p-4 h-100">
                         <i class="fas fa-utensils fs-1 mb-3 mx-auto" style="color: var(--primary-color);"></i>
-                        <h5 class="fw-bold">Modern Interpretation</h5>
-                        <p class="mb-0">Our chefs skillfully apply modern techniques to traditional flavors, creating a
-                            truly unique dining experience.</p>
+                        <h5 class="fw-bold">@lang('messages.modern_interpretation')</h5>
+                        <p class="mb-0">@lang('messages.modern_interpretation_description')</p>
                     </div>
                 </div>
                 <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
                     <div class="card p-4 h-100">
                         <i class="fas fa-concierge-bell fs-1 mb-3 mx-auto" style="color: var(--secondary-color);"></i>
-                        <h5 class="fw-bold">Royal Hospitality</h5>
-                        <p class="mb-0">We believe in service fit for royalty, ensuring every guest feels welcomed,
-                            valued, and pampered from start to finish.</p>
+                        <h5 class="fw-bold">@lang('messages.warm_hospitality')</h5>
+                        <p class="mb-0">@lang('messages.warm_hospitality_description')</p>
                     </div>
                 </div>
             </div>
@@ -245,40 +238,29 @@
     <section class="py-5 position-relative">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="fw-bold">Our Journey</h2>
-                <p class="text-muted">Key milestones that have shaped our story.</p>
+                <h2 class="fw-bold">@lang('messages.our_journey')</h2>
+                <p class="text-muted">@lang('messages.our_journey_description')</p>
             </div>
             <div class="timeline">
                 <div class="timeline-container left" data-aos="fade-right">
                     <div class="timeline-content">
-                        <div class="timeline-year">2016</div>
-                        <h3>Grand Opening in Connaught Place</h3>
-                        <p>The Imperial Spice opens its doors, aiming to set a new standard for fine Indian dining in the
-                            heart of Delhi.</p>
+                        <div class="timeline-year">2021</div>
+                        <h3>@lang('messages.grand_opening')</h3>
+                        <p>@lang('messages.grand_opening_description')</p>
                     </div>
                 </div>
                 <div class="timeline-container right" data-aos="fade-left">
                     <div class="timeline-content">
-                        <div class="timeline-year">2019</div>
-                        <h3>Awarded for Excellence</h3>
-                        <p>Honored with a prestigious award from the Ministry of Tourism, Govt. of India, recognizing our
-                            culinary excellence.</p>
+                        <div class="timeline-year">2023</div>
+                        <h3>@lang('messages.menu_expansion')</h3>
+                        <p>@lang('messages.menu_expansion_description')</p>
                     </div>
                 </div>
                 <div class="timeline-container left" data-aos="fade-right">
                     <div class="timeline-content">
-                        <div class="timeline-year">2022</div>
-                        <h3>Introduction of Live Music</h3>
-                        <p>We enhanced our royal ambiance by introducing nightly live music, creating an even more immersive
-                            dining experience.</p>
-                    </div>
-                </div>
-                <div class="timeline-container right" data-aos="fade-left">
-                    <div class="timeline-content">
                         <div class="timeline-year">2024</div>
-                        <h3>A Refreshed Ambiance</h3>
-                        <p>We completed a renovation to further elevate our decor and guest comfort, solidifying our place
-                            as a premier dining destination.</p>
+                        <h3>@lang('messages.refreshed_ambiance')</h3>
+                        <p>@lang('messages.refreshed_ambiance_description')</p>
                     </div>
                 </div>
             </div>
@@ -289,8 +271,8 @@
     <section class="py-5" style="background-color: var(--gray-light);">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="fw-bold">The Talent Behind the Taste</h2>
-                <p class="text-muted">Meet the creative minds who bring our culinary vision to life.</p>
+                <h2 class="fw-bold">@lang('messages.the_talent_behind_the_taste')</h2>
+                <p class="text-muted">@lang('messages.meet_the_creative_minds')</p>
             </div>
             <div class="row g-4 justify-content-center">
                 <div class="col-lg-4 col-md-6" data-aos="zoom-in">
@@ -299,10 +281,8 @@
                             class="rounded-circle mb-3 mx-auto" alt="Executive Chef Rakesh"
                             style="border: 4px solid var(--primary-color);">
                         <h5 class="card-title fw-bold">Chef Rakesh</h5>
-                        <p class="mb-2" style="color: var(--primary-color); font-weight: 600;">Executive Chef</p>
-                        <p class="card-text text-muted small mb-3">With 20 years of experience, Chef Rakesh is the heart of
-                            our kitchen. His philosophy, "Simplicity is the ultimate sophistication," shines through in
-                            every dish.</p>
+                        <p class="mb-2" style="color: var(--primary-color); font-weight: 600;">@lang('messages.executive_chef')</p>
+                        <p class="card-text text-muted small mb-3">@lang('messages.chef_rakesh_description')</p>
                         <div class="d-flex justify-content-center gap-3">
                             <a href="#" class="text-secondary"><i class="fab fa-instagram"></i></a>
                             <a href="#" class="text-secondary"><i class="fab fa-linkedin-in"></i></a>
@@ -315,26 +295,11 @@
                             class="rounded-circle mb-3 mx-auto" alt="Restaurant Manager"
                             style="border: 4px solid var(--primary-color);">
                         <h5 class="card-title fw-bold">Mr. Singh</h5>
-                        <p class="mb-2" style="color: var(--primary-color); font-weight: 600;">Restaurant Manager</p>
-                        <p class="card-text text-muted small mb-3">Mr. Singh orchestrates our front-of-house, ensuring that
-                            every guest receives the seamless, royal hospitality that defines The Imperial Spice.</p>
+                        <p class="mb-2" style="color: var(--primary-color); font-weight: 600;">@lang('messages.restaurant_manager')</p>
+                        <p class="card-text text-muted small mb-3">@lang('messages.mr_singh_description')</p>
                         <div class="d-flex justify-content-center gap-3">
                             <a href="#" class="text-secondary"><i class="fab fa-twitter"></i></a>
                             <a href="#" class="text-secondary"><i class="fab fa-linkedin-in"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="card text-center p-4 h-100">
-                        <img src="https://images.unsplash.com/photo-1600275892312-1f44359403a4?auto=format&fit=crop&w=150&h=150&q=80"
-                            class="rounded-circle mb-3 mx-auto" alt="Mixologist"
-                            style="border: 4px solid var(--primary-color);">
-                        <h5 class="card-title fw-bold">Priya Sharma</h5>
-                        <p class="mb-2" style="color: var(--primary-color); font-weight: 600;">Head Mixologist</p>
-                        <p class="card-text text-muted small mb-3">As the curator of our bar, Priya crafts inventive
-                            cocktails that complement our cuisine and elevate your dining experience.</p>
-                        <div class="d-flex justify-content-center gap-3">
-                            <a href="#" class="text-secondary"><i class="fab fa-instagram"></i></a>
                         </div>
                     </div>
                 </div>
@@ -347,29 +312,25 @@
         <div class="floating-decoration decoration-1" style="opacity: 0.05;"></div>
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="fw-bold">Glimpses of The Imperial Spice</h2>
-                <p class="text-muted">A taste of the experience that awaits you.</p>
+                <h2 class="fw-bold">@lang('messages.glimpses_of_the_imperial_spice')</h2>
+                <p class="text-muted">@lang('messages.a_taste_of_the_experience')</p>
             </div>
             <div class="gallery-grid">
-                <div class="gallery-item" data-aos="fade-up"><img
-                        src="{{ asset('assets/img/gallery.jpg') }}"
-                        alt="Restaurant Ambiance">
-                    <div class="overlay">The Royal Ambiance</div>
+                <div class="gallery-item" data-aos="fade-up"><img src="{{ asset('assets/img/gallery.jpg') }}"
+                        alt="Happy guests outside the restaurant">
+                    <div class="overlay">@lang('messages.welcoming_our_guests')</div>
                 </div>
                 <div class="gallery-item" data-aos="fade-up" data-aos-delay="100"><img
-                        src="{{ asset('assets/img/dinin.jpg') }}"
-                        alt="Indian Kebabs">
-                    <div class="overlay">Artfully Plated Kebabs</div>
+                        src="{{ asset('assets/img/dinin.jpg') }}" alt="Guests enjoying a group dinner">
+                    <div class="overlay">@lang('messages.a_shared_dining_experience')</div>
                 </div>
                 <div class="gallery-item" data-aos="fade-up" data-aos-delay="200"><img
-                        src="{{ asset('assets/img/about.jpg') }}"
-                        alt="Cocktails at the bar">
-                    <div class="overlay">Our Signature Cocktails</div>
+                        src="{{ asset('assets/img/about.jpg') }}" alt="A group celebration at The Imperial Spice">
+                    <div class="overlay">@lang('messages.creating_lasting_memories')</div>
                 </div>
                 <div class="gallery-item" data-aos="fade-up" data-aos-delay="300"><img
-                        src="{{ asset('assets/img/whyus.jpg') }}"
-                        alt="Live Music">
-                    <div class="overlay">An Evening with Live Music</div>
+                        src="{{ asset('assets/img/whyus.jpg') }}" alt="Friends dining together at our restaurant">
+                    <div class="overlay">@lang('messages.good_food_great_company')</div>
                 </div>
             </div>
         </div>
@@ -379,18 +340,17 @@
     <section class="py-5" style="background-color: var(--gray-light);">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="fw-bold">Words from Our Guests</h2>
-                <p class="text-muted">Don't just take our word for it.</p>
+                <h2 class="fw-bold">@lang('messages.words_from_our_guests')</h2>
+                <p class="text-muted">@lang('messages.dont_just_take_our_word')</p>
             </div>
             <div class="row g-4">
                 <div class="col-lg-4" data-aos="fade-up">
                     <div class="card h-100">
                         <div class="card-body text-center p-4">
                             <i class="fas fa-quote-left fs-3 mb-3" style="color: var(--primary-light);"></i>
-                            <p class="fst-italic">"The best fine dining experience in Connaught Place. The live music was
-                                magical and the food was out of this world. Truly a royal treat!"</p>
-                            <h6 class="fw-bold mt-4 mb-0">Rohan Mehta</h6>
-                            <small class="text-muted">Google Review</small>
+                            <p class="fst-italic">@lang('messages.testimonial_4')</p>
+                            <h6 class="fw-bold mt-4 mb-0">@lang('messages.testimonial_4_author')</h6>
+                            <small class="text-muted">@lang('messages.google_review')</small>
                         </div>
                     </div>
                 </div>
@@ -398,10 +358,9 @@
                     <div class="card h-100">
                         <div class="card-body text-center p-4">
                             <i class="fas fa-quote-left fs-3 mb-3" style="color: var(--primary-light);"></i>
-                            <p class="fst-italic">"We celebrated our anniversary here and it was perfect. The staff treated
-                                us like royalty and every dish was an explosion of flavor."</p>
-                            <h6 class="fw-bold mt-4 mb-0">Priya & Sameer Desai</h6>
-                            <small class="text-muted">Anniversary Dinner</small>
+                            <p class="fst-italic">@lang('messages.testimonial_5')</p>
+                            <h6 class="fw-bold mt-4 mb-0">@lang('messages.testimonial_5_author')</h6>
+                            <small class="text-muted">@lang('messages.anniversary_dinner')</small>
                         </div>
                     </div>
                 </div>
@@ -409,10 +368,9 @@
                     <div class="card h-100">
                         <div class="card-body text-center p-4">
                             <i class="fas fa-quote-left fs-3 mb-3" style="color: var(--primary-light);"></i>
-                            <p class="fst-italic">"As a tourist, I wanted to taste authentic Indian food. The Imperial
-                                Spice exceeded all expectations. A must-visit in Delhi."</p>
-                            <h6 class="fw-bold mt-4 mb-0">Emily Carter</h6>
-                            <small class="text-muted">Visitor from London</small>
+                            <p class="fst-italic">@lang('messages.testimonial_6')</p>
+                            <h6 class="fw-bold mt-4 mb-0">@lang('messages.testimonial_6_author')</h6>
+                            <small class="text-muted">@lang('messages.visitor_from_paris')</small>
                         </div>
                     </div>
                 </div>
@@ -423,17 +381,16 @@
     {{-- CTA Section --}}
     <section class="py-5" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));">
         <div class="container text-center text-white">
-            <h2 class="display-5 fw-bold mb-3">Reserve Your Royal Experience</h2>
-            <p class="lead mb-4">Book your table and let us transport you on a culinary journey you won't forget.</p>
+            <h2 class="display-5 fw-bold mb-3">@lang('messages.reserve_your_experience')</h2>
+            <p class="lead mb-4">@lang('messages.book_your_table_2')</p>
             <a href="{{ url('/booking') }}" class="btn btn-light text-primary fw-bold"
                 style="padding: 14px 40px; border-radius: 50px;">
-                <i class="fas fa-calendar-alt me-2"></i>Book Your Table Now
+                <i class="fas fa-calendar-alt me-2"></i>@lang('messages.book_your_table_now')
             </a>
         </div>
     </section>
 
 @endsection
-
 @push('scripts')
     {{-- Existing Scripts --}}
     <script>

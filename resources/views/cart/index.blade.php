@@ -9,8 +9,8 @@
     <section class="py-5 mt-5 bg-light">
         <div class="container">
             <div class="text-center">
-                <h1 class="display-4 fw-bold">Shopping Cart</h1>
-                <p class="lead">Review your selected items before checkout</p>
+                <h1 class="display-4 fw-bold">@lang('messages.shopping_cart')</h1>
+                <p class="lead">@lang('messages.review_items')</p>
             </div>
         </div>
     </section>
@@ -23,16 +23,16 @@
                     <div class="card">
                         <div class="card-header">
                             <h5 class="mb-0">
-                                <i class="fas fa-shopping-cart me-2"></i>Cart Items
+                                <i class="fas fa-shopping-cart me-2"></i>@lang('messages.cart_items')
                             </h5>
                         </div>
                         <div class="card-body">
                             @if ($cartItems->isEmpty())
                                 <div class="text-center py-5">
                                     <i class="fas fa-shopping-cart fa-3x text-muted mb-3"></i>
-                                    <h5>Your cart is empty</h5>
-                                    <p class="text-muted">Add some delicious items from our menu!</p>
-                                    <a href="{{ route('menu') }}" class="btn btn-primary">Browse Menu</a>
+                                    <h5>@lang('messages.cart_empty')</h5>
+                                    <p class="text-muted">@lang('messages.cart_empty_message')</p>
+                                    <a href="{{ route('menu') }}" class="btn btn-primary">@lang('messages.browse_menu')</a>
                                 </div>
                             @else
                                 @foreach ($cartItems as $item)
@@ -87,7 +87,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h5 class="mb-0">
-                                <i class="fas fa-receipt me-2"></i>Order Summary
+                                <i class="fas fa-receipt me-2"></i>@lang('messages.order_summary')
                             </h5>
                         </div>
                         <div class="card-body">
@@ -99,31 +99,31 @@
                             @endphp
 
                             <div class="d-flex justify-content-between mb-2">
-                                <span>Subtotal (Excl. IVA):</span>
+                                <span>@lang('messages.subtotal'):</span>
                                 <span>€{{ number_format($subtotal, 2) }}</span>
                             </div>
                             <div class="d-flex justify-content-between mb-2">
-                                <span>IVA (10%):</span>
+                                <span>@lang('messages.tax'):</span>
                                 <span>€{{ number_format($tax, 2) }}</span>
                             </div>
                             <hr>
                             <div class="d-flex justify-content-between fw-bold h5">
-                                <span>Total:</span>
+                                <span>@lang('messages.total'):</span>
                                 <span>€{{ number_format($total, 2) }}</span>
                             </div>
 
                             <div class="d-grid gap-2 mt-4">
                                 @if (!$cartItems->isEmpty())
                                     <a href="{{ route('checkout') }}" class="btn btn-primary btn-lg">
-                                        <i class="fas fa-credit-card me-2"></i>Proceed to Checkout
+                                        <i class="fas fa-credit-card me-2"></i>@lang('messages.proceed_to_checkout')
                                     </a>
                                 @else
                                     <button class="btn btn-primary btn-lg" disabled>
-                                        <i class="fas fa-credit-card me-2"></i>Proceed to Checkout
+                                        <i class="fas fa-credit-card me-2"></i>@lang('messages.proceed_to_checkout')
                                     </button>
                                 @endif
                                 <a href="{{ route('menu') }}" class="btn btn-outline-primary">
-                                    <i class="fas fa-arrow-left me-2"></i>Continue Shopping
+                                    <i class="fas fa-arrow-left me-2"></i>@lang('messages.browse_menu')
                                 </a>
                             </div>
                         </div>
