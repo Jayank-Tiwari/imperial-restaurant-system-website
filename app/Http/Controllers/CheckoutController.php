@@ -26,7 +26,7 @@ class CheckoutController extends Controller
         $total = $subtotal + $tax;
         $deliveryFee = 50.00; // Hardcoded delivery fee for delivery orders
 
-        return view('checkout.index', compact('cartItems', 'subtotal', 'tax', 'total','deliveryFee'));
+        return view('checkout.index', compact('cartItems', 'subtotal', 'tax', 'total', 'deliveryFee'));
     }
 
     // Store dine-in order
@@ -89,11 +89,19 @@ class CheckoutController extends Controller
             'postal_code' => 'required|string',
         ]);
 
-        $validPostalCodes = ['08800', '08801', '08802']; // Hardcoded 4km radius zip codes
+        // Define delivery charges by postal code
+        $deliveryCharges = [
+            '08880' => 0.00,
+            '08812' => 2.00,
+            '08870' => 4.00,
+        ];
 
-        if (!in_array($request->postal_code, $validPostalCodes)) {
+        // Check if the postal code is allowed
+        if (!array_key_exists($request->postal_code, $deliveryCharges)) {
             return back()->with('error', 'Delivery only available within 4km radius');
         }
+
+        $deliveryFee = $deliveryCharges[$request->postal_code];
 
         $user = Auth::user();
         $cartItems = CartItem::where('user_id', $user->id)->with('menuItem')->get();
@@ -105,10 +113,9 @@ class CheckoutController extends Controller
         $subtotal = $cartItems->sum(fn($item) => $item->menuItem->price * $item->quantity);
         $taxRate = 0.10;
         $tax = $subtotal * $taxRate;
-        $deliveryFee = 50.00; // The hardcoded 50 euro delivery fee
         $total = $subtotal + $tax + $deliveryFee;
 
-        // Temporarily store all order details in session
+        // Store order details in session for Stripe
         Session::put('delivery_order', [
             'user_id' => $user->id,
             'subtotal' => $subtotal,
@@ -121,6 +128,7 @@ class CheckoutController extends Controller
 
         return redirect()->route('stripe.checkout');
     }
+
 
     // Stripe calls this after successful payment
     public function paymentSuccess()

@@ -55,7 +55,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link @if (View::getSection('active') === 'profile-setting') active @endif" href="{{ route('admin.profile-setting') }}">
+        <a class="nav-link @if (View::getSection(name: 'active') === 'profile-setting') active @endif" href="{{ route('admin.profile-setting') }}">
             <i class="bi bi-person-circle me-2"></i>
             @lang('messages.profile_settings')
         </a>

@@ -90,7 +90,7 @@
                                             </div>
                                         @endif
 
-                                        <form method="POST" action="{{ route('user.profile.update') }}">
+                                        <form method="POST" action="{{ route('admin.profile.update') }}">
                                             @csrf
                                             @method('PUT')
                                             <input type="hidden" name="form_type" value="personal">
@@ -150,7 +150,7 @@
                                                     </div>
                                                     <div class="card-body">
                                                         <form method="POST"
-                                                            action="{{ route('user.profile.update') }}">
+                                                            action="{{ route('admin.profile.update') }}">
                                                             @csrf
                                                             @method('PUT')
                                                             <input type="hidden" name="form_type" value="password">

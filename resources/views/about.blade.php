@@ -175,7 +175,7 @@
         <div class="container">
             <div class="row align-items-center g-5">
                 <div class="col-lg-6" data-aos="fade-right">
-                    <img src="{{ asset('assets/img/about.jpg') }}" class="img-fluid"
+                    <img src="{{ asset('assets/img/about.webp') }}" class="img-fluid"
                         style="border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);"
                         alt="The Imperial Spice Restaurant Interior">
                 </div>
@@ -280,7 +280,7 @@
                         <img src="https://images.unsplash.com/photo-1583394293214-28ded15ee548?auto=format&fit=crop&w=150&h=150&q=80"
                             class="rounded-circle mb-3 mx-auto" alt="Executive Chef Rakesh"
                             style="border: 4px solid var(--primary-color);">
-                        <h5 class="card-title fw-bold">Chef Rakesh</h5>
+                        <h5 class="card-title fw-bold">Chef Diwan Singh</h5>
                         <p class="mb-2" style="color: var(--primary-color); font-weight: 600;">@lang('messages.executive_chef')</p>
                         <p class="card-text text-muted small mb-3">@lang('messages.chef_rakesh_description')</p>
                         <div class="d-flex justify-content-center gap-3">
@@ -294,7 +294,7 @@
                         <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?auto=format&fit=crop&w=150&h=150&q=80"
                             class="rounded-circle mb-3 mx-auto" alt="Restaurant Manager"
                             style="border: 4px solid var(--primary-color);">
-                        <h5 class="card-title fw-bold">Mr. Singh</h5>
+                        <h5 class="card-title fw-bold">Mr. Pawan Singh</h5>
                         <p class="mb-2" style="color: var(--primary-color); font-weight: 600;">@lang('messages.restaurant_manager')</p>
                         <p class="card-text text-muted small mb-3">@lang('messages.mr_singh_description')</p>
                         <div class="d-flex justify-content-center gap-3">
@@ -316,20 +316,20 @@
                 <p class="text-muted">@lang('messages.a_taste_of_the_experience')</p>
             </div>
             <div class="gallery-grid">
-                <div class="gallery-item" data-aos="fade-up"><img src="{{ asset('assets/img/gallery.jpg') }}"
+                <div class="gallery-item" data-aos="fade-up"><img src="{{ asset('assets/img/gallery.webp') }}"
                         alt="Happy guests outside the restaurant">
                     <div class="overlay">@lang('messages.welcoming_our_guests')</div>
                 </div>
                 <div class="gallery-item" data-aos="fade-up" data-aos-delay="100"><img
-                        src="{{ asset('assets/img/dinin.jpg') }}" alt="Guests enjoying a group dinner">
+                        src="{{ asset('assets/img/dinin.webp') }}" alt="Guests enjoying a group dinner">
                     <div class="overlay">@lang('messages.a_shared_dining_experience')</div>
                 </div>
                 <div class="gallery-item" data-aos="fade-up" data-aos-delay="200"><img
-                        src="{{ asset('assets/img/about.jpg') }}" alt="A group celebration at The Imperial Spice">
+                        src="{{ asset('assets/img/about.webp') }}" alt="A group celebration at The Imperial Spice">
                     <div class="overlay">@lang('messages.creating_lasting_memories')</div>
                 </div>
                 <div class="gallery-item" data-aos="fade-up" data-aos-delay="300"><img
-                        src="{{ asset('assets/img/whyus.jpg') }}" alt="Friends dining together at our restaurant">
+                        src="{{ asset('assets/img/whyus.webp') }}" alt="Friends dining together at our restaurant">
                     <div class="overlay">@lang('messages.good_food_great_company')</div>
                 </div>
             </div>

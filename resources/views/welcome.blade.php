@@ -6,7 +6,7 @@
 @section('content')
 
     <section class="hero-section"
-        style="background-image: url('{{ asset('assets/img/Adobe Express - file.jpg') }}'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 100vh; position: relative;">
+        style="background-image: url('{{ asset('assets/img/home.webp') }}'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 100vh; position: relative;">
         <div class="overlay"
             style="background-color: rgba(0, 0, 0, 0.5); height: 100%; width: 100%; position: absolute; top: 0; left: 0;">
         </div>
@@ -104,7 +104,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6" data-aos="fade-left">
-                    <img src="{{ asset('assets/img/whyus.jpg') }}" class="img-fluid"
+                    <img src="{{ asset('assets/img/whyus.webp') }}" class="img-fluid"
                         style="border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);" alt="Restaurant Ambiance">
                 </div>
             </div>

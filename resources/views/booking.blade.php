@@ -42,8 +42,9 @@
                                     {{-- First Name --}}
                                     <div class="col-md-6">
                                         <label for="firstName" class="form-label">@lang('messages.first_name')</label>
-                                        <input type="text" name="first_name" class="form-control @error('first_name') is-invalid @enderror"
-                                               id="firstName" value="{{ old('first_name') }}" required>
+                                        <input type="text" name="first_name"
+                                            class="form-control @error('first_name') is-invalid @enderror" id="firstName"
+                                            value="{{ old('first_name') }}" required>
                                         @error('first_name')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -52,8 +53,9 @@
                                     {{-- Last Name --}}
                                     <div class="col-md-6">
                                         <label for="lastName" class="form-label">@lang('messages.last_name')</label>
-                                        <input type="text" name="last_name" class="form-control @error('last_name') is-invalid @enderror"
-                                               id="lastName" value="{{ old('last_name') }}" required>
+                                        <input type="text" name="last_name"
+                                            class="form-control @error('last_name') is-invalid @enderror" id="lastName"
+                                            value="{{ old('last_name') }}" required>
                                         @error('last_name')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -62,8 +64,9 @@
                                     {{-- Email --}}
                                     <div class="col-md-6">
                                         <label for="email" class="form-label">@lang('messages.email')</label>
-                                        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                                               id="email" value="{{ old('email') }}" required>
+                                        <input type="email" name="email"
+                                            class="form-control @error('email') is-invalid @enderror" id="email"
+                                            value="{{ old('email') }}" required>
                                         @error('email')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -72,8 +75,9 @@
                                     {{-- Phone --}}
                                     <div class="col-md-6">
                                         <label for="phone" class="form-label">@lang('messages.phone_number')</label>
-                                        <input type="tel" name="phone" class="form-control @error('phone') is-invalid @enderror"
-                                               id="phone" value="{{ old('phone') }}" required>
+                                        <input type="tel" name="phone"
+                                            class="form-control @error('phone') is-invalid @enderror" id="phone"
+                                            value="{{ old('phone') }}" required>
                                         @error('phone')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -83,8 +87,8 @@
                                     <div class="col-md-6">
                                         <label for="date" class="form-label">@lang('messages.reservation_date')</label>
                                         <input type="date" name="reservation_date"
-                                               class="form-control @error('reservation_date') is-invalid @enderror"
-                                               id="date" value="{{ old('reservation_date') }}" required>
+                                            class="form-control @error('reservation_date') is-invalid @enderror"
+                                            id="date" value="{{ old('reservation_date') }}" required>
                                         @error('reservation_date')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -94,17 +98,22 @@
                                     <div class="col-md-6">
                                         <label for="time" class="form-label">@lang('messages.preferred_time')</label>
                                         <select name="reservation_time"
-                                                class="form-select @error('reservation_time') is-invalid @enderror"
-                                                id="time" required>
+                                            class="form-select @error('reservation_time') is-invalid @enderror"
+                                            id="time" required>
                                             <option value="">@lang('messages.select_time')</option>
                                             @foreach ([
-                                                '17:00' => '5:00 PM', '17:30' => '5:30 PM',
-                                                '18:00' => '6:00 PM', '18:30' => '6:30 PM',
-                                                '19:00' => '7:00 PM', '19:30' => '7:30 PM',
-                                                '20:00' => '8:00 PM', '20:30' => '8:30 PM',
-                                                '21:00' => '9:00 PM'
-                                            ] as $value => $label)
-                                                <option value="{{ $value }}" {{ old('reservation_time') == $value ? 'selected' : '' }}>
+            '17:00' => '5:00 PM',
+            '17:30' => '5:30 PM',
+            '18:00' => '6:00 PM',
+            '18:30' => '6:30 PM',
+            '19:00' => '7:00 PM',
+            '19:30' => '7:30 PM',
+            '20:00' => '8:00 PM',
+            '20:30' => '8:30 PM',
+            '21:00' => '9:00 PM',
+        ] as $value => $label)
+                                                <option value="{{ $value }}"
+                                                    {{ old('reservation_time') == $value ? 'selected' : '' }}>
                                                     {{ $label }}
                                                 </option>
                                             @endforeach
@@ -118,14 +127,16 @@
                                     <div class="col-md-6">
                                         <label for="guests" class="form-label">@lang('messages.number_of_guests')</label>
                                         <select name="guests" class="form-select @error('guests') is-invalid @enderror"
-                                                id="guests" required>
+                                            id="guests" required>
                                             <option value="">@lang('messages.select_guests')</option>
                                             @for ($i = 1; $i <= 8; $i++)
-                                                <option value="{{ $i }}" {{ old('guests') == $i ? 'selected' : '' }}>
+                                                <option value="{{ $i }}"
+                                                    {{ old('guests') == $i ? 'selected' : '' }}>
                                                     {{ $i }} Guest{{ $i > 1 ? 's' : '' }}
                                                 </option>
                                             @endfor
-                                            <option value="8+" {{ old('guests') == '8+' ? 'selected' : '' }}>8+ Guests</option>
+                                            <option value="8+" {{ old('guests') == '8+' ? 'selected' : '' }}>8+ Guests
+                                            </option>
                                         </select>
                                         @error('guests')
                                             <div class="invalid-feedback">{{ $message }}</div>
@@ -136,7 +147,7 @@
                                     <div class="col-md-6">
                                         <label for="occasion" class="form-label">@lang('messages.special_occasion')</label>
                                         <select name="occasion" class="form-select @error('occasion') is-invalid @enderror"
-                                                id="occasion">
+                                            id="occasion">
                                             <option value="">@lang('messages.select_occasion')</option>
                                             @php
                                                 $occasionOptions = [
@@ -147,7 +158,8 @@
                                                 ];
                                             @endphp
                                             @foreach ($occasionOptions as $occasion => $label)
-                                                <option value="{{ $occasion }}" {{ old('occasion') == $occasion ? 'selected' : '' }}>
+                                                <option value="{{ $occasion }}"
+                                                    {{ old('occasion') == $occasion ? 'selected' : '' }}>
                                                     {{ ucfirst($label) }}
                                                 </option>
                                             @endforeach
@@ -160,10 +172,8 @@
                                     {{-- Special Requests --}}
                                     <div class="col-12">
                                         <label for="specialRequests" class="form-label">@lang('messages.special_requests')</label>
-                                        <textarea name="special_requests"
-                                                  class="form-control @error('special_requests') is-invalid @enderror"
-                                                  id="specialRequests" rows="3"
-                                                  placeholder="@lang('messages.your_message')">{{ old('special_requests') }}</textarea>
+                                        <textarea name="special_requests" class="form-control @error('special_requests') is-invalid @enderror"
+                                            id="specialRequests" rows="3" placeholder="@lang('messages.your_message')">{{ old('special_requests') }}</textarea>
                                         @error('special_requests')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -195,9 +205,8 @@
                                     <i class="fas fa-clock text-primary me-2"></i>
                                     <strong>@lang('messages.dining_hours')</strong><br>
                                     <small class="text-muted">
-                                        Mon-Thu: 5:00 PM - 10:00 PM<br>
-                                        Fri-Sat: 5:00 PM - 11:00 PM<br>
-                                        Sun: 5:00 PM - 9:00 PM
+                                        @lang('messages.daily_lunch'): 12:30 PM - 4:30 PM<br>
+                                        @lang('messages.daily_dinner'): 6:30 PM - 11:00 PM
                                     </small>
                                 </li>
                                 <li class="mb-2">
@@ -213,30 +222,32 @@
                                 <li class="mb-2">
                                     <i class="fas fa-phone text-primary me-2"></i>
                                     <strong>@lang('messages.contact')</strong><br>
-                                    <small class="text-muted">(555) 123-4567</small>
+                                    <small class="text-muted">+34 602 18 93 06</small>
                                 </li>
                             </ul>
                         </div>
                     </div>
+                </div>
 
-                    {{-- Why Book --}}
-                    <div class="card mt-4">
-                        <div class="card-header">
-                            <h6 class="mb-0">
-                                <i class="fas fa-star me-2"></i>@lang('messages.why_book_with_us')
-                            </h6>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-unstyled">
-                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>@lang('messages.guaranteed_seating')</li>
-                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>@lang('messages.priority_service')</li>
-                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>@lang('messages.special_occasion_arrangements')</li>
-                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>@lang('messages.flexible_cancellation_policy')</li>
-                            </ul>
-                        </div>
+
+                {{-- Why Book --}}
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h6 class="mb-0">
+                            <i class="fas fa-star me-2"></i>@lang('messages.why_book_with_us')
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>@lang('messages.guaranteed_seating')</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>@lang('messages.priority_service')</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>@lang('messages.special_occasion_arrangements')</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>@lang('messages.flexible_cancellation_policy')</li>
+                        </ul>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </section>
 @endsection

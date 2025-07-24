@@ -164,9 +164,9 @@ return [
     'the_talent_behind_the_taste' => 'The Talent Behind the Taste',
     'meet_the_creative_minds' => 'Meet the creative minds who bring our culinary vision to life.',
     'executive_chef' => 'Executive Chef',
-    'chef_rakesh_description' => 'With 20 years of experience, Chef Rakesh is the heart of our kitchen. His philosophy, "Simplicity is the ultimate sophistication," shines through in every dish.',
+    'chef_rakesh_description' => 'With 20 years of experience, Chef Diwan is the heart of our kitchen. His philosophy, "Simplicity is the ultimate sophistication," shines through in every dish.',
     'restaurant_manager' => 'Restaurant Manager',
-    'mr_singh_description' => 'Mr. Singh orchestrates our front-of-house, ensuring that every guest receives the seamless, warm hospitality that defines The Imperial Spice.',
+    'mr_singh_description' => 'Mr. Pawan Singh orchestrates our front-of-house, ensuring that every guest receives the seamless, warm hospitality that defines The Imperial Spice.',
     'glimpses_of_the_imperial_spice' => 'Glimpses of The Imperial Spice',
     'a_taste_of_the_experience' => 'A taste of the experience that awaits you.',
     'welcoming_our_guests' => 'Welcoming Our Guests',
@@ -430,6 +430,11 @@ return [
     // Categories (additional)
     'edit_category' => 'Edit Category',
     'category_name' => 'Category Name',
+    'daily' => 'Daily',
+    'evening' => 'Evening',
+    'daily_lunch' => 'Daily Lunch',
+    'daily_dinner' => 'Daily Dinner',
+    'experience_culinary_excellence' => 'Experience culinary excellence in the heart of Vilanova i la Geltrú. We serve the finest dishes with passion and dedication.',
 
     // Bookings (newly added)
     'search_bookings' => 'Search bookings...',

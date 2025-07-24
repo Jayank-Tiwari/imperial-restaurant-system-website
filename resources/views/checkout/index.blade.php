@@ -77,7 +77,7 @@
                                     </div>
                                     <div class="mb-4">
                                         <label for="postal_code" class="form-label fw-semibold">@lang('messages.postal_code')</label>
-                                        <input type="text" name="postal_code" class="form-control" placeholder="@lang('messages.postal_code_example')"
+                                        <input type="text" name="postal_code" id="postal_code" class="form-control" placeholder="@lang('messages.postal_code_example')"
                                             required>
                                         <small class="text-muted">@lang('messages.delivery_area_note')</small>
                                     </div>
@@ -109,7 +109,7 @@
                         </div>
                         <div class="d-flex justify-content-between mb-2 d-none" id="delivery-charge-row">
                             <span>@lang('messages.delivery_charge'):</span>
-                            <span id="delivery-charge">€{{ number_format($deliveryFee ?? 0, 2) }}</span>
+                            <span id="delivery-charge">€0.00</span>
                         </div>
                         <hr>
                         <div class="d-flex justify-content-between fw-bold h5">
@@ -130,42 +130,45 @@
             const dineinTab = document.getElementById('dinein-tab');
 
             const deliveryChargeRow = document.getElementById('delivery-charge-row');
+            const deliveryChargeElement = document.getElementById('delivery-charge');
             const totalElement = document.getElementById('total');
 
+            const postalCodeInput = document.getElementById('postal_code');
             const initialTotal = {{ $total ?? 0 }};
-            const deliveryCharge = {{ $deliveryFee ?? 0 }};
+            
+            // Delivery charges mapping
+            const deliveryCharges = {
+                '08880': 0.00,
+                '08812': 2.00,
+                '08870': 4.00
+            };
 
             deliveryTab.addEventListener('shown.bs.tab', function () {
                 deliveryChargeRow.classList.remove('d-none');
-                const newTotal = initialTotal + deliveryCharge;
-                totalElement.textContent = `€${newTotal.toFixed(2)}`;
+                totalElement.textContent = `€${initialTotal.toFixed(2)}`;
             });
 
             dineinTab.addEventListener('shown.bs.tab', function () {
                 deliveryChargeRow.classList.add('d-none');
                 totalElement.textContent = `€${initialTotal.toFixed(2)}`;
             });
-        });
 
-        // Add animation to form elements on focus
-        const inputs = document.querySelectorAll('.form-control, .form-select');
-        inputs.forEach(input => {
-            input.addEventListener('focus', function () {
-                this.parentElement.classList.add('focused');
-            });
-            input.addEventListener('blur', function () {
-                this.parentElement.classList.remove('focused');
-            });
-        });
+            // Update delivery fee dynamically based on postal code
+            postalCodeInput?.addEventListener('input', function () {
+                const postal = this.value.trim();
+                let fee = 0;
 
-        // Add tab switch animation
-        const tabButtons = document.querySelectorAll('[data-bs-toggle="tab"]');
-        tabButtons.forEach(button => {
-            button.addEventListener('click', function () {
-                document.getElementById('checkoutTabsContent').style.opacity = 0;
-                setTimeout(() => {
-                    document.getElementById('checkoutTabsContent').style.opacity = 1;
-                }, 300);
+                if (deliveryCharges[postal] !== undefined) {
+                    fee = deliveryCharges[postal];
+                    deliveryChargeRow.classList.remove('d-none');
+                } else {
+                    fee = 0;
+                    deliveryChargeRow.classList.add('d-none');
+                }
+
+                deliveryChargeElement.textContent = `€${fee.toFixed(2)}`;
+                const newTotal = initialTotal + fee;
+                totalElement.textContent = `€${newTotal.toFixed(2)}`;
             });
         });
     </script>
