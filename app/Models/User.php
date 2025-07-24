@@ -61,5 +61,17 @@ class User extends Authenticatable
         return $this->hasMany(Delivery::class, 'staff_id');
     }
 
-
+    /**
+     * Check if the user has a specific role.
+     *
+     * @param string|array $role
+     * @return bool
+     */
+    public function hasRole($role): bool
+    {
+        if (is_array($role)) {
+            return in_array($this->role, $role);
+        }
+        return $this->role === $role;
+    }
 }

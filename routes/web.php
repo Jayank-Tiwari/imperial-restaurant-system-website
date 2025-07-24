@@ -55,6 +55,9 @@ Route::middleware(['auth', RoleMiddleware::class])->group(function () {
     Route::get('/admin/booking', [BookingController::class, 'index'])->name('admin.booking');
     Route::get('/user/dashboard', [UserController::class, 'index'])->name('user.dashboard');
     Route::get('/user/reservations', [UserController::class, 'myReservations'])->name('user.reservations');
+    Route::get('/user/profile-setting', [ProfileController::class, 'editProfile'])->name('user.profile-setting');
+    Route::put('/user/profile-setting/update', [ProfileController::class, 'updateProfile'])->name('user.profile.update');
+
 
     // Booking Edit/Update
     Route::get('/admin/bookings/{id}/edit', [BookingController::class, 'edit'])->name('admin.booking.edit');
