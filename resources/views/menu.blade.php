@@ -33,7 +33,7 @@
                 @foreach($items as $item)
                     <div class="col-lg-4 col-md-6 menu-item" data-category="{{ $category }}" data-id="{{ $item->id }}">
                         <div class="card menu-item-card h-100">
-                            <img src="{{ $item->image ? asset('storage/' . $item->image) : asset('placeholder.svg') }}" class="card-img-top" alt="{{ $item->name }}">
+                            <img src="{{ $item->image ? asset(path: 'storage/' . $item->image) : asset('placeholder.svg') }}" class="card-img-top" alt="{{ $item->name }}">
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">{{ $item->name }}</h5>
                                 <p class="card-text flex-grow-1">{{ $item->description }}</p>
