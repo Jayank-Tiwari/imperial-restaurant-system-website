@@ -33,7 +33,7 @@
                 <?php $__currentLoopData = $items; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="col-lg-4 col-md-6 menu-item" data-category="<?php echo e($category); ?>" data-id="<?php echo e($item->id); ?>">
                         <div class="card menu-item-card h-100">
-                            <img src="<?php echo e($item->image ? asset(path: 'storage/' . $item->image) : asset('placeholder.svg')); ?>" class="card-img-top" alt="<?php echo e($item->name); ?>">
+                            <img src="<?php echo e($item->image ? asset($item->image) : asset('placeholder.svg')); ?>" class="card-img-top" alt="<?php echo e($item->name); ?>">
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title"><?php echo e($item->name); ?></h5>
                                 <p class="card-text flex-grow-1"><?php echo e($item->description); ?></p>

@@ -50,11 +50,6 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="analytics.html">
-            <i class="bi bi-graph-up me-2"></i> @lang('messages.analytics')
-        </a>
-    </li>
-    <li class="nav-item">
         <a class="nav-link @if (View::getSection(name: 'active') === 'profile-setting') active @endif" href="{{ route('admin.profile-setting') }}">
             <i class="bi bi-person-circle me-2"></i>
             @lang('messages.profile_settings')

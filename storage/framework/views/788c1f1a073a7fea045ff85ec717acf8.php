@@ -43,7 +43,7 @@
                 <?php $__currentLoopData = $dishes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $dish): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="col-lg-4 col-md-6" data-aos="fade-up">
                         <div class="card menu-item-card h-100">
-                            <img src="<?php echo e(asset('storage/' . $dish->image)); ?>" class="card-img-top"
+                            <img src="<?php echo e($dish->image ? asset($dish->image) : asset('placeholder.svg')); ?>" class="card-img-top"
                                 alt="<?php echo e($dish->name); ?>">
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title fw-bold"><?php echo e($dish->name); ?></h5>

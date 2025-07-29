@@ -42,7 +42,7 @@
                         <i class="fas fa-globe"></i>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" href="{{ route('locale.switch', 'en') }}">@lang('messages.english')</a>
+                        <li><a class="dropdown-item" href="{{ route('locale.switch', 'en') }}">English</a>
                         </li>
                         <li><a class="dropdown-item" href="{{ route('locale.switch', 'es') }}">@lang('messages.spanish')</a>
                         </li>

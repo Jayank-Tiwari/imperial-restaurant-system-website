@@ -50,11 +50,6 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="analytics.html">
-            <i class="bi bi-graph-up me-2"></i> <?php echo app('translator')->get('messages.analytics'); ?>
-        </a>
-    </li>
-    <li class="nav-item">
         <a class="nav-link <?php if(View::getSection(name: 'active') === 'profile-setting'): ?> active <?php endif; ?>" href="<?php echo e(route('admin.profile-setting')); ?>">
             <i class="bi bi-person-circle me-2"></i>
             <?php echo app('translator')->get('messages.profile_settings'); ?>

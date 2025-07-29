@@ -43,7 +43,7 @@
                         <i class="fas fa-globe"></i>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" href="<?php echo e(route('locale.switch', 'en')); ?>"><?php echo app('translator')->get('messages.english'); ?></a>
+                        <li><a class="dropdown-item" href="<?php echo e(route('locale.switch', 'en')); ?>">English</a>
                         </li>
                         <li><a class="dropdown-item" href="<?php echo e(route('locale.switch', 'es')); ?>"><?php echo app('translator')->get('messages.spanish'); ?></a>
                         </li>
