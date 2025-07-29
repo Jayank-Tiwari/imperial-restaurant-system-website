@@ -18,7 +18,7 @@ class MenuItemsTableSeeder extends Seeder
             [
                 'name' => 'Butter Chicken',
                 'description' => 'Classic North Indian dish with creamy tomato gravy',
-                'category' => 'Main Course',
+                'category_id' => 2, // Main Course
                 'price' => 320.00,
                 'availability' => true,
                 'created_at' => now(),
@@ -27,7 +27,7 @@ class MenuItemsTableSeeder extends Seeder
             [
                 'name' => 'Paneer Tikka',
                 'description' => 'Grilled paneer cubes with spices',
-                'category' => 'Starter',
+                'category_id' => 1, // Starter
                 'price' => 250.00,
                 'availability' => true,
                 'created_at' => now(),

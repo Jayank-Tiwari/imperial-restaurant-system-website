@@ -55,6 +55,21 @@
                     <small class="text-muted">JPEG, PNG, JPG, or WEBP. Max size: 2MB.</small>
                 </div>
 
+                <div id="preview" class="mb-3"></div>
+                <script>
+                document.querySelector('input[name="image"]').addEventListener('change', function(e) {
+                    const preview = document.getElementById('preview');
+                    preview.innerHTML = '';
+                    if (this.files && this.files[0]) {
+                        const img = document.createElement('img');
+                        img.src = URL.createObjectURL(this.files[0]);
+                        img.style.maxWidth = '200px';
+                        img.className = 'img-thumbnail mt-2';
+                        preview.appendChild(img);
+                    }
+                });
+                </script>
+
                 <button type="submit" class="btn btn-success">Add Item</button>
                 <a href="{{ route('admin.menu-management') }}" class="btn btn-secondary">Cancel</a>
             </form>

@@ -92,6 +92,7 @@ class CheckoutController extends Controller
         // Define delivery charges by postal code
         $deliveryCharges = [
             '08880' => 0.00,
+            '08800' => 0.00, // Free delivery for this postal code
             '08812' => 2.00,
             '08870' => 4.00,
         ];

@@ -15,11 +15,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UsersTableSeeder::class,
+            CategorySeeder::class, // Categories must come before MenuItems
             MenuItemsTableSeeder::class,
             BookingSeeder::class,
-            CategorySeeder::class,
         ]);
-
-     
     }
 }

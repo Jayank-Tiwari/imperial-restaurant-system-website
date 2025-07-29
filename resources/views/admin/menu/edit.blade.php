@@ -54,7 +54,7 @@
                 @if ($menuItem->image)
                     <div class="mb-3">
                         <label class="form-label">Current Image</label><br>
-                        <img src="{{ asset('storage/' . $menuItem->image) }}" alt="Menu Image" class="img-thumbnail" style="max-width: 200px;">
+                        <img src="{{ asset($menuItem->image) }}" alt="Menu Image" class="img-thumbnail" style="max-width: 200px;">
                     </div>
                 @endif
 

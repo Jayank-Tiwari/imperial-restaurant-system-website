@@ -1,15 +1,15 @@
-@extends('layout.app')
 
-@section('title', 'Menu - Imperial Spice')
-@section('active', 'menu')
 
-@section('content')
+<?php $__env->startSection('title', 'Menu - Imperial Spice'); ?>
+<?php $__env->startSection('active', 'menu'); ?>
+
+<?php $__env->startSection('content'); ?>
 
 <!-- Hero Section -->
-<section class="py-5 mt-5" style="background-image: url('{{ asset('assets/img/menu-page.png') }}'); background-size: cover; background-position: center;">
+<section class="py-5 mt-5" style="background-image: url('<?php echo e(asset('assets/img/menu-page.png')); ?>'); background-size: cover; background-position: center;">
     <div class="container text-center">
-        <h1 class="display-4 fw-bold text-white">@lang('messages.our_menu')</h1>
-        <p class="lead text-white">@lang('messages.discover_our_dishes')</p>
+        <h1 class="display-4 fw-bold text-white"><?php echo app('translator')->get('messages.our_menu'); ?></h1>
+        <p class="lead text-white"><?php echo app('translator')->get('messages.discover_our_dishes'); ?></p>
     </div>
 </section>
 
@@ -17,10 +17,10 @@
 <section class="py-4 bg-white sticky-top shadow-sm">
     <div class="container text-center">
         <div class="btn-group" role="group" id="menuFilter">
-            <button type="button" class="btn btn-outline-primary active" data-filter="all">@lang('messages.all_items')</button>
-            @foreach($menuItems->keys() as $cat)
-                <button type="button" class="btn btn-outline-primary" data-filter="{{ $cat }}">{{ ucfirst($cat) }}</button>
-            @endforeach
+            <button type="button" class="btn btn-outline-primary active" data-filter="all"><?php echo app('translator')->get('messages.all_items'); ?></button>
+            <?php $__currentLoopData = $menuItems->keys(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <button type="button" class="btn btn-outline-primary" data-filter="<?php echo e($cat); ?>"><?php echo e(ucfirst($cat)); ?></button>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
     </div>
 </section>
@@ -29,27 +29,27 @@
 <section class="py-5">
     <div class="container">
         <div class="row g-4" id="menuItems">
-            @forelse($menuItems as $category => $items)
-                @foreach($items as $item)
-                    <div class="col-lg-4 col-md-6 menu-item" data-category="{{ $category }}" data-id="{{ $item->id }}">
+            <?php $__empty_1 = true; $__currentLoopData = $menuItems; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category => $items): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                <?php $__currentLoopData = $items; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div class="col-lg-4 col-md-6 menu-item" data-category="<?php echo e($category); ?>" data-id="<?php echo e($item->id); ?>">
                         <div class="card menu-item-card h-100">
-                            <img src="{{ $item->image ? asset($item->image) : asset('placeholder.svg') }}" class="card-img-top" alt="{{ $item->name }}">
+                            <img src="<?php echo e($item->image ? asset(path: 'storage/' . $item->image) : asset('placeholder.svg')); ?>" class="card-img-top" alt="<?php echo e($item->name); ?>">
                             <div class="card-body d-flex flex-column">
-                                <h5 class="card-title">{{ $item->name }}</h5>
-                                <p class="card-text flex-grow-1">{{ $item->description }}</p>
+                                <h5 class="card-title"><?php echo e($item->name); ?></h5>
+                                <p class="card-text flex-grow-1"><?php echo e($item->description); ?></p>
                                 <div class="d-flex justify-content-between align-items-center mt-auto">
-                                    <span class="h5 text-primary mb-0">€{{ number_format($item->price, 2) }}</span>
+                                    <span class="h5 text-primary mb-0">€<?php echo e(number_format($item->price, 2)); ?></span>
                                     <button class="btn btn-primary btn-sm add-to-cart">
-                                        <i class="fas fa-plus me-1"></i>@lang('messages.add_to_cart')
+                                        <i class="fas fa-plus me-1"></i><?php echo app('translator')->get('messages.add_to_cart'); ?>
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                @endforeach
-            @empty
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                 <p class="text-center text-muted">No menu items available.</p>
-            @endforelse
+            <?php endif; ?>
         </div>
     </div>
 </section>
@@ -77,11 +77,11 @@
             const itemDiv = this.closest('.menu-item');
             const menuItemId = itemDiv.dataset.id;
 
-            fetch('{{ route('cart.add') }}', {
+            fetch('<?php echo e(route('cart.add')); ?>', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    'X-CSRF-TOKEN': '<?php echo e(csrf_token()); ?>'
                 },
                 body: JSON.stringify({
                     menu_item_id: menuItemId,
@@ -117,4 +117,6 @@
     document.head.appendChild(style);
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layout.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\Imperial Spice\website\resources\views/menu.blade.php ENDPATH**/ ?>

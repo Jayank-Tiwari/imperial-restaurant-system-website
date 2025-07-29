@@ -51,8 +51,9 @@ class MenuController extends Controller
 
         if ($request->hasFile('image')) {
             $filename = Str::uuid() . '.' . $request->file('image')->getClientOriginalExtension();
-            $path = $request->file('image')->storeAs('menu_images', $filename, 'public');
-            $validated['image'] = $path;
+            $destinationPath = public_path('assets/menu_item');
+            $request->file('image')->move($destinationPath, $filename);
+            $validated['image'] = 'assets/menu_item/' . $filename;
         }
 
         MenuItem::create($validated);
@@ -82,13 +83,14 @@ class MenuController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            if ($menuItem->image) {
-                Storage::disk('public')->delete($menuItem->image);
+            // Delete previous image if it exists
+            if ($menuItem->image && file_exists(public_path($menuItem->image))) {
+                unlink(public_path($menuItem->image));
             }
-
             $filename = Str::uuid() . '.' . $request->file('image')->getClientOriginalExtension();
-            $path = $request->file('image')->storeAs('menu_images', $filename, 'public');
-            $validated['image'] = $path;
+            $destinationPath = public_path('assets/menu_item');
+            $request->file('image')->move($destinationPath, $filename);
+            $validated['image'] = 'assets/menu_item/' . $filename;
         }
 
         $menuItem->update($validated);
