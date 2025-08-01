@@ -1,6 +1,130 @@
 <?php $__env->startSection('title', 'Home - Imperial Spice'); ?>
 <?php $__env->startSection('active', 'home'); ?>
 
+<?php $__env->startPush('styles'); ?>
+<style>
+    /* Menu Item Card Styling for Home Page */
+    .menu-item-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: none;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .menu-item-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+    }
+
+    .menu-item-card .card-img-top {
+        height: 200px;
+        object-fit: cover;
+        border-radius: 0.375rem 0.375rem 0 0;
+    }
+
+    .menu-item-card .card-body {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+
+    .menu-item-card .card-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        color: var(--primary-color, #d35400);
+    }
+
+    .menu-item-card .card-text {
+        font-size: 0.9rem;
+        color: #6c757d;
+        line-height: 1.5;
+        margin-bottom: 1rem;
+        flex-grow: 1;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .menu-item-card .price-section {
+        margin-top: auto;
+        padding-top: 1rem;
+        border-top: 1px solid #f8f9fa;
+    }
+
+    .menu-item-card .price {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-color, #d35400);
+    }
+
+    .add-to-cart {
+        border-radius: 25px;
+        padding: 0.5rem 1.25rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+    }
+
+    .add-to-cart:hover {
+        transform: scale(1.05);
+    }
+
+    /* Testimonial card styling */
+    .testimonial-card {
+        border: none;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .testimonial-card:hover {
+        transform: translateY(-3px);
+    }
+
+    /* Hero section improvements */
+    .hero-section {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, rgba(0,0,0,0.6), rgba(0,0,0,0.3));
+        z-index: 1;
+    }
+
+    .hero-section .container {
+        position: relative;
+        z-index: 2;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .menu-item-card .card-img-top {
+            height: 180px;
+        }
+        
+        .menu-item-card .card-body {
+            padding: 1.25rem;
+        }
+        
+        .display-3 {
+            font-size: 2.5rem !important;
+        }
+    }
+</style>
+<?php $__env->stopPush(); ?>
+
 <?php $__env->startSection('content'); ?>
 
     <section class="hero-section"
@@ -43,18 +167,18 @@
                 <?php $__currentLoopData = $dishes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $dish): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="col-lg-4 col-md-6" data-aos="fade-up">
                         <div class="card menu-item-card h-100">
-                            <img src="<?php echo e($dish->image ? asset($dish->image) : asset('placeholder.svg')); ?>" class="card-img-top"
-                                alt="<?php echo e($dish->name); ?>">
-                            <div class="card-body d-flex flex-column">
+                            <img src="<?php echo e($dish->image ? asset($dish->image) : asset('assets/img/placeholder.jpg')); ?>" 
+                                 class="card-img-top"
+                                 alt="<?php echo e($dish->name); ?>"
+                                 loading="lazy"
+                                 onerror="this.src='<?php echo e(asset('assets/img/placeholder.jpg')); ?>'">
+                            <div class="card-body">
                                 <h5 class="card-title fw-bold"><?php echo e($dish->name); ?></h5>
-                                <p class="card-text text-muted small flex-grow-1"><?php echo e($dish->description); ?></p>
-                                <div class="mt-auto d-flex justify-content-between align-items-center pt-3">
-                                    <span class="h5 fw-bold mb-0"
-                                        style="color: var(--primary-color);"><?php echo app('translator')->get('messages.currency'); ?><?php echo e(number_format($dish->price, 2)); ?></span>
-
-                                    
+                                <p class="card-text text-muted small"><?php echo e($dish->description); ?></p>
+                                <div class="price-section d-flex justify-content-between align-items-center">
+                                    <span class="price"><?php echo app('translator')->get('messages.currency'); ?><?php echo e(number_format($dish->price, 2)); ?></span>
                                     <button class="btn btn-sm btn-primary add-to-cart" data-id="<?php echo e($dish->id); ?>">
-                                        <?php echo app('translator')->get('messages.add_to_cart'); ?>
+                                        <i class="fas fa-plus me-1"></i><?php echo app('translator')->get('messages.add_to_cart'); ?>
                                     </button>
                                 </div>
                             </div>
@@ -108,6 +232,7 @@
             </div>
         </div>
     </section>
+
     <section class="py-5" style="background-color: var(--gray-light);">
         <div class="container">
             <div class="text-center mb-5" data-aos="fade-up">
@@ -125,7 +250,6 @@
                             </div>
                             <p class="mb-4"><em><?php echo app('translator')->get('messages.testimonial_1'); ?></em></p>
                             <div class="d-flex align-items-center">
-                                <img src="/placeholder.svg?height=50&width=50" class="rounded-circle me-3" alt="Customer">
                                 <div>
                                     <h6 class="mb-0 fw-bold"><?php echo app('translator')->get('messages.testimonial_1_author'); ?></h6>
                                     <small class="text-muted"><?php echo app('translator')->get('messages.testimonial_1_author_role'); ?></small>
@@ -144,8 +268,6 @@
                             </div>
                             <p class="mb-4"><em><?php echo app('translator')->get('messages.testimonial_2'); ?></em></p>
                             <div class="d-flex align-items-center">
-                                <img src="/placeholder.svg?height=50&width=50" class="rounded-circle me-3"
-                                    alt="Customer">
                                 <div>
                                     <h6 class="mb-0 fw-bold"><?php echo app('translator')->get('messages.testimonial_2_author'); ?></h6>
                                     <small class="text-muted"><?php echo app('translator')->get('messages.testimonial_2_author_role'); ?></small>
@@ -164,8 +286,6 @@
                             </div>
                             <p class="mb-4"><em><?php echo app('translator')->get('messages.testimonial_3'); ?></em></p>
                             <div class="d-flex align-items-center">
-                                <img src="/placeholder.svg?height=50&width=50" class="rounded-circle me-3"
-                                    alt="Customer">
                                 <div>
                                     <h6 class="mb-0 fw-bold"><?php echo app('translator')->get('messages.testimonial_3_author'); ?></h6>
                                     <small class="text-muted"><?php echo app('translator')->get('messages.testimonial_3_author_role'); ?></small>
@@ -188,12 +308,13 @@
 
                     // Immediately disable the button to prevent multiple clicks
                     this.disabled = true;
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i><?php echo app('translator')->get('messages.adding'); ?>...';
 
                     fetch('<?php echo e(route('cart.add')); ?>', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
-                                'Accept': 'application/json', // Important for Laravel to know we expect a JSON response
+                                'Accept': 'application/json',
                                 'X-CSRF-TOKEN': '<?php echo e(csrf_token()); ?>'
                             },
                             body: JSON.stringify({
@@ -202,25 +323,19 @@
                             })
                         })
                         .then(response => {
-                            // If the response is not OK (e.g., 401, 403, 500), handle it as an error
                             if (!response.ok) {
-                                if (response.status === 401) { // 401 Unauthorized
-                                    alert(<?php echo app('translator')->get('messages.login_to_add_cart'); ?>);
+                                if (response.status === 401) {
+                                    alert('<?php echo app('translator')->get('messages.login_to_add_cart'); ?>');
                                     window.location.href = '<?php echo e(route('login')); ?>';
                                 } else {
-                                    // For other errors like 500 Internal Server Error
-                                    alert(<?php echo app('translator')->get('messages.something_went_wrong'); ?>);
+                                    alert('<?php echo app('translator')->get('messages.something_went_wrong'); ?>');
                                 }
-                                // This makes the promise chain jump to the .catch() block
-                                throw new Error(<?php echo app('translator')->get('messages.something_went_wrong'); ?> + response
-                                    .status);
+                                throw new Error('<?php echo app('translator')->get('messages.something_went_wrong'); ?>' + response.status);
                             }
-                            // If the response is OK, proceed to parse it as JSON
                             return response.json();
                         })
                         .then(data => {
-                            // This block only runs on a successful response (status 2xx)
-                            this.innerHTML = '<i class="fas fa-check"></i> Added!';
+                            this.innerHTML = '<i class="fas fa-check me-1"></i><?php echo app('translator')->get('messages.added'); ?>!';
                             this.classList.replace('btn-primary', 'btn-success');
 
                             // Update the cart counter in the navbar
@@ -237,11 +352,9 @@
                             }, 2000);
                         })
                         .catch(error => {
-                            // This will catch network errors or the error thrown from the !response.ok check
-                            console.error(<?php echo app('translator')->get('messages.something_went_wrong'); ?>, error.message);
-
-                            // Re-enable the button if an error occurred so the user can try again
+                            console.error('<?php echo app('translator')->get('messages.something_went_wrong'); ?>', error.message);
                             this.disabled = false;
+                            this.innerHTML = originalButtonHtml;
                         });
                 });
             });

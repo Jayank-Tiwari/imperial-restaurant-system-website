@@ -277,9 +277,9 @@
             <div class="row g-4 justify-content-center">
                 <div class="col-lg-4 col-md-6" data-aos="zoom-in">
                     <div class="card text-center p-4 h-100">
-                        <img src="https://images.unsplash.com/photo-1583394293214-28ded15ee548?auto=format&fit=crop&w=150&h=150&q=80"
-                            class="rounded-circle mb-3 mx-auto" alt="Executive Chef Rakesh"
-                            style="border: 4px solid var(--primary-color);">
+                        <img src="{{ asset('assets/img/chef.jpg') }}" class="rounded-circle mb-3 mx-auto"
+                            alt="Executive Chef Diwan Singh" 
+                            style="border: 4px solid var(--primary-color); width: 150px; height: 150px; object-fit: cover;">
                         <h5 class="card-title fw-bold">Chef Diwan Singh</h5>
                         <p class="mb-2" style="color: var(--primary-color); font-weight: 600;">@lang('messages.executive_chef')</p>
                         <p class="card-text text-muted small mb-3">@lang('messages.chef_rakesh_description')</p>
@@ -291,9 +291,9 @@
                 </div>
                 <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
                     <div class="card text-center p-4 h-100">
-                        <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?auto=format&fit=crop&w=150&h=150&q=80"
-                            class="rounded-circle mb-3 mx-auto" alt="Restaurant Manager"
-                            style="border: 4px solid var(--primary-color);">
+                        <img src="{{ asset('assets/img/manager.jpg') }}" class="rounded-circle mb-3 mx-auto"
+                            alt="Restaurant Manager Pawan Singh" 
+                            style="border: 4px solid var(--primary-color); width: 150px; height: 150px; object-fit: cover;">
                         <h5 class="card-title fw-bold">Mr. Pawan Singh</h5>
                         <p class="mb-2" style="color: var(--primary-color); font-weight: 600;">@lang('messages.restaurant_manager')</p>
                         <p class="card-text text-muted small mb-3">@lang('messages.mr_singh_description')</p>
@@ -379,16 +379,32 @@
     </section>
 
     {{-- CTA Section --}}
-    <section class="py-5" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));">
-        <div class="container text-center text-white">
-            <h2 class="display-5 fw-bold mb-3">@lang('messages.reserve_your_experience')</h2>
-            <p class="lead mb-4">@lang('messages.book_your_table_2')</p>
-            <a href="{{ url('/booking') }}" class="btn btn-light text-primary fw-bold"
-                style="padding: 14px 40px; border-radius: 50px;">
+    <section class="py-5 position-relative overflow-hidden"
+        style="background: linear-gradient(135deg, hsl(15, 100%, 55%), hsl(125, 45%, 30%));">
+        <div
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.04\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E'); z-index: 1;">
+        </div>
+
+        <div class="container text-center text-white position-relative" style="z-index: 2;">
+            <h2 class="display-5 fw-bold mb-3" style="color: #FFFFFF; text-shadow: 2px 2px 8px rgba(0,0,0,0.6);">
+                @lang('messages.reserve_your_experience')
+            </h2>
+            <p class="lead mb-4" style="color: #f0f0f0; text-shadow: 1px 1px 5px rgba(0,0,0,0.5);">
+                @lang('messages.book_your_table_2')
+            </p>
+            <a href="{{ url('/booking') }}" class="btn btn-light fw-bold shadow-lg"
+                style="padding: 14px 40px; border-radius: 50px; color: var(--secondary-color); transition: all 0.3s ease; transform: scale(1);">
                 <i class="fas fa-calendar-alt me-2"></i>@lang('messages.book_your_table_now')
             </a>
         </div>
     </section>
+
+    <style>
+        .btn-light:hover {
+            transform: scale(1.05) !important;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2) !important;
+        }
+    </style>
 
 @endsection
 @push('scripts')
