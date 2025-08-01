@@ -54,7 +54,7 @@
                                         </select>
                                     </div>
                                     
-                                    <!-- Payment Method Selection -->
+                                    <!-- Payment Method Selection for Dine-in -->
                                     <div class="mb-4">
                                         <label class="form-label fw-semibold"><?php echo app('translator')->get('messages.payment_method'); ?></label>
                                         <div class="row">
@@ -78,8 +78,8 @@
                                     </div>
                                     
                                     <div class="text-end">
-                                        <button type="submit" class="btn btn-success px-4">
-                                            <i class="fas fa-check-circle me-1"></i><?php echo app('translator')->get('messages.place_dinein_order'); ?>
+                                        <button type="submit" class="btn btn-success px-4" id="dinein-submit-btn">
+                                            <i class="fas fa-check-circle me-1"></i><span id="dinein-btn-text"><?php echo app('translator')->get('messages.place_dinein_order'); ?></span>
                                         </button>
                                     </div>
                                 </form>
@@ -101,11 +101,12 @@
                                     </div>
                                     <div class="mb-4">
                                         <label for="postal_code" class="form-label fw-semibold"><?php echo app('translator')->get('messages.postal_code'); ?></label>
-                                        <input type="text" name="postal_code" id="postal_code" class="form-control" placeholder="<?php echo app('translator')->get('messages.postal_code_example'); ?>" required>
+                                        <input type="text" name="postal_code" id="postal_code" class="form-control" placeholder="<?php echo app('translator')->get('messages.postal_code_example'); ?>"
+                                            required>
                                         <small class="text-muted"><?php echo app('translator')->get('messages.delivery_area_note'); ?></small>
                                     </div>
-                                    
-                                    <!-- Payment Method Selection -->
+
+                                    <!-- Payment Method Selection for Delivery -->
                                     <div class="mb-4">
                                         <label class="form-label fw-semibold"><?php echo app('translator')->get('messages.payment_method'); ?></label>
                                         <div class="row">
@@ -127,7 +128,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="text-end">
                                         <button type="submit" class="btn btn-primary px-4" id="delivery-submit-btn">
                                             <i class="fas fa-credit-card me-1"></i><span id="delivery-btn-text"><?php echo app('translator')->get('messages.proceed_to_payment'); ?></span>
@@ -179,9 +180,14 @@
             const deliveryChargeElement = document.getElementById('delivery-charge');
             const totalElement = document.getElementById('total');
             const postalCodeInput = document.getElementById('postal_code');
+            
+            // Button elements
             const deliverySubmitBtn = document.getElementById('delivery-submit-btn');
             const deliveryBtnText = document.getElementById('delivery-btn-text');
+            const dineinSubmitBtn = document.getElementById('dinein-submit-btn');
+            const dineinBtnText = document.getElementById('dinein-btn-text');
             
+            // Payment method radio buttons
             const deliveryCardRadio = document.getElementById('delivery_card');
             const deliveryCashRadio = document.getElementById('delivery_cash');
             const dineinCardRadio = document.getElementById('dinein_card');
@@ -200,7 +206,7 @@
 
             // Update delivery button text based on payment method
             function updateDeliveryButton() {
-                if (deliveryCashRadio.checked) {
+                if (deliveryCashRadio && deliveryCashRadio.checked) {
                     deliveryBtnText.textContent = '<?php echo app('translator')->get("messages.place_order"); ?>';
                     deliverySubmitBtn.querySelector('i').className = 'fas fa-check-circle me-1';
                 } else {
@@ -209,18 +215,38 @@
                 }
             }
 
+            // Update dine-in button text based on payment method
+            function updateDineinButton() {
+                if (dineinCashRadio && dineinCashRadio.checked) {
+                    dineinBtnText.textContent = '<?php echo app('translator')->get("messages.place_order"); ?>';
+                    dineinSubmitBtn.querySelector('i').className = 'fas fa-check-circle me-1';
+                } else {
+                    dineinBtnText.textContent = '<?php echo app('translator')->get("messages.proceed_to_payment"); ?>';
+                    dineinSubmitBtn.querySelector('i').className = 'fas fa-credit-card me-1';
+                }
+            }
+
             // Event listeners for payment method changes
-            deliveryCardRadio.addEventListener('change', updateDeliveryButton);
-            deliveryCashRadio.addEventListener('change', updateDeliveryButton);
+            if (deliveryCardRadio && deliveryCashRadio) {
+                deliveryCardRadio.addEventListener('change', updateDeliveryButton);
+                deliveryCashRadio.addEventListener('change', updateDeliveryButton);
+            }
+
+            if (dineinCardRadio && dineinCashRadio) {
+                dineinCardRadio.addEventListener('change', updateDineinButton);
+                dineinCashRadio.addEventListener('change', updateDineinButton);
+            }
 
             deliveryTab.addEventListener('shown.bs.tab', function () {
                 deliveryChargeRow.classList.remove('d-none');
                 totalElement.textContent = `${currencySymbol}${initialTotal.toFixed(2)}`;
+                updateDeliveryButton();
             });
 
             dineinTab.addEventListener('shown.bs.tab', function () {
                 deliveryChargeRow.classList.add('d-none');
                 totalElement.textContent = `${currencySymbol}${initialTotal.toFixed(2)}`;
+                updateDineinButton();
             });
 
             // Update delivery fee dynamically based on postal code
@@ -240,6 +266,10 @@
                 const newTotal = initialTotal + fee;
                 totalElement.textContent = `${currencySymbol}${newTotal.toFixed(2)}`;
             });
+            
+            // Initialize button states
+            updateDeliveryButton();
+            updateDineinButton();
         });
     </script>
 <?php $__env->stopSection(); ?>

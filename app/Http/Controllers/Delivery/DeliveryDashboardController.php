@@ -53,20 +53,26 @@ class DeliveryDashboardController extends Controller
         $request->validate(['otp' => 'required|string|size:6']);
 
         $staffId = Auth::id();
-
         $delivery = Delivery::where('staff_id', $staffId)
             ->where('order_id', $id)
             ->firstOrFail();
 
         if ($delivery->otp === $request->otp) {
+            // Update delivery status
             $delivery->status = 'delivered';
             $delivery->save();
-
+            
             $order = $delivery->order;
             $order->order_status = 'delivered';
+            
+            // If payment method is cash and status is pending, mark as paid
+            if ($order->payment_method === 'cash' && $order->payment_status === 'pending') {
+                $order->payment_status = 'paid';
+            }
+            
             $order->save();
 
-            return redirect()->route('delivery.dashboard')->with('success', 'OTP matched. Order marked as delivered.');
+            return redirect()->route('delivery.dashboard')->with('success', 'OTP verified successfully. Order marked as delivered and payment collected.');
         }
 
         return back()->with('error', 'Incorrect OTP. Please try again.');

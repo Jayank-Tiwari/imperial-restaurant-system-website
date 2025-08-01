@@ -45,6 +45,21 @@
                         @endforeach
                     </select>
                 </div>
+
+                <!-- Payment Method Filter -->
+                <div class="col-auto">
+                    <label class="form-label mb-0 fw-bold">@lang('messages.payment_method'):</label>
+                </div>
+                <div class="col-auto">
+                    <select name="payment_method" class="form-select form-select-sm" onchange="this.form.submit()">
+                        <option value="">@lang('messages.all')</option>
+                        @foreach (['card', 'cash'] as $method)
+                            <option value="{{ $method }}" {{ request('payment_method') == $method ? 'selected' : '' }}>
+                                @lang('messages.payment_method_' . $method)
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
         </form>
 
@@ -73,7 +88,8 @@
                                 <th>@lang('messages.type')</th>
                                 <th>@lang('messages.order_status')</th>
                                 <th>@lang('messages.payment')</th>
-                                <th>@lang('messages.action')</th>
+                                <th>@lang('messages.payment_method')</th>
+                                <th>@lang('messages.actions')</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -90,14 +106,14 @@
                                             @endforeach
                                         </ul>
                                     </td>
-                                    <td><strong>₹{{ number_format($order->total_amount, 2) }}</strong></td>
+                                    <td><strong>€{{ number_format($order->total_amount, 2) }}</strong></td>
                                     <td>
                                         <span
                                             class="badge 
                                         @if ($order->delivery_type == 'delivery') bg-warning text-dark
                                         @elseif($order->delivery_type == 'dinein') bg-success
                                         @else bg-info @endif">
-                                            {{ ucfirst($order->delivery_type) }}
+                                            @lang('messages.delivery_type_' . $order->delivery_type)
                                         </span>
                                     </td>
                                     <td>
@@ -132,6 +148,20 @@
                                             </select>
                                         </form>
                                     </td>
+
+                                    <td>
+                                        <span class="badge 
+                                            @if($order->payment_method == 'card') bg-primary
+                                            @elseif($order->payment_method == 'cash') bg-warning text-dark
+                                            @else bg-secondary @endif">
+                                            <i class="fas 
+                                                @if($order->payment_method == 'card') fa-credit-card
+                                                @elseif($order->payment_method == 'cash') fa-money-bill-wave
+                                                @else fa-question @endif me-1"></i>
+                                            @lang('messages.payment_method_' . ($order->payment_method ?? 'unknown'))
+                                        </span>
+                                    </td>
+
                                     <td>
                                         <a href="{{ route('admin.order.show', $order->id) }}"
                                             class="btn btn-sm btn-outline-primary">
@@ -141,7 +171,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="9" class="text-center py-4 text-muted">@lang('messages.no_orders_found_for_status')
+                                    <td colspan="10" class="text-center py-4 text-muted">@lang('messages.no_orders_found_for_status')
                                     </td>
                                 </tr>
                             @endforelse

@@ -18,6 +18,7 @@ class Order extends Model
         'delivery_type',
         'table_no',
         'delivery_address',
+        'payment_method', 
     ];
 
     /**

@@ -9,17 +9,25 @@ class OrderController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Order::with(['user', 'orderItems.menuItem'])->latest();
+        $query = Order::with(['user', 'orderItems.menuItem']);
 
+        // Filter by order status
         if ($request->filled('status') && $request->status !== 'all') {
             $query->where('order_status', $request->status);
         }
 
+        // Filter by payment status
         if ($request->filled('payment')) {
             $query->where('payment_status', $request->payment);
         }
 
-        $orders = $query->paginate(10);
+        // Filter by payment method
+        if ($request->filled('payment_method')) {
+            $query->where('payment_method', $request->payment_method);
+        }
+
+        $orders = $query->orderBy('created_at', 'desc')->paginate(15);
+
         return view('admin.order.index', compact('orders'));
     }
 

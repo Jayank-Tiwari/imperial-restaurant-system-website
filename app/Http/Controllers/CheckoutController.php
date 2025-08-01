@@ -84,9 +84,11 @@ class CheckoutController extends Controller
     // Store delivery request and redirect to Stripe
     public function storeDelivery(Request $request)
     {
+        // 1. Validate the request, now including the payment_method
         $request->validate([
             'address' => 'required|string',
             'postal_code' => 'required|string',
+            'payment_method' => 'required|in:card,cash', // Ensures payment method is either 'card' or 'cash'
         ]);
 
         // Define delivery charges by postal code
@@ -116,18 +118,54 @@ class CheckoutController extends Controller
         $tax = $subtotal * $taxRate;
         $total = $subtotal + $tax + $deliveryFee;
 
-        // Store order details in session for Stripe
-        Session::put('delivery_order', [
-            'user_id' => $user->id,
-            'subtotal' => $subtotal,
-            'tax' => $tax,
-            'delivery_fee' => $deliveryFee,
-            'total' => $total,
-            'address' => $request->address,
-            'postal_code' => $request->postal_code,
-        ]);
+        // 2. Check the selected payment method
+        if ($request->payment_method === 'cash') {
+            // --- Logic for Cash on Delivery ---
 
-        return redirect()->route('stripe.checkout');
+            // Create a new order with 'pending' payment status
+            $order = Order::create([
+                'user_id' => $user->id,
+                'payment_status' => 'pending', // Important for COD
+                'payment_method' => 'cash',
+                'order_status' => 'confirmed',  
+                'total_amount' => $total,
+                'delivery_type' => 'delivery',
+                'delivery_address' => $request->address,
+                'delivery_fee' => $deliveryFee,
+                'tax' => $tax,
+            ]);
+
+            // Add items from the cart to the order
+            foreach ($cartItems as $item) {
+                $order->orderItems()->create([
+                    'menu_item_id' => $item->menu_item_id,
+                    'quantity' => $item->quantity,
+                    'price' => $item->menuItem->price,
+                ]);
+            }
+
+            // Clear the user's cart
+            CartItem::where('user_id', $user->id)->delete();
+
+            // Redirect with a success message
+            return redirect()->route('user.dashboard')->with('success', 'Your order has been placed successfully!');
+
+        } else {
+            // --- Existing logic for Card Payment ---
+
+            // Store order details in session for Stripe
+            Session::put('delivery_order', [
+                'user_id' => $user->id,
+                'subtotal' => $subtotal,
+                'tax' => $tax,
+                'delivery_fee' => $deliveryFee,
+                'total' => $total,
+                'address' => $request->address,
+                'postal_code' => $request->postal_code,
+            ]);
+
+            return redirect()->route('stripe.checkout');
+        }
     }
 
 
