@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Delicious Bites</title>
+    <title><?php echo app('translator')->get('messages.login'); ?> - <?php echo app('translator')->get('messages.imperial_spice'); ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="<?php echo e(asset('assets/css/style.css')); ?>" rel="stylesheet">
@@ -14,7 +14,7 @@
             <div class="text-center mb-4">
                 <a class="navbar-brand" href="<?php echo e(route('home')); ?>">
                     <h2 class="fw-bold" style="color: var(--primary-color);">
-                        <i class="fas fa-utensils me-2"></i>Imperial Spice
+                        <i class="fas fa-utensils me-2"></i><?php echo app('translator')->get('messages.imperial_spice'); ?>
                     </h2>
                 </a>
                 <p class="text-muted"><?php echo app('translator')->get('messages.welcome_back'); ?></p>
@@ -23,8 +23,9 @@
             
             <?php if($errors->any()): ?>
                 <div class="alert alert-danger">
-                    <?php echo e($errors->first()); ?>
-
+                    <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <div><?php echo e(__($error)); ?></div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
             <?php endif; ?>
 
