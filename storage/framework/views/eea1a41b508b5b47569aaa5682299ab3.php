@@ -77,10 +77,10 @@
     /* Filter button styling */
     .filter-buttons-wrapper {
         display: flex;
-        flex-wrap: wrap;
         justify-content: center;
         gap: 0.5rem;
         max-width: 100%;
+        flex-wrap: wrap;
     }
 
     .filter-buttons-wrapper .btn {
@@ -94,6 +94,7 @@
         border: 2px solid var(--primary-color);
         color: var(--primary-color);
         background: white;
+        flex-shrink: 0;
     }
 
     .filter-buttons-wrapper .btn:hover {
@@ -124,42 +125,6 @@
         }
     }
 
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-        .menu-item-card .card-img-top {
-            height: 180px;
-        }
-        
-        .menu-item-card .card-body {
-            min-height: 160px;
-            padding: 1.25rem;
-        }
-
-        .filter-buttons-wrapper {
-            gap: 0.25rem;
-            padding: 0 1rem;
-        }
-
-        .filter-buttons-wrapper .btn {
-            padding: 0.4rem 1rem;
-            font-size: 0.875rem;
-            letter-spacing: 0.3px;
-        }
-
-        /* For very small screens, make buttons stack better */
-        @media (max-width: 576px) {
-            .filter-buttons-wrapper {
-                gap: 0.5rem;
-            }
-            
-            .filter-buttons-wrapper .btn {
-                padding: 0.5rem 0.75rem;
-                font-size: 0.8rem;
-                min-width: auto;
-            }
-        }
-    }
-
     /* Hero section overlay for better text readability */
     .hero-section {
         position: relative;
@@ -179,6 +144,56 @@
     .hero-section .container {
         position: relative;
         z-index: 2;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .menu-item-card .card-img-top {
+            height: 180px;
+        }
+        
+        .menu-item-card .card-body {
+            min-height: 160px;
+            padding: 1.25rem;
+        }
+
+        /* Mobile filter buttons - horizontal scroll */
+        .filter-buttons-wrapper {
+            display: flex;
+            overflow-x: auto;
+            overflow-y: hidden;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            padding: 0 1rem;
+            gap: 0.75rem;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE/Edge */
+        }
+
+        .filter-buttons-wrapper::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
+        }
+
+        .filter-buttons-wrapper .btn {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            letter-spacing: 0.3px;
+            min-width: max-content;
+            flex-shrink: 0;
+        }
+
+        /* Add padding to container for mobile scroll */
+        .py-4.bg-white.sticky-top {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .filter-buttons-wrapper .btn {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+        }
     }
 </style>
 <?php $__env->stopPush(); ?>
@@ -201,7 +216,7 @@
             <?php $__currentLoopData = $menuItems->keys(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <?php
                     // Split category name by " // " separator
-                    $parts = explode(' // ', $cat);
+                    $parts = explode('//', $cat);
                     $displayName = (app()->getLocale() == 'es' && isset($parts[1])) 
                         ? trim($parts[1])  // Spanish name
                         : trim($parts[0]); // English name (default)
@@ -293,33 +308,56 @@
                     quantity: 1
                 })
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
             .then(data => {
+                console.log('Cart response:', data); // Debug log
+                
                 if (data.success) {
+                    // Success - show confirmation
                     this.innerHTML = '<i class="fas fa-check me-1"></i>Added!';
                     this.classList.replace('btn-primary', 'btn-success');
 
+                    // Update cart count if you have a cart counter element
+                    if (data.cart_count && document.querySelector('.cart-count')) {
+                        document.querySelector('.cart-count').textContent = data.cart_count;
+                    }
+
+                    // Reset button after 2 seconds
                     setTimeout(() => {
                         this.innerHTML = originalText;
                         this.classList.replace('btn-success', 'btn-primary');
                         this.disabled = false;
                     }, 2000);
                 } else {
-                    throw new Error(data.message || 'Failed to add item');
+                    // Handle server-side error
+                    throw new Error(data.message || 'Failed to add item to cart');
                 }
             })
             .catch(error => {
                 console.error('Cart error:', error);
-                this.innerHTML = '<i class="fas fa-exclamation me-1"></i>Error';
+                
+                // Check if it's an authentication error
+                if (error.message.includes('401') || error.message.includes('Unauthenticated')) {
+                    this.innerHTML = '<i class="fas fa-exclamation me-1"></i>Login Required';
+                    alert('Please log in to add items to the cart.');
+                } else {
+                    this.innerHTML = '<i class="fas fa-exclamation me-1"></i>Error';
+                    alert('Error adding item to cart: ' + error.message);
+                }
+                
                 this.classList.replace('btn-primary', 'btn-danger');
                 
+                // Reset button after 3 seconds
                 setTimeout(() => {
                     this.innerHTML = originalText;
                     this.classList.replace('btn-danger', 'btn-primary');
                     this.disabled = false;
-                }, 2000);
-                
-                alert('Please log in to add items to the cart.');
+                }, 3000);
             });
         });
     });

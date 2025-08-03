@@ -307,33 +307,56 @@
                     quantity: 1
                 })
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
             .then(data => {
+                console.log('Cart response:', data); // Debug log
+                
                 if (data.success) {
+                    // Success - show confirmation
                     this.innerHTML = '<i class="fas fa-check me-1"></i>Added!';
                     this.classList.replace('btn-primary', 'btn-success');
 
+                    // Update cart count if you have a cart counter element
+                    if (data.cart_count && document.querySelector('.cart-count')) {
+                        document.querySelector('.cart-count').textContent = data.cart_count;
+                    }
+
+                    // Reset button after 2 seconds
                     setTimeout(() => {
                         this.innerHTML = originalText;
                         this.classList.replace('btn-success', 'btn-primary');
                         this.disabled = false;
                     }, 2000);
                 } else {
-                    throw new Error(data.message || 'Failed to add item');
+                    // Handle server-side error
+                    throw new Error(data.message || 'Failed to add item to cart');
                 }
             })
             .catch(error => {
                 console.error('Cart error:', error);
-                this.innerHTML = '<i class="fas fa-exclamation me-1"></i>Error';
+                
+                // Check if it's an authentication error
+                if (error.message.includes('401') || error.message.includes('Unauthenticated')) {
+                    this.innerHTML = '<i class="fas fa-exclamation me-1"></i>Login Required';
+                    alert('Please log in to add items to the cart.');
+                } else {
+                    this.innerHTML = '<i class="fas fa-exclamation me-1"></i>Error';
+                    alert('Error adding item to cart: ' + error.message);
+                }
+                
                 this.classList.replace('btn-primary', 'btn-danger');
                 
+                // Reset button after 3 seconds
                 setTimeout(() => {
                     this.innerHTML = originalText;
                     this.classList.replace('btn-danger', 'btn-primary');
                     this.disabled = false;
-                }, 2000);
-                
-                alert('Please log in to add items to the cart.');
+                }, 3000);
             });
         });
     });

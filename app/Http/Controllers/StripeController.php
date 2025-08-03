@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\Payment;
+use App\Mail\OrderPlaced;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Mail;
 use Stripe\Stripe;
 use Stripe\Checkout\Session as StripeSession;
 
@@ -32,7 +34,7 @@ class StripeController extends Controller
                     'price_data' => [
                         'currency' => 'eur',
                         'product_data' => ['name' => 'Imperial Spice Delivery Order'],
-                        'unit_amount' => $data['total'] * 100, // Amount in paise
+                        'unit_amount' => $data['total'] * 100, // Amount in cents
                     ],
                     'quantity' => 1,
                 ]
@@ -70,10 +72,13 @@ class StripeController extends Controller
         $order = Order::create([
             'user_id' => $data['user_id'],
             'payment_status' => 'paid',
+            'payment_method' => 'card',
             'order_status' => 'confirmed',
             'total_amount' => $data['total'],
             'delivery_type' => 'delivery',
             'delivery_address' => $data['address'],
+            'delivery_fee' => $data['delivery_fee'],
+            'tax' => $data['tax'],
         ]);
 
         // ✅ Create order items
@@ -94,9 +99,17 @@ class StripeController extends Controller
             'paid_at' => Carbon::now(),
         ]);
 
+        // Send email notification to restaurant
+        try {
+            Mail::to(config('mail.restaurant_email', env('RESTAURANT_EMAIL')))
+                ->send(new OrderPlaced($order));
+        } catch (\Exception $e) {
+            \Log::error('Failed to send order notification email: ' . $e->getMessage());
+        }
+
         // ✅ Clear cart
         CartItem::where('user_id', $data['user_id'])->delete();
 
-        return redirect()->route('admin.dashboard')->with('success', 'Payment successful and order placed!');
+        return redirect()->route('user.dashboard')->with('success', 'Payment successful and order placed!');
     }
 }

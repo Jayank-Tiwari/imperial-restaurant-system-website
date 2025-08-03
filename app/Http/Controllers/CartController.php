@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\CartItem;
+use App\Models\MenuItem;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
@@ -19,29 +20,58 @@ class CartController extends Controller
 
     public function add(Request $request)
     {
-        $request->validate([
-            'menu_item_id' => 'required|exists:menu_items,id',
-            'quantity' => 'nullable|integer|min:1'
-        ]);
+        try {
+            // Check if user is authenticated
+            if (!auth()->check()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Please log in to add items to cart'
+                ], 401);
+            }
 
-        $cartItem = CartItem::firstOrCreate(
-            [
-                'user_id' => Auth::id(),
-                'menu_item_id' => $request->menu_item_id
-            ],
-            [
-                'quantity' => $request->quantity ?? 1
-            ]
-        );
+            $request->validate([
+                'menu_item_id' => 'required|exists:menu_items,id',
+                'quantity' => 'required|integer|min:1'
+            ]);
 
-        if (!$cartItem->wasRecentlyCreated) {
-            $cartItem->increment('quantity', $request->quantity ?? 1);
+            $menuItem = MenuItem::findOrFail($request->menu_item_id);
+            
+            // Check if item already exists in cart
+            $cartItem = CartItem::where('user_id', auth()->id())
+                           ->where('menu_item_id', $request->menu_item_id)
+                           ->first();
+
+            if ($cartItem) {
+                // Update quantity if item exists
+                $cartItem->quantity += $request->quantity;
+                $cartItem->save();
+            } else {
+                // Create new cart item
+                CartItem::create([
+                    'user_id' => auth()->id(),
+                    'menu_item_id' => $request->menu_item_id,
+                    'quantity' => $request->quantity
+                ]);
+            }
+
+            // Get updated cart count
+            $cartCount = CartItem::where('user_id', auth()->id())->sum('quantity');
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Item added to cart successfully',
+                'cart_count' => $cartCount
+            ]);
+
+        } catch (\Exception $e) {
+            \Log::error('Cart add error: ' . $e->getMessage());
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to add item to cart'
+            ], 500);
         }
-
-        return response()->json(['message' => 'Item added to cart successfully']);
     }
-
-    // app/Http/Controllers/CartController.php
 
     public function update(Request $request, $id)
     {

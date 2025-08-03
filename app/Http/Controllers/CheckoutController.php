@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\CartItem;
 use App\Models\Order;
+use App\Mail\OrderPlaced;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Mail;
 
 class CheckoutController extends Controller
 {
@@ -61,10 +63,12 @@ class CheckoutController extends Controller
         $order = Order::create([
             'user_id' => $user->id,
             'payment_status' => 'pending',
+            'payment_method' => 'cash',
             'order_status' => 'confirmed',
             'total_amount' => $total,
             'delivery_type' => 'dinein',
             'table_no' => $request->table_no,
+            'tax' => $tax,
         ]);
 
         // Add order items
@@ -74,6 +78,14 @@ class CheckoutController extends Controller
                 'quantity' => $item->quantity,
                 'price' => $item->menuItem->price,
             ]);
+        }
+
+        // Send email notification to restaurant
+        try {
+            Mail::to(env('RESTAURANT_EMAIL', 'restaurant@imperialspice.com'))
+                ->send(new OrderPlaced($order));
+        } catch (\Exception $e) {
+            \Log::error('Failed to send order notification email: ' . $e->getMessage());
         }
 
         CartItem::where('user_id', $user->id)->delete();
@@ -144,6 +156,14 @@ class CheckoutController extends Controller
                 ]);
             }
 
+            // Send email notification to restaurant
+            try {
+                Mail::to(env('RESTAURANT_EMAIL', 'restaurant@imperialspice.com'))
+                    ->send(new OrderPlaced($order));
+            } catch (\Exception $e) {
+                \Log::error('Failed to send order notification email: ' . $e->getMessage());
+            }
+
             // Clear the user's cart
             CartItem::where('user_id', $user->id)->delete();
 
@@ -168,7 +188,6 @@ class CheckoutController extends Controller
         }
     }
 
-
     // Stripe calls this after successful payment
     public function paymentSuccess()
     {
@@ -183,10 +202,13 @@ class CheckoutController extends Controller
         $order = Order::create([
             'user_id' => $data['user_id'],
             'payment_status' => 'paid',
+            'payment_method' => 'card',
             'order_status' => 'confirmed',
             'total_amount' => $data['total'],
             'delivery_type' => 'delivery',
             'delivery_address' => $data['address'],
+            'delivery_fee' => $data['delivery_fee'],
+            'tax' => $data['tax'],
         ]);
 
         foreach ($cartItems as $item) {
@@ -195,6 +217,14 @@ class CheckoutController extends Controller
                 'quantity' => $item->quantity,
                 'price' => $item->menuItem->price,
             ]);
+        }
+
+        // Send email notification to restaurant
+        try {
+            Mail::to(env('RESTAURANT_EMAIL', 'restaurant@imperialspice.com'))
+                ->send(new OrderPlaced($order));
+        } catch (\Exception $e) {
+            \Log::error('Failed to send order notification email: ' . $e->getMessage());
         }
 
         CartItem::where('user_id', $data['user_id'])->delete();
