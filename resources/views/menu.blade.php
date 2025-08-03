@@ -75,13 +75,38 @@
     }
 
     /* Filter button styling */
-    #menuFilter .btn {
+    .filter-buttons-wrapper {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        max-width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .filter-buttons-wrapper .btn {
         border-radius: 25px;
-        margin: 0 0.25rem;
         padding: 0.5rem 1.5rem;
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.5px;
+        white-space: nowrap;
+        transition: all 0.3s ease;
+        border: 2px solid var(--primary-color);
+        color: var(--primary-color);
+        background: white;
+        flex-shrink: 0;
+    }
+
+    .filter-buttons-wrapper .btn:hover {
+        background: var(--primary-color);
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .filter-buttons-wrapper .btn.active {
+        background: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
     }
 
     /* Animation styles */
@@ -100,6 +125,27 @@
         }
     }
 
+    /* Hero section overlay for better text readability */
+    .hero-section {
+        position: relative;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 1;
+    }
+
+    .hero-section .container {
+        position: relative;
+        z-index: 2;
+    }
+
     /* Responsive adjustments */
     @media (max-width: 768px) {
         .menu-item-card .card-img-top {
@@ -110,6 +156,44 @@
             min-height: 160px;
             padding: 1.25rem;
         }
+
+        /* Mobile filter buttons - horizontal scroll */
+        .filter-buttons-wrapper {
+            display: flex;
+            overflow-x: auto;
+            overflow-y: hidden;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            padding: 0 1rem;
+            gap: 0.75rem;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE/Edge */
+        }
+
+        .filter-buttons-wrapper::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
+        }
+
+        .filter-buttons-wrapper .btn {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            letter-spacing: 0.3px;
+            min-width: max-content;
+            flex-shrink: 0;
+        }
+
+        /* Add padding to container for mobile scroll */
+        .py-4.bg-white.sticky-top {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .filter-buttons-wrapper .btn {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+        }
     }
 </style>
 @endpush
@@ -117,7 +201,7 @@
 @section('content')
 
 <!-- Hero Section -->
-<section class="py-5 mt-5" style="background-image: url('{{ asset('assets/img/home.webp') }}'); background-size: cover; background-position: center;">
+<section class="hero-section py-5 mt-5" style="background-image: url('{{ asset('assets/img/home.webp') }}'); background-size: cover; background-position: center;">
     <div class="container text-center">
         <h1 class="display-4 fw-bold text-white">@lang('messages.our_menu')</h1>
         <p class="lead text-white">@lang('messages.discover_our_dishes')</p>
@@ -127,12 +211,12 @@
 <!-- Filter Buttons -->
 <section class="py-4 bg-white sticky-top shadow-sm">
     <div class="container text-center">
-        <div class="btn-group flex-wrap" role="group" id="menuFilter">
+        <div class="filter-buttons-wrapper" id="menuFilter">
             <button type="button" class="btn btn-outline-primary active" data-filter="all">@lang('messages.all_items')</button>
             @foreach($menuItems->keys() as $cat)
                 @php
                     // Split category name by " // " separator
-                    $parts = explode(' // ', $cat);
+                    $parts = explode('//', $cat);
                     $displayName = (app()->getLocale() == 'es' && isset($parts[1])) 
                         ? trim($parts[1])  // Spanish name
                         : trim($parts[0]); // English name (default)

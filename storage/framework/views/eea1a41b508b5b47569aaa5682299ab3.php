@@ -75,13 +75,37 @@
     }
 
     /* Filter button styling */
-    #menuFilter .btn {
+    .filter-buttons-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+        max-width: 100%;
+    }
+
+    .filter-buttons-wrapper .btn {
         border-radius: 25px;
-        margin: 0 0.25rem;
         padding: 0.5rem 1.5rem;
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.5px;
+        white-space: nowrap;
+        transition: all 0.3s ease;
+        border: 2px solid var(--primary-color);
+        color: var(--primary-color);
+        background: white;
+    }
+
+    .filter-buttons-wrapper .btn:hover {
+        background: var(--primary-color);
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .filter-buttons-wrapper .btn.active {
+        background: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
     }
 
     /* Animation styles */
@@ -110,6 +134,51 @@
             min-height: 160px;
             padding: 1.25rem;
         }
+
+        .filter-buttons-wrapper {
+            gap: 0.25rem;
+            padding: 0 1rem;
+        }
+
+        .filter-buttons-wrapper .btn {
+            padding: 0.4rem 1rem;
+            font-size: 0.875rem;
+            letter-spacing: 0.3px;
+        }
+
+        /* For very small screens, make buttons stack better */
+        @media (max-width: 576px) {
+            .filter-buttons-wrapper {
+                gap: 0.5rem;
+            }
+            
+            .filter-buttons-wrapper .btn {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.8rem;
+                min-width: auto;
+            }
+        }
+    }
+
+    /* Hero section overlay for better text readability */
+    .hero-section {
+        position: relative;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 1;
+    }
+
+    .hero-section .container {
+        position: relative;
+        z-index: 2;
     }
 </style>
 <?php $__env->stopPush(); ?>
@@ -117,7 +186,7 @@
 <?php $__env->startSection('content'); ?>
 
 <!-- Hero Section -->
-<section class="py-5 mt-5" style="background-image: url('<?php echo e(asset('assets/img/home.webp')); ?>'); background-size: cover; background-position: center;">
+<section class="hero-section py-5 mt-5" style="background-image: url('<?php echo e(asset('assets/img/home.webp')); ?>'); background-size: cover; background-position: center;">
     <div class="container text-center">
         <h1 class="display-4 fw-bold text-white"><?php echo app('translator')->get('messages.our_menu'); ?></h1>
         <p class="lead text-white"><?php echo app('translator')->get('messages.discover_our_dishes'); ?></p>
@@ -127,7 +196,7 @@
 <!-- Filter Buttons -->
 <section class="py-4 bg-white sticky-top shadow-sm">
     <div class="container text-center">
-        <div class="btn-group flex-wrap" role="group" id="menuFilter">
+        <div class="filter-buttons-wrapper" id="menuFilter">
             <button type="button" class="btn btn-outline-primary active" data-filter="all"><?php echo app('translator')->get('messages.all_items'); ?></button>
             <?php $__currentLoopData = $menuItems->keys(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <?php
