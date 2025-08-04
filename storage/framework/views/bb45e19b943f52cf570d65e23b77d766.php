@@ -20,4 +20,36 @@
 
 
     
-    <?php echo $__env->make('layout.footer', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\Imperial Spice\website\resources\views/layout/app.blade.php ENDPATH**/ ?>
+    <?php echo $__env->make('layout.footer', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+
+<script>
+// Global cart count updater
+window.updateCartCount = function(count) {
+    console.log('Global updateCartCount called with:', count);
+    
+    const cartCountElement = document.getElementById('cart-count');
+    if (cartCountElement) {
+        cartCountElement.textContent = count;
+        
+        // Animation
+        cartCountElement.style.transform = 'scale(1.3)';
+        cartCountElement.style.transition = 'transform 0.2s ease';
+        
+        setTimeout(() => {
+            cartCountElement.style.transform = 'scale(1)';
+        }, 200);
+        
+        return true;
+    }
+    
+    console.warn('Cart count element not found');
+    return false;
+};
+
+// Ensure DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, cart element:', document.getElementById('cart-count'));
+});
+</script>
+</body>
+</html><?php /**PATH D:\Imperial Spice\website\resources\views/layout/app.blade.php ENDPATH**/ ?>

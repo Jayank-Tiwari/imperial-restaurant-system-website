@@ -117,3 +117,5 @@ Route::post('/checkout/delivery', [CheckoutController::class, 'storeDelivery'])-
 Route::match(['get', 'post'], 'checkout/payment-success', [StripeController::class, 'paymentSuccess'])->name('checkout.payment.success');
 Route::get('/stripe/checkout', [StripeController::class, 'checkout'])->name('stripe.checkout');
 
+Route::get('/cart/count', [CartController::class, 'getCount'])->name('cart.count');
+

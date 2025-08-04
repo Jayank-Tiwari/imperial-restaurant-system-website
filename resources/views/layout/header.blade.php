@@ -31,8 +31,12 @@
                     <a class="nav-link @if (View::getSection('active') === 'cart') active @endif"
                         href="{{ route('cart.index') }}">
                         <i class="fas fa-shopping-cart"></i>
-                        <span class="badge bg-primary rounded-pill ms-1">
-                            {{ session('cart_count', 0) }}
+                        <span id="cart-count" class="badge bg-primary rounded-pill ms-1" data-cart-count>
+                            @auth
+                                {{ \App\Models\CartItem::where('user_id', auth()->id())->count() ?: 0 }}
+                            @else
+                                0
+                            @endauth
                         </span>
                     </a>
                 </li>

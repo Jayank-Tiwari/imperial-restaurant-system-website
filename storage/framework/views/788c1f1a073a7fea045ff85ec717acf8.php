@@ -122,6 +122,22 @@
             font-size: 2.5rem !important;
         }
     }
+
+    /* Toast notification styles */
+    .custom-toast {
+        animation: slideInFromRight 0.3s ease-out;
+    }
+
+    @keyframes slideInFromRight {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
 </style>
 <?php $__env->stopPush(); ?>
 
@@ -300,62 +316,144 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // --- ADD TO CART LOGIC ---
+            
+            // Function to update cart count in header
+            function updateCartCount(count) {
+                const cartCountElement = document.getElementById('cart-count');
+                if (cartCountElement) {
+                    cartCountElement.textContent = count;
+                    
+                    // Add animation effect
+                    cartCountElement.style.transform = 'scale(1.3)';
+                    cartCountElement.style.transition = 'transform 0.2s ease';
+                    
+                    setTimeout(() => {
+                        cartCountElement.style.transform = 'scale(1)';
+                    }, 200);
+                } else {
+                    console.warn('Cart count element not found');
+                }
+            }
+
+            // Simple toast notification function
+            function showToast(message, type = 'success') {
+                // Remove existing toasts
+                const existingToasts = document.querySelectorAll('.custom-toast');
+                existingToasts.forEach(toast => toast.remove());
+
+                // Create toast element
+                const toast = document.createElement('div');
+                toast.className = `custom-toast alert alert-${type === 'error' ? 'danger' : type === 'success' ? 'success' : 'info'} 
+                                  position-fixed`;
+                toast.style.cssText = `
+                    top: 20px;
+                    right: 20px;
+                    z-index: 9999;
+                    min-width: 300px;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                    border-radius: 8px;
+                `;
+                toast.innerHTML = `
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'} me-2"></i>
+                        <span>${message}</span>
+                        <button type="button" class="btn-close ms-auto" onclick="this.parentElement.parentElement.remove()"></button>
+                    </div>
+                `;
+                
+                // Add to page
+                document.body.appendChild(toast);
+                
+                // Remove after 4 seconds
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.style.animation = 'slideInFromRight 0.3s ease-out reverse';
+                        setTimeout(() => toast.remove(), 300);
+                    }
+                }, 4000);
+            }
+
+            // Add to cart functionality
             document.querySelectorAll('.add-to-cart').forEach(button => {
                 button.addEventListener('click', function() {
                     const menuItemId = this.dataset.id;
-                    const originalButtonHtml = this.innerHTML;
+                    const originalText = this.innerHTML;
 
-                    // Immediately disable the button to prevent multiple clicks
+                    // Check if user is logged in first
+                    <?php if(auth()->guard()->guest()): ?>
+                        showToast('Please log in to add items to the cart.', 'error');
+                        setTimeout(() => {
+                            window.location.href = '<?php echo e(route('login')); ?>';
+                        }, 1500);
+                        return;
+                    <?php endif; ?>
+
+                    // Disable button during request
                     this.disabled = true;
-                    this.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i><?php echo app('translator')->get('messages.adding'); ?>...';
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Adding...';
 
                     fetch('<?php echo e(route('cart.add')); ?>', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Accept': 'application/json',
-                                'X-CSRF-TOKEN': '<?php echo e(csrf_token()); ?>'
-                            },
-                            body: JSON.stringify({
-                                menu_item_id: menuItemId,
-                                quantity: 1
-                            })
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '<?php echo e(csrf_token()); ?>'
+                        },
+                        body: JSON.stringify({
+                            menu_item_id: menuItemId,
+                            quantity: 1
                         })
-                        .then(response => {
-                            if (!response.ok) {
-                                if (response.status === 401) {
-                                    alert('<?php echo app('translator')->get('messages.login_to_add_cart'); ?>');
-                                    window.location.href = '<?php echo e(route('login')); ?>';
-                                } else {
-                                    alert('<?php echo app('translator')->get('messages.something_went_wrong'); ?>');
-                                }
-                                throw new Error('<?php echo app('translator')->get('messages.something_went_wrong'); ?>' + response.status);
-                            }
-                            return response.json();
-                        })
-                        .then(data => {
-                            this.innerHTML = '<i class="fas fa-check me-1"></i><?php echo app('translator')->get('messages.added'); ?>!';
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Cart response:', data);
+                        
+                        if (data.success) {
+                            // Success - show confirmation
+                            this.innerHTML = '<i class="fas fa-check me-1"></i>Added!';
                             this.classList.replace('btn-primary', 'btn-success');
 
-                            // Update the cart counter in the navbar
-                            const cartCountElement = document.getElementById('cartCount');
-                            if (cartCountElement && data.cartCount !== undefined) {
-                                cartCountElement.textContent = data.cartCount;
+                            // Update cart count in header
+                            if (data.cart_count !== undefined) {
+                                updateCartCount(data.cart_count);
                             }
 
-                            // Revert button to original state after 2 seconds
+                            // Show success notification
+                            showToast('Item added to cart successfully!', 'success');
+
+                            // Reset button after 2 seconds
                             setTimeout(() => {
-                                this.innerHTML = originalButtonHtml;
+                                this.innerHTML = originalText;
                                 this.classList.replace('btn-success', 'btn-primary');
                                 this.disabled = false;
                             }, 2000);
-                        })
-                        .catch(error => {
-                            console.error('<?php echo app('translator')->get('messages.something_went_wrong'); ?>', error.message);
+                        } else {
+                            throw new Error(data.message || 'Failed to add item to cart');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Cart error:', error);
+                        
+                        if (error.message.includes('401') || error.message.includes('Unauthenticated')) {
+                            this.innerHTML = '<i class="fas fa-exclamation me-1"></i>Login Required';
+                            showToast('Please log in to add items to the cart.', 'error');
+                        } else {
+                            this.innerHTML = '<i class="fas fa-exclamation me-1"></i>Error';
+                            showToast('Error adding item to cart', 'error');
+                        }
+                        
+                        this.classList.replace('btn-primary', 'btn-danger');
+                        
+                        setTimeout(() => {
+                            this.innerHTML = originalText;
+                            this.classList.replace('btn-danger', 'btn-primary');
                             this.disabled = false;
-                            this.innerHTML = originalButtonHtml;
-                        });
+                        }, 3000);
+                    });
                 });
             });
         });

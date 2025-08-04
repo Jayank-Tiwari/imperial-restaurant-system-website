@@ -31,9 +31,13 @@
                     <a class="nav-link <?php if(View::getSection('active') === 'cart'): ?> active <?php endif; ?>"
                         href="<?php echo e(route('cart.index')); ?>">
                         <i class="fas fa-shopping-cart"></i>
-                        <span class="badge bg-primary rounded-pill ms-1">
-                            <?php echo e(session('cart_count', 0)); ?>
+                        <span id="cart-count" class="badge bg-primary rounded-pill ms-1" data-cart-count>
+                            <?php if(auth()->guard()->check()): ?>
+                                <?php echo e(\App\Models\CartItem::where('user_id', auth()->id())->count() ?: 0); ?>
 
+                            <?php else: ?>
+                                0
+                            <?php endif; ?>
                         </span>
                     </a>
                 </li>

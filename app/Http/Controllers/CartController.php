@@ -2,26 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\CartItem;
 use App\Models\MenuItem;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
     public function index()
     {
-        $cartItems = CartItem::with('menuItem')
-            ->where('user_id', Auth::id())
-            ->get();
+        $user = Auth::user();
+        $cartItems = CartItem::with('menuItem')->where('user_id', $user->id)->get();
+        $total = $cartItems->sum(fn($item) => $item->menuItem->price * $item->quantity);
 
-        return view('cart.index', compact('cartItems'));
+        return view('cart.index', compact('cartItems', 'total'));
     }
 
     public function add(Request $request)
     {
         try {
-            // Check if user is authenticated
             if (!auth()->check()) {
                 return response()->json([
                     'success' => false,
@@ -36,17 +35,14 @@ class CartController extends Controller
 
             $menuItem = MenuItem::findOrFail($request->menu_item_id);
             
-            // Check if item already exists in cart
             $cartItem = CartItem::where('user_id', auth()->id())
                            ->where('menu_item_id', $request->menu_item_id)
                            ->first();
 
             if ($cartItem) {
-                // Update quantity if item exists
                 $cartItem->quantity += $request->quantity;
                 $cartItem->save();
             } else {
-                // Create new cart item
                 CartItem::create([
                     'user_id' => auth()->id(),
                     'menu_item_id' => $request->menu_item_id,
@@ -54,8 +50,8 @@ class CartController extends Controller
                 ]);
             }
 
-            // Get updated cart count
-            $cartCount = CartItem::where('user_id', auth()->id())->sum('quantity');
+            // Get updated cart item count (not quantity sum)
+            $cartCount = CartItem::where('user_id', auth()->id())->count();
 
             return response()->json([
                 'success' => true,
@@ -75,24 +71,98 @@ class CartController extends Controller
 
     public function update(Request $request, $id)
     {
-        $cartItem = CartItem::findOrFail($id);
+        try {
+            $cartItem = CartItem::where('user_id', auth()->id())->findOrFail($id);
+            
+            if ($request->has('action')) {
+                $action = $request->input('action');
+                
+                if ($action === 'increase') {
+                    $cartItem->quantity += 1;
+                    $cartItem->save();
+                } elseif ($action === 'decrease') {
+                    if ($cartItem->quantity > 1) {
+                        $cartItem->quantity -= 1;
+                        $cartItem->save();
+                    } else {
+                        $cartItem->delete();
+                    }
+                }
+                
+                return redirect()->route('cart.index')->with('success', 'Cart updated successfully');
+                
+            } else {
+                $request->validate([
+                    'quantity' => 'required|integer|min:1|max:99'
+                ]);
 
-        if ($request->input('action') === 'increase') {
-            $cartItem->quantity += 1;
-        } elseif ($request->input('action') === 'decrease' && $cartItem->quantity > 1) {
-            $cartItem->quantity -= 1;
+                $cartItem->update(['quantity' => $request->quantity]);
+
+                // Get updated cart item count (not quantity sum)
+                $cartCount = CartItem::where('user_id', auth()->id())->count();
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Cart updated successfully',
+                    'cart_count' => $cartCount
+                ]);
+            }
+
+        } catch (\Exception $e) {
+            \Log::error('Cart update error: ' . $e->getMessage());
+            
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed to update cart'
+                ], 500);
+            }
+            
+            return redirect()->route('cart.index')->with('error', 'Failed to update cart');
         }
-
-        $cartItem->save();
-
-        return redirect()->route('cart.index');
     }
-
 
     public function remove($id)
     {
-        CartItem::where('id', $id)->where('user_id', Auth::id())->delete();
+        try {
+            $cartItem = CartItem::where('user_id', auth()->id())->findOrFail($id);
+            $cartItem->delete();
 
-        return redirect()->route('cart.index');
+            // Get updated cart item count (not quantity sum)
+            $cartCount = CartItem::where('user_id', auth()->id())->count();
+
+            if (request()->expectsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Item removed from cart',
+                    'cart_count' => $cartCount
+                ]);
+            }
+
+            return redirect()->route('cart.index')->with('success', 'Item removed from cart');
+
+        } catch (\Exception $e) {
+            \Log::error('Cart remove error: ' . $e->getMessage());
+            
+            if (request()->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed to remove item'
+                ], 500);
+            }
+            
+            return redirect()->route('cart.index')->with('error', 'Failed to remove item');
+        }
+    }
+
+    public function getCount()
+    {
+        if (!auth()->check()) {
+            return response()->json(['cart_count' => 0]);
+        }
+
+        // Return count of unique items, not total quantity
+        $cartCount = CartItem::where('user_id', auth()->id())->count();
+        return response()->json(['cart_count' => $cartCount]);
     }
 }

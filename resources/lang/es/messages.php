@@ -137,9 +137,9 @@ return [
     'dishes_served' => 'Platos Servidos',
     'awards_won' => 'Premios Ganados',
     'finest_indian_cuisine' => 'La Mejor Cocina India',
-    'authentic_taste' => 'Un auténtico sabor de la India en el corazón de Barcelona.',
+    'authentic_taste' => 'Un auténtico sabor de la India en el corazón de Vilanova I la Geltrú.',
     'our_culinary_story' => 'Nuestra Historia Culinaria',
-    'is_a_celebrated_indian_restaurant' => 'es un célebre restaurante indio en Barcelona, conocido por llevar a sus comensales a una aventura gastronómica única. Nuestro menú es un homenaje a los secretos culinarios transmitidos de generación en generación, reinventados con un toque moderno.',
+    'is_a_celebrated_indian_restaurant' => 'es un célebre restaurante indio en Vilanova I la Geltrú, conocido por llevar a sus comensales a una aventura gastronómica única. Nuestro menú es un homenaje a los secretos culinarios transmitidos de generación en generación, reinventados con un toque moderno.',
     'is_a_celebrated_indian_restaurant2' => 'Nos dedicamos a crear una experiencia memorable para cada cliente, combinando un ambiente cálido y acogedor con sabores exquisitos y un servicio cordial. Desde nuestros platos estrella hasta nuestro vibrante ambiente, cada detalle está diseñado para una visita inolvidable.',
     'years_of_excellence' => 'Años de Excelencia',
     'happy_guests' => 'Comensales Felices',
@@ -155,7 +155,7 @@ return [
     'warm_hospitality_description' => 'Creemos en un servicio que te hace sentir como en casa, asegurando que cada cliente se sienta bienvenido, valorado y cuidado de principio a fin.',
     'our_journey' => 'Nuestra Trayectoria',
     'our_journey_description' => 'Hitos clave que han dado forma a nuestra historia.',
-    'grand_opening' => 'Gran Apertura en Barcelona',
+    'grand_opening' => 'Gran Apertura en Vilanova I la Geltrú',
     'grand_opening_description' => 'The Imperial Spice abre sus puertas, con el objetivo de traer auténticos sabores indios al vibrante corazón de la ciudad.',
     'menu_expansion' => 'Ampliación del Menú y Nuevas Especialidades',
     'menu_expansion_description' => 'Introdujimos una gama de nuevos platos, incluyendo especialidades regionales y creaciones de autor del chef, para deleitar a nuestros clientes.',
@@ -617,6 +617,14 @@ return [
     'customer_phone' => 'Teléfono del Cliente',
     'verify_delivery' => 'Verificar Entrega',
     'instructions' => 'Instrucciones',
+
+    'added_to_cart' => 'Añadido al Carrito',
+    'enter_full_name' => 'Introduce tu Nombre Completo',
+    'enter_phone_number' => 'Introduce tu Número de Teléfono',
+    'enter_email_address' => 'Introduce tu Dirección de Correo Electrónico',
+    'enter_password' => 'Introduce tu Contraseña',
+    'added' => 'Añadido',
+    'adding' => 'Añadiendo...',
 
 
 ];
