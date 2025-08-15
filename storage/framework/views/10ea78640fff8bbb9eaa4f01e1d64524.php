@@ -34,7 +34,7 @@
                     <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i>Rambla de Josep Antoni Vidal 29, 08800
                         Vilanova i la Geltrú, Barcelona, Spain</li>
                     <li class="mb-2"><i class="fas fa-phone me-2"></i>+34 602 18 93 06</li>
-                    <li class="mb-2"><i class="fas fa-envelope me-2"></i>info@imperialspice.es</li>
+                    <li class="mb-2"><i class="fas fa-envelope me-2"></i>Imperialspice50@gmail.com</li>
                 </ul>
             </div>
 
