@@ -23,12 +23,29 @@ class CheckoutController extends Controller
         }
 
         $subtotal = $cartItems->sum(fn($item) => $item->menuItem->price * $item->quantity);
-        $taxRate = 0.10; // 10% IVA
-        $tax = $subtotal * $taxRate;
-        $total = $subtotal + $tax;
         $deliveryFee = 50.00; // Hardcoded delivery fee for delivery orders
 
-        return view('checkout.index', compact('cartItems', 'subtotal', 'tax', 'total', 'deliveryFee'));
+        // Discount logic
+        $isEligibleForDiscount = !$user->has_one_time_discount;
+        $discountPercentage = 0;
+        $discountAmount = 0;
+        $finalTotal = $subtotal + $deliveryFee;
+
+        if ($isEligibleForDiscount) {
+            $discountPercentage = rand(15, 20);
+            $discountAmount = (($subtotal + $deliveryFee) * $discountPercentage) / 100;
+            $finalTotal = ($subtotal + $deliveryFee) - $discountAmount;
+        }
+
+        return view('checkout.index', compact(
+            'cartItems',
+            'subtotal',
+            'deliveryFee',
+            'isEligibleForDiscount',
+            'discountPercentage',
+            'discountAmount',
+            'finalTotal'
+        ));
     }
 
     // Store dine-in order
@@ -55,9 +72,6 @@ class CheckoutController extends Controller
         }
 
         $subtotal = $cartItems->sum(fn($item) => $item->menuItem->price * $item->quantity);
-        $taxRate = 0.10;
-        $tax = $subtotal * $taxRate;
-        $total = $subtotal + $tax;
 
         // Create dine-in order
         $order = Order::create([
@@ -65,10 +79,9 @@ class CheckoutController extends Controller
             'payment_status' => 'pending',
             'payment_method' => 'cash',
             'order_status' => 'confirmed',
-            'total_amount' => $total,
+            'total_amount' => $subtotal,
             'delivery_type' => 'dinein',
             'table_no' => $request->table_no,
-            'tax' => $tax,
         ]);
 
         // Add order items
@@ -96,22 +109,19 @@ class CheckoutController extends Controller
     // Store delivery request and redirect to Stripe
     public function storeDelivery(Request $request)
     {
-        // 1. Validate the request, now including the payment_method
         $request->validate([
             'address' => 'required|string',
             'postal_code' => 'required|string',
-            'payment_method' => 'required|in:card,cash', // Ensures payment method is either 'card' or 'cash'
+            'payment_method' => 'required|in:card,cash',
         ]);
 
-        // Define delivery charges by postal code
         $deliveryCharges = [
             '08880' => 0.00,
-            '08800' => 0.00, // Free delivery for this postal code
+            '08800' => 0.00,
             '08812' => 2.00,
             '08870' => 4.00,
         ];
 
-        // Check if the postal code is allowed
         if (!array_key_exists($request->postal_code, $deliveryCharges)) {
             return back()->with('error', 'Delivery only available within 4km radius');
         }
@@ -126,28 +136,32 @@ class CheckoutController extends Controller
         }
 
         $subtotal = $cartItems->sum(fn($item) => $item->menuItem->price * $item->quantity);
-        $taxRate = 0.10;
-        $tax = $subtotal * $taxRate;
-        $total = $subtotal + $tax + $deliveryFee;
+        $total = $subtotal + $deliveryFee;
 
-        // 2. Check the selected payment method
+        $discountPercentage = null;
+
+        if (!$user->has_one_time_discount) {
+            $discountPercentage = rand(15, 20);
+            $discountAmount = ($total * $discountPercentage) / 100;
+            $total -= $discountAmount;
+
+            $user->has_one_time_discount = true;
+            $user->save();
+        }
+
         if ($request->payment_method === 'cash') {
-            // --- Logic for Cash on Delivery ---
-
-            // Create a new order with 'pending' payment status
             $order = Order::create([
                 'user_id' => $user->id,
-                'payment_status' => 'pending', // Important for COD
+                'payment_status' => 'pending',
                 'payment_method' => 'cash',
-                'order_status' => 'confirmed',  
+                'order_status' => 'confirmed',
                 'total_amount' => $total,
+                'discount_percentage' => $discountPercentage,
                 'delivery_type' => 'delivery',
                 'delivery_address' => $request->address,
                 'delivery_fee' => $deliveryFee,
-                'tax' => $tax,
             ]);
 
-            // Add items from the cart to the order
             foreach ($cartItems as $item) {
                 $order->orderItems()->create([
                     'menu_item_id' => $item->menu_item_id,
@@ -169,7 +183,6 @@ class CheckoutController extends Controller
 
             // Redirect with a success message
             return redirect()->route('user.dashboard')->with('success', 'Your order has been placed successfully!');
-
         } else {
             // --- Existing logic for Card Payment ---
 
@@ -177,9 +190,9 @@ class CheckoutController extends Controller
             Session::put('delivery_order', [
                 'user_id' => $user->id,
                 'subtotal' => $subtotal,
-                'tax' => $tax,
                 'delivery_fee' => $deliveryFee,
                 'total' => $total,
+                'discount_percentage' => $discountPercentage,
                 'address' => $request->address,
                 'postal_code' => $request->postal_code,
             ]);
@@ -187,6 +200,7 @@ class CheckoutController extends Controller
             return redirect()->route('stripe.checkout');
         }
     }
+
 
     // Stripe calls this after successful payment
     public function paymentSuccess()
@@ -208,7 +222,6 @@ class CheckoutController extends Controller
             'delivery_type' => 'delivery',
             'delivery_address' => $data['address'],
             'delivery_fee' => $data['delivery_fee'],
-            'tax' => $data['tax'],
         ]);
 
         foreach ($cartItems as $item) {
@@ -219,7 +232,6 @@ class CheckoutController extends Controller
             ]);
         }
 
-        // Send email notification to restaurant
         try {
             Mail::to(env('RESTAURANT_EMAIL', 'restaurant@imperialspice.com'))
                 ->send(new OrderPlaced($order));

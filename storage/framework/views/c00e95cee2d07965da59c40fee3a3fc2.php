@@ -15,12 +15,8 @@
                             <th><?php echo app('translator')->get('messages.order_id'); ?></th>
                             <th><?php echo app('translator')->get('messages.type'); ?></th>
                             <th><?php echo app('translator')->get('messages.total'); ?></th>
+                            <th>Discount</th>
                             <th><?php echo app('translator')->get('messages.payment_method'); ?></th>
-                            <th><?php echo app('translator')->get('messages.payment_status'); ?></th>
-                            <th><?php echo app('translator')->get('messages.order_status'); ?></th>
-                            <th><?php echo app('translator')->get('messages.delivery_otp'); ?></th>
-                            <th><?php echo app('translator')->get('messages.delivery_status'); ?></th>
-                            <th><?php echo app('translator')->get('messages.placed_at'); ?></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -28,72 +24,41 @@
                             <tr>
                                 <td><strong>#<?php echo e($order->id); ?></strong></td>
                                 <td>
-                                    <span class="badge bg-<?php echo e($order->delivery_type == 'dinein' ? 'success' : ($order->delivery_type == 'delivery' ? 'warning text-dark' : 'info')); ?>">
-                                        <?php echo app('translator')->get('messages.delivery_type_' . $order->delivery_type); ?>
-                                    </span>
                                 </td>
-                                <td><strong><?php echo e(__('messages.currency')); ?><?php echo e(number_format($order->total_amount, 2)); ?></strong></td>
-                                <td>
-                                    <span class="badge bg-<?php echo e($order->payment_method == 'card' ? 'primary' : 'warning text-dark'); ?>">
-                                        <i class="fas <?php echo e($order->payment_method == 'card' ? 'fa-credit-card' : 'fa-money-bill-wave'); ?> me-1"></i>
-                                        <?php echo app('translator')->get('messages.payment_method_' . ($order->payment_method ?? 'unknown')); ?>
-                                    </span>
-                                    <?php if($order->payment_method == 'cash'): ?>
-                                        <br>
-                                        <small class="text-muted">
-                                            <?php if($order->delivery_type == 'delivery'): ?>
-                                                (<?php echo app('translator')->get('messages.cod_short'); ?>)
-                                            <?php else: ?>
-                                                (<?php echo app('translator')->get('messages.pay_at_restaurant_short'); ?>)
-                                            <?php endif; ?>
-                                        </small>
-                                    <?php endif; ?>
+                                <td><strong><?php echo e(__('messages.currency')); ?><?php echo e(number_format($order->total_amount, 2)); ?></strong>
                                 </td>
                                 <td>
-                                    <span class="badge bg-<?php echo e($order->payment_status === 'paid' ? 'success' : ($order->payment_status === 'failed' ? 'danger' : 'warning text-dark')); ?>">
-                                        <?php echo app('translator')->get('messages.payment_status_' . $order->payment_status); ?>
-                                    </span>
-                                    <?php if($order->payment_method == 'cash' && $order->payment_status == 'pending'): ?>
-                                        <br>
-                                        <small class="text-muted">
-                                            <?php if($order->delivery_type == 'delivery'): ?>
-                                                <?php echo app('translator')->get('messages.pay_on_delivery_note'); ?>
-                                            <?php else: ?>
-                                                <?php echo app('translator')->get('messages.pay_at_restaurant_note'); ?>
-                                            <?php endif; ?>
-                                        </small>
-                                    <?php endif; ?>
-                                </td>
-                                <td>
-                                    <span class="badge bg-<?php echo e($order->order_status === 'delivered' ? 'success' : ($order->order_status === 'cancelled' ? 'danger' : 'info')); ?>">
-                                        <?php echo app('translator')->get('messages.order_status_' . $order->order_status); ?>
-                                    </span>
-                                </td>
-                                <td>
-                                    <?php if($order->delivery_type == 'delivery'): ?>
-                                        <?php if($order->delivery_otp): ?>
-                                            <span class="badge bg-secondary"><?php echo e($order->delivery_otp); ?></span>
-                                        <?php else: ?>
-                                            <span class="text-muted"><?php echo e(__('messages.not_available')); ?></span>
-                                        <?php endif; ?>
+                                    <?php if($order->discount_percentage): ?>
+                                        <span class="badge bg-success"><?php echo e($order->discount_percentage); ?>%</span>
                                     <?php else: ?>
-                                        <span class="text-muted"><?php echo app('translator')->get('messages.not_applicable'); ?></span>
+                                        N/A
                                     <?php endif; ?>
                                 </td>
                                 <td>
-                                    <?php if($order->delivery_type == 'delivery'): ?>
-                                        <?php echo e(ucfirst($order->delivery->status ?? __('messages.not_assigned'))); ?>
-
-                                    <?php else: ?>
-                                        <span class="text-muted"><?php echo app('translator')->get('messages.not_applicable'); ?></span>
-                                    <?php endif; ?>
                                 </td>
-                                <td><?php echo e($order->created_at->format('d M Y, h:i A')); ?></td>
                             </tr>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>
                 </table>
             </div>
+
+            <!-- OTP Instructions for Delivery Orders -->
+            <?php if($orders->where('delivery_type', 'delivery')->where('delivery.otp', '!=', null)->count() > 0): ?>
+                <div class="alert alert-success mt-4">
+                    <h5 class="alert-heading">
+                        <i class="fas fa-shield-alt me-2"></i><?php echo app('translator')->get('messages.delivery_otp_instructions'); ?>
+                    </h5>
+                    <p class="mb-0">
+                        <?php echo app('translator')->get('messages.customer_otp_instructions'); ?>
+                    </p>
+                    <hr>
+                    <ul class="mb-0">
+                        <li><?php echo app('translator')->get('messages.provide_otp_to_delivery_person'); ?></li>
+                        <li><?php echo app('translator')->get('messages.verify_order_before_sharing_otp'); ?></li>
+                        <li><?php echo app('translator')->get('messages.otp_required_for_delivery_completion'); ?></li>
+                    </ul>
+                </div>
+            <?php endif; ?>
 
             <!-- Payment Instructions for Cash Orders -->
             <?php if($orders->where('payment_method', 'cash')->where('payment_status', 'pending')->count() > 0): ?>
@@ -134,7 +99,10 @@
                 <div class="col-md-3">
                     <div class="card text-center bg-warning text-dark">
                         <div class="card-body">
-                            <h5 class="card-title"><?php echo e($orders->whereIn('order_status', ['pending', 'confirmed', 'preparing', 'out_for_delivery'])->count()); ?></h5>
+                            <h5 class="card-title">
+                                <?php echo e($orders->whereIn('order_status', ['pending', 'confirmed', 'preparing', 'out_for_delivery'])->count()); ?>
+
+                            </h5>
                             <p class="card-text"><?php echo app('translator')->get('messages.active_orders'); ?></p>
                         </div>
                     </div>
@@ -142,7 +110,8 @@
                 <div class="col-md-3">
                     <div class="card text-center bg-info text-white">
                         <div class="card-body">
-                            <h5 class="card-title"><?php echo e(__('messages.currency')); ?><?php echo e(number_format($orders->sum('total_amount'), 2)); ?></h5>
+                            <h5 class="card-title">
+                                <?php echo e(__('messages.currency')); ?><?php echo e(number_format($orders->sum('total_amount'), 2)); ?></h5>
                             <p class="card-text"><?php echo app('translator')->get('messages.total_spent'); ?></p>
                         </div>
                     </div>

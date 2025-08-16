@@ -94,23 +94,35 @@
                         <div class="card-body">
                             <?php
                                 $subtotal = $cartItems->sum(fn($item) => $item->menuItem->price * $item->quantity);
-                                $taxRate = 0.1; // 10% IVA
-                                $tax = $subtotal * $taxRate;
-                                $total = $subtotal + $tax;
+                                $total = $subtotal;
+                                $discountAmount = 0;
+                                $discountPercentage = 0;
+                                $finalTotal = $total;
+                                if ($isEligibleForDiscount ?? false) {
+                                    $discountPercentage = $discountPercentage ?? rand(15, 20);
+                                    $discountAmount = ($total * $discountPercentage) / 100;
+                                    $finalTotal = $total - $discountAmount;
+                                }
                             ?>
 
                             <div class="d-flex justify-content-between mb-2">
                                 <span><?php echo app('translator')->get('messages.subtotal'); ?>:</span>
                                 <span id="subtotal-amount">€<?php echo e(number_format($subtotal, 2)); ?></span>
                             </div>
-                            <div class="d-flex justify-content-between mb-2">
-                                <span><?php echo app('translator')->get('messages.tax'); ?>:</span>
-                                <span id="tax-amount">€<?php echo e(number_format($tax, 2)); ?></span>
-                            </div>
+                            <?php if($isEligibleForDiscount ?? false): ?>
+                                <div class="d-flex justify-content-between mb-2 bg-light text-success">
+                                    <div>
+                                        <strong>New User Discount (<?php echo e($discountPercentage); ?>%)</strong>
+                                        <br>
+                                        <small>Welcome! Enjoy your first order on us.</small>
+                                    </div>
+                                    <span>−€<?php echo e(number_format($discountAmount, 2)); ?></span>
+                                </div>
+                            <?php endif; ?>
                             <hr>
                             <div class="d-flex justify-content-between fw-bold h5">
                                 <span><?php echo app('translator')->get('messages.total'); ?>:</span>
-                                <span id="total-amount">€<?php echo e(number_format($total, 2)); ?></span>
+                                <span id="total-amount">€<?php echo e(number_format($finalTotal, 2)); ?></span>
                             </div>
 
                             <div class="d-grid gap-2 mt-4">

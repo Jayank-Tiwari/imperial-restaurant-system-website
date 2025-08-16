@@ -9,15 +9,48 @@ use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
+    /**
+     * Display the contents of the cart.
+     *
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
         $user = Auth::user();
-        $cartItems = CartItem::with('menuItem')->where('user_id', $user->id)->get();
-        $total = $cartItems->sum(fn($item) => $item->menuItem->price * $item->quantity);
+        $cartItems = CartItem::where('user_id', $user->id)->with('menuItem')->get();
 
-        return view('cart.index', compact('cartItems', 'total'));
+        $subtotal = $cartItems->sum(function ($item) {
+            return $item->menuItem->price * $item->quantity;
+        });
+
+        $isEligibleForDiscount = !$user->has_one_time_discount;
+        $discountAmount = 0;
+        $discountPercentage = 0;
+        $finalTotal = $subtotal;
+
+        if ($isEligibleForDiscount && !$cartItems->isEmpty()) {
+            // Generate a random discount percentage to display to the user.
+            $discountPercentage = rand(15, 20);
+            $discountAmount = ($subtotal * $discountPercentage) / 100;
+            $finalTotal = $subtotal - $discountAmount;
+        }
+
+        return view('cart.index', compact(
+            'cartItems',
+            'subtotal',
+            'isEligibleForDiscount',
+            'discountAmount',
+            'discountPercentage',
+            'finalTotal'
+        ));
     }
 
+    /**
+     * Add an item to the cart.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function add(Request $request)
     {
         try {
@@ -36,8 +69,8 @@ class CartController extends Controller
             $menuItem = MenuItem::findOrFail($request->menu_item_id);
             
             $cartItem = CartItem::where('user_id', auth()->id())
-                           ->where('menu_item_id', $request->menu_item_id)
-                           ->first();
+                                  ->where('menu_item_id', $request->menu_item_id)
+                                  ->first();
 
             if ($cartItem) {
                 $cartItem->quantity += $request->quantity;
@@ -69,6 +102,13 @@ class CartController extends Controller
         }
     }
 
+    /**
+     * Update the quantity of a cart item.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
     public function update(Request $request, $id)
     {
         try {
@@ -122,6 +162,12 @@ class CartController extends Controller
         }
     }
 
+    /**
+     * Remove an item from the cart.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
     public function remove($id)
     {
         try {
@@ -155,6 +201,11 @@ class CartController extends Controller
         }
     }
 
+    /**
+     * Get the number of items in the cart.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getCount()
     {
         if (!auth()->check()) {

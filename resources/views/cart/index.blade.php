@@ -93,23 +93,35 @@
                         <div class="card-body">
                             @php
                                 $subtotal = $cartItems->sum(fn($item) => $item->menuItem->price * $item->quantity);
-                                $taxRate = 0.1; // 10% IVA
-                                $tax = $subtotal * $taxRate;
-                                $total = $subtotal + $tax;
+                                $total = $subtotal;
+                                $discountAmount = 0;
+                                $discountPercentage = 0;
+                                $finalTotal = $total;
+                                if ($isEligibleForDiscount ?? false) {
+                                    $discountPercentage = $discountPercentage ?? rand(15, 20);
+                                    $discountAmount = ($total * $discountPercentage) / 100;
+                                    $finalTotal = $total - $discountAmount;
+                                }
                             @endphp
 
                             <div class="d-flex justify-content-between mb-2">
                                 <span>@lang('messages.subtotal'):</span>
                                 <span id="subtotal-amount">€{{ number_format($subtotal, 2) }}</span>
                             </div>
-                            <div class="d-flex justify-content-between mb-2">
-                                <span>@lang('messages.tax'):</span>
-                                <span id="tax-amount">€{{ number_format($tax, 2) }}</span>
-                            </div>
+                            @if($isEligibleForDiscount ?? false)
+                                <div class="d-flex justify-content-between mb-2 bg-light text-success">
+                                    <div>
+                                        <strong>New User Discount ({{ $discountPercentage }}%)</strong>
+                                        <br>
+                                        <small>Welcome! Enjoy your first order on us.</small>
+                                    </div>
+                                    <span>−€{{ number_format($discountAmount, 2) }}</span>
+                                </div>
+                            @endif
                             <hr>
                             <div class="d-flex justify-content-between fw-bold h5">
                                 <span>@lang('messages.total'):</span>
-                                <span id="total-amount">€{{ number_format($total, 2) }}</span>
+                                <span id="total-amount">€{{ number_format($finalTotal, 2) }}</span>
                             </div>
 
                             <div class="d-grid gap-2 mt-4">
