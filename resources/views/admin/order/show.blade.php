@@ -144,10 +144,16 @@
                                     <td>€{{ number_format($order->delivery_charge, 2) }}</td>
                                 </tr>
                             @endif
-                            <tr>
-                                <td colspan="3" class="text-end">@lang('messages.tax') (10%):</td>
-                                <td>€{{ number_format($order->total_amount - $itemsTotal - ($order->delivery_charge ?? 0), 2) }}</td>
-                            </tr>
+                            @if($order->discount_percentage && $order->discount_percentage > 0)
+                                <tr>
+                                    <td colspan="3" class="text-end text-success">
+                                        @lang('messages.discount') ({{ $order->discount_percentage }}%)
+                                    </td>
+                                    <td class="text-success">
+                                        −€{{ number_format($discountAmount, 2) }}
+                                    </td>
+                                </tr>
+                            @endif
                             <tr class="fw-bold table-success">
                                 <td colspan="3" class="text-end">@lang('messages.total'):</td>
                                 <td>€{{ number_format($order->total_amount, 2) }}</td>

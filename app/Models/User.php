@@ -24,6 +24,7 @@ class User extends Authenticatable
         'password',
         'role',
         'active',
+        'has_one_time_discount',
     ];
 
     /**

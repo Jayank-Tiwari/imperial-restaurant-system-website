@@ -16,6 +16,7 @@ class Order extends Model
         'order_status',
         'total_amount',
         'delivery_type',
+        'discount_percentage',
         'table_no',
         'delivery_address',
         'payment_method', 

@@ -92,23 +92,15 @@
                         </div>
                         <div class="card-body">
                             @php
-                                $subtotal = $cartItems->sum(fn($item) => $item->menuItem->price * $item->quantity);
-                                $total = $subtotal;
-                                $discountAmount = 0;
-                                $discountPercentage = 0;
-                                $finalTotal = $total;
-                                if ($isEligibleForDiscount ?? false) {
-                                    $discountPercentage = $discountPercentage ?? rand(15, 20);
-                                    $discountAmount = ($total * $discountPercentage) / 100;
-                                    $finalTotal = $total - $discountAmount;
-                                }
+                                // Use values from controller only!
+                                // $subtotal, $discountPercentage, $discountAmount, $finalTotal are already set
                             @endphp
 
                             <div class="d-flex justify-content-between mb-2">
                                 <span>@lang('messages.subtotal'):</span>
                                 <span id="subtotal-amount">€{{ number_format($subtotal, 2) }}</span>
                             </div>
-                            @if($isEligibleForDiscount ?? false)
+                            @if($isEligibleForDiscount)
                                 <div class="d-flex justify-content-between mb-2 bg-light text-success">
                                     <div>
                                         <strong>New User Discount ({{ $discountPercentage }}%)</strong>
@@ -169,12 +161,11 @@
                 const quantity = parseInt(element.dataset.quantity);
                 subtotal += price * quantity;
             });
-            
-            const tax = subtotal * 0.1;
-            const total = subtotal + tax;
-            
+
+            // Remove tax/iva calculation
+            const total = subtotal;
+
             document.getElementById('subtotal-amount').textContent = '€' + subtotal.toFixed(2);
-            document.getElementById('tax-amount').textContent = '€' + tax.toFixed(2);
             document.getElementById('total-amount').textContent = '€' + total.toFixed(2);
         }
 

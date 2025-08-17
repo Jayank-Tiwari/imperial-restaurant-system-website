@@ -34,7 +34,14 @@ class OrderController extends Controller
     public function show(Order $order)
     {
         $order->load(['user', 'orderItems.menuItem']);
-        return view('admin.order.show', compact('order'));
+        $itemsTotal = $order->orderItems->sum(fn($item) => $item->price * $item->quantity);
+
+        $discountAmount = 0;
+        if ($order->discount_percentage && $order->discount_percentage > 0) {
+            $discountAmount = ($itemsTotal + ($order->delivery_charge ?? 0)) * $order->discount_percentage / 100;
+        }
+
+        return view('admin.order.show', compact('order', 'itemsTotal', 'discountAmount'));
     }
     public function updatePayment(Request $request, Order $order)
     {

@@ -25,16 +25,18 @@ class CheckoutController extends Controller
         $subtotal = $cartItems->sum(fn($item) => $item->menuItem->price * $item->quantity);
         $deliveryFee = 50.00; // Hardcoded delivery fee for delivery orders
 
-        // Discount logic
         $isEligibleForDiscount = !$user->has_one_time_discount;
-        $discountPercentage = 0;
-        $discountAmount = 0;
-        $finalTotal = $subtotal + $deliveryFee;
 
         if ($isEligibleForDiscount) {
-            $discountPercentage = rand(15, 20);
+            $discountPercentage = session('discount_percentage', rand(15, 20));
+            session(['discount_percentage' => $discountPercentage]); // Ensure it's set
             $discountAmount = (($subtotal + $deliveryFee) * $discountPercentage) / 100;
             $finalTotal = ($subtotal + $deliveryFee) - $discountAmount;
+        } else {
+            $discountPercentage = 0;
+            $discountAmount = 0;
+            $finalTotal = $subtotal + $deliveryFee;
+            session()->forget('discount_percentage');
         }
 
         return view('checkout.index', compact(
@@ -219,6 +221,7 @@ class CheckoutController extends Controller
             'payment_method' => 'card',
             'order_status' => 'confirmed',
             'total_amount' => $data['total'],
+            'discount_percentage' => $data['discount_percentage'] ?? null, // <-- Add this line
             'delivery_type' => 'delivery',
             'delivery_address' => $data['address'],
             'delivery_fee' => $data['delivery_fee'],

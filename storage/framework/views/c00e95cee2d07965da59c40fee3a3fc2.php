@@ -24,6 +24,8 @@
                             <tr>
                                 <td><strong>#<?php echo e($order->id); ?></strong></td>
                                 <td>
+                                    <?php echo e(ucfirst($order->delivery_type ?? 'N/A')); ?>
+
                                 </td>
                                 <td><strong><?php echo e(__('messages.currency')); ?><?php echo e(number_format($order->total_amount, 2)); ?></strong>
                                 </td>
@@ -35,6 +37,8 @@
                                     <?php endif; ?>
                                 </td>
                                 <td>
+                                    <?php echo e(ucfirst($order->payment_method ?? 'N/A')); ?>
+
                                 </td>
                             </tr>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

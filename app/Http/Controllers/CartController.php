@@ -24,23 +24,27 @@ class CartController extends Controller
         });
 
         $isEligibleForDiscount = !$user->has_one_time_discount;
-        $discountAmount = 0;
-        $discountPercentage = 0;
-        $finalTotal = $subtotal;
 
-        if ($isEligibleForDiscount && !$cartItems->isEmpty()) {
-            // Generate a random discount percentage to display to the user.
-            $discountPercentage = rand(15, 20);
-            $discountAmount = ($subtotal * $discountPercentage) / 100;
-            $finalTotal = $subtotal - $discountAmount;
+        // Use session to keep discount percentage consistent
+        if ($isEligibleForDiscount) {
+            if (!session()->has('discount_percentage')) {
+                session(['discount_percentage' => rand(15, 20)]);
+            }
+            $discountPercentage = session('discount_percentage');
+        } else {
+            $discountPercentage = 0;
+            session()->forget('discount_percentage');
         }
+
+        $discountAmount = $isEligibleForDiscount ? ($subtotal * $discountPercentage / 100) : 0;
+        $finalTotal = $subtotal - $discountAmount;
 
         return view('cart.index', compact(
             'cartItems',
             'subtotal',
             'isEligibleForDiscount',
-            'discountAmount',
             'discountPercentage',
+            'discountAmount',
             'finalTotal'
         ));
     }

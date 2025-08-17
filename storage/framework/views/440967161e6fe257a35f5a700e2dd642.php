@@ -144,10 +144,17 @@
                                     <td>€<?php echo e(number_format($order->delivery_charge, 2)); ?></td>
                                 </tr>
                             <?php endif; ?>
-                            <tr>
-                                <td colspan="3" class="text-end"><?php echo app('translator')->get('messages.tax'); ?> (10%):</td>
-                                <td>€<?php echo e(number_format($order->total_amount - $itemsTotal - ($order->delivery_charge ?? 0), 2)); ?></td>
-                            </tr>
+                            <?php if($order->discount_percentage && $order->discount_percentage > 0): ?>
+                                <tr>
+                                    <td colspan="3" class="text-end text-success">
+                                        <?php echo app('translator')->get('messages.discount'); ?> (<?php echo e($order->discount_percentage); ?>%)
+                                    </td>
+                                    <td class="text-success">
+                                        −€<?php echo e(number_format($discountAmount, 2)); ?>
+
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
                             <tr class="fw-bold table-success">
                                 <td colspan="3" class="text-end"><?php echo app('translator')->get('messages.total'); ?>:</td>
                                 <td>€<?php echo e(number_format($order->total_amount, 2)); ?></td>

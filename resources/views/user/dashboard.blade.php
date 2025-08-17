@@ -24,6 +24,7 @@
                             <tr>
                                 <td><strong>#{{ $order->id }}</strong></td>
                                 <td>
+                                    {{ ucfirst($order->delivery_type ?? 'N/A') }}
                                 </td>
                                 <td><strong>{{ __('messages.currency') }}{{ number_format($order->total_amount, 2) }}</strong>
                                 </td>
@@ -35,6 +36,7 @@
                                     @endif
                                 </td>
                                 <td>
+                                    {{ ucfirst($order->payment_method ?? 'N/A') }}
                                 </td>
                             </tr>
                         @endforeach

@@ -97,6 +97,7 @@ class AuthController extends Controller
             'phone' => $request->phone,
             'password' => Hash::make($request->password),
             'role' => $request->role,
+            'has_one_time_discount' => false, // <-- Ensure this is set for new users
         ]);
 
         Auth::login($user);
