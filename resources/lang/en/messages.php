@@ -88,7 +88,7 @@ return [
     'delivery_address' => 'Delivery Address',
     'special_instructions' => 'Special Instructions',
     'bill_summary' => 'Bill Summary',
-    'subtotal' => 'Subtotal (Excl. IVA)',
+    'subtotal' => 'Subtotal (Incl. IVA)',
     'tax' => 'IVA (10%)',
     'place_order' => 'Place Order',
     'payment_details' => 'Payment Details',

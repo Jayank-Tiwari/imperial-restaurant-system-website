@@ -78,7 +78,6 @@ class StripeController extends Controller
             'delivery_type' => 'delivery',
             'delivery_address' => $data['address'],
             'delivery_fee' => $data['delivery_fee'],
-            'tax' => $data['tax'],
         ]);
 
         // ✅ Create order items

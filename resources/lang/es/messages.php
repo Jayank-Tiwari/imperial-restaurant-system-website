@@ -88,7 +88,7 @@ return [
     'delivery_address' => 'Dirección de Entrega',
     'special_instructions' => 'Instrucciones Especiales',
     'bill_summary' => 'Resumen de la Cuenta',
-    'subtotal' => 'Subtotal (sin IVA)',
+    'subtotal' => 'Subtotal (Incl. IVA)',
     'tax' => 'IVA (10%)',
     'place_order' => 'Realizar Pedido',
     'payment_details' => 'Detalles de Pago',
