@@ -37,9 +37,10 @@
                                 </div>
                             @else
                                 @foreach ($cartItems as $item)
-                                    <div class="row align-items-center border-bottom py-3" id="cart-item-{{ $item->id }}">
+                                    <div class="row align-items-center border-bottom py-3"
+                                        id="cart-item-{{ $item->id }}">
                                         <div class="col-md-2">
-                                            <img src="{{ asset('storage/' . $item->menuItem->image) }}"
+                                            <img src="{{ asset($item->menuItem->image) }}"
                                                 class="img-fluid rounded" alt="{{ $item->menuItem->name }}">
                                         </div>
                                         <div class="col-md-4">
@@ -48,31 +49,29 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class="input-group input-group-sm">
-                                                <button class="btn btn-outline-secondary quantity-btn" 
-                                                        data-cart-id="{{ $item->id }}" 
-                                                        data-action="decrease" 
-                                                        type="button">
+                                                <button class="btn btn-outline-secondary quantity-btn"
+                                                    data-cart-id="{{ $item->id }}" data-action="decrease"
+                                                    type="button">
                                                     <i class="fas fa-minus"></i>
                                                 </button>
                                                 <input type="text" class="form-control text-center quantity-display"
-                                                        value="{{ $item->quantity }}" readonly>
-                                                <button class="btn btn-outline-secondary quantity-btn" 
-                                                        data-cart-id="{{ $item->id }}" 
-                                                        data-action="increase" 
-                                                        type="button">
+                                                    value="{{ $item->quantity }}" readonly>
+                                                <button class="btn btn-outline-secondary quantity-btn"
+                                                    data-cart-id="{{ $item->id }}" data-action="increase"
+                                                    type="button">
                                                     <i class="fas fa-plus"></i>
                                                 </button>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
-                                            <span class="fw-bold item-total" data-price="{{ $item->menuItem->price }}" data-quantity="{{ $item->quantity }}">
+                                            <span class="fw-bold item-total" data-price="{{ $item->menuItem->price }}"
+                                                data-quantity="{{ $item->quantity }}">
                                                 €{{ number_format($item->menuItem->price * $item->quantity, 2) }}
                                             </span>
                                         </div>
                                         <div class="col-md-1">
-                                            <button class="btn btn-sm btn-outline-danger remove-item" 
-                                                    data-cart-id="{{ $item->id }}" 
-                                                    type="button">
+                                            <button class="btn btn-sm btn-outline-danger remove-item"
+                                                data-cart-id="{{ $item->id }}" type="button">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </div>
@@ -100,7 +99,7 @@
                                 <span>@lang('messages.subtotal'):</span>
                                 <span id="subtotal-amount">€{{ number_format($subtotal, 2) }}</span>
                             </div>
-                            @if($isEligibleForDiscount)
+                            @if ($isEligibleForDiscount)
                                 <div class="d-flex justify-content-between mb-2 bg-light text-success">
                                     <div>
                                         <strong>New User Discount ({{ $discountPercentage }}%)</strong>
@@ -176,58 +175,17 @@
                 const action = this.dataset.action;
                 const quantityDisplay = this.parentElement.querySelector('.quantity-display');
                 const itemTotalElement = this.closest('.row').querySelector('.item-total');
-                
+
                 // Disable button during request
                 this.disabled = true;
-                
+
                 fetch(`/cart/update/${cartItemId}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: `_method=PUT&action=${action}`
-                })
-                .then(response => {
-                    if (response.redirected) {
-                        window.location.href = response.url;
-                        return;
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if (data && data.success) {
-                        if (data.cart_count !== undefined) {
-                            updateCartCount(data.cart_count);
-                        }
-                        location.reload(); // Reload to update everything
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    location.reload(); // Reload on error
-                })
-                .finally(() => {
-                    this.disabled = false;
-                });
-            });
-        });
-
-        // Remove item
-        document.querySelectorAll('.remove-item').forEach(button => {
-            button.addEventListener('click', function() {
-                const cartItemId = this.dataset.cartId;
-
-                if (confirm('Are you sure you want to remove this item?')) {
-                    this.disabled = true;
-                    
-                    fetch(`/cart/remove/${cartItemId}`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded',
                             'X-CSRF-TOKEN': '{{ csrf_token() }}'
                         },
-                        body: '_method=DELETE'
+                        body: `_method=PUT&action=${action}`
                     })
                     .then(response => {
                         if (response.redirected) {
@@ -241,16 +199,57 @@
                             if (data.cart_count !== undefined) {
                                 updateCartCount(data.cart_count);
                             }
-                            location.reload();
+                            location.reload(); // Reload to update everything
                         }
                     })
                     .catch(error => {
                         console.error('Error:', error);
-                        location.reload();
+                        location.reload(); // Reload on error
                     })
                     .finally(() => {
                         this.disabled = false;
                     });
+            });
+        });
+
+        // Remove item
+        document.querySelectorAll('.remove-item').forEach(button => {
+            button.addEventListener('click', function() {
+                const cartItemId = this.dataset.cartId;
+
+                if (confirm('Are you sure you want to remove this item?')) {
+                    this.disabled = true;
+
+                    fetch(`/cart/remove/${cartItemId}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: '_method=DELETE'
+                        })
+                        .then(response => {
+                            if (response.redirected) {
+                                window.location.href = response.url;
+                                return;
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data && data.success) {
+                                if (data.cart_count !== undefined) {
+                                    updateCartCount(data.cart_count);
+                                }
+                                location.reload();
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            location.reload();
+                        })
+                        .finally(() => {
+                            this.disabled = false;
+                        });
                 }
             });
         });

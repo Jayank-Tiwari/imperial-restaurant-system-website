@@ -95,6 +95,7 @@ return [
     'card_number' => 'Número de Tarjeta',
     'card_expiry' => 'MM/AA',
     'card_cvc' => 'CVC',
+    'phone_format_info' => 'Formato de número de teléfono: +34 123 456 789',
 
     // Checkout Page (newly added)
     'select_dinein_or_delivery' => 'Por favor, selecciona En el Restaurante o A Domicilio para continuar.',

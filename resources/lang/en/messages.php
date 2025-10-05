@@ -188,6 +188,7 @@ return [
     'book_your_table_now' => 'Book Your Table Now',
     'book_your_table_2' => 'Book your table and let us transport you on a culinary journey you won\'t forget.',
     'our_menu' => 'Our Menu',
+    'phone_format_info' => 'Phone number format: +34 123 456 789',
     'discover_our_dishes' => 'Discover our carefully crafted dishes made with the finest ingredients.',
     'all_items' => 'All Items',
     'table_reservation' => 'Table Reservation',
