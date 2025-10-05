@@ -25,7 +25,10 @@ class CheckoutController extends Controller
         $subtotal = $cartItems->sum(fn($item) => $item->menuItem->price * $item->quantity);
         $deliveryFee = 50.00; // Hardcoded delivery fee for delivery orders
 
-        $isEligibleForDiscount = !$user->has_one_time_discount;
+    $isEligibleForDiscount = !$user->has_one_time_discount;
+
+    // Shop closed on Wednesday - pass flag to view and block orders server-side in store methods
+    $shopClosed = now()->isWednesday();
 
         if ($isEligibleForDiscount) {
             $discountPercentage = session('discount_percentage', rand(15, 20));
@@ -47,6 +50,7 @@ class CheckoutController extends Controller
             'discountPercentage',
             'discountAmount',
             'finalTotal'
+            , 'shopClosed'
         ));
     }
 
@@ -54,6 +58,11 @@ class CheckoutController extends Controller
     public function storeDineIn(Request $request)
     {
         $request->validate(['table_no' => 'required|integer']);
+
+        // Block dine-in orders if shop is closed
+        if (now()->isWednesday()) {
+            return back()->with('error', 'We are closed on Wednesdays. Orders cannot be placed today.');
+        }
 
         $user = Auth::user();
         $cartItems = CartItem::where('user_id', $user->id)->with('menuItem')->get();
@@ -116,6 +125,11 @@ class CheckoutController extends Controller
             'postal_code' => 'required|string',
             'payment_method' => 'required|in:card,cash',
         ]);
+
+        // Block delivery orders if shop is closed
+        if (now()->isWednesday()) {
+            return back()->with('error', 'We are closed on Wednesdays. Delivery orders cannot be placed today.');
+        }
 
         $deliveryCharges = [
             '08880' => 0.00,
@@ -210,6 +224,11 @@ class CheckoutController extends Controller
         $data = Session::pull('delivery_order');
         if (!$data) {
             return redirect()->route('menu')->with('error', 'No pending order found.');
+        }
+
+        // Prevent completing payment if shop is closed
+        if (now()->isWednesday()) {
+            return redirect()->route('menu')->with('error', 'We are closed on Wednesdays. Orders cannot be completed today.');
         }
 
         $user = Auth::user();

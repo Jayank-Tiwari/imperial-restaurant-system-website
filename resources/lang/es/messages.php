@@ -111,6 +111,10 @@ return [
     'delivery_area_note' => 'Entrega disponible solo en áreas seleccionadas.',
     'proceed_to_payment' => 'Proceder al Pago',
     'delivery_charge' => 'Coste de Envío',
+    // Shop closed notices
+    'shop_closed_title' => 'Estamos cerrados los miércoles.',
+    'shop_closed_message' => 'No se pueden hacer pedidos hoy. Vuelve mañana, por favor.',
+    'shop_closed_badge' => 'Cerrado hoy — pedidos deshabilitados',
 
     // User Dashboard
     'my_reservations' => 'Mis Reservas',
@@ -232,6 +236,8 @@ return [
     'advance_booking_description' => 'Las reservas se pueden hacer con hasta 30 días de antelación.',
     'reservation_success' => '¡Reserva realizada con éxito! Esperamos darle la bienvenida.',
     'reservation_error' => 'Hubo un error con su reserva. Por favor, inténtelo de nuevo.',
+        'reservation_closed_title' => 'Las reservas no se aceptan los miércoles.',
+        'reservation_closed_message' => 'Nuestro restaurante está cerrado los miércoles. Por favor, elija otro día para reservar.',
     'welcome_back' => '¡Bienvenido de nuevo! Por favor, inicia sesión en tu cuenta.',
     'dont_have_account' => '¿No tienes una cuenta?',
     'sign_up' => 'Regístrate',

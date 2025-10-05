@@ -24,7 +24,14 @@
 
             {{-- Error Message --}}
             @if (session('error'))
-                <div class="alert alert-danger">@lang(session('reservation_error'))</div>
+                <div class="alert alert-danger">{{ session('error') }}</div>
+            @endif
+
+            @if (!empty($shopClosed) && $shopClosed)
+                <div class="alert alert-warning text-center">
+                    <strong>@lang('messages.shop_closed_title')</strong>
+                    <div>@lang('messages.shop_closed_message')</div>
+                </div>
             @endif
 
             <div class="row justify-content-center">
@@ -182,7 +189,7 @@
 
                                 {{-- Submit --}}
                                 <div class="d-grid gap-2 mt-4">
-                                    <button type="submit" class="btn btn-primary btn-lg">
+                                    <button type="submit" class="btn btn-primary btn-lg" @if(!empty($shopClosed) && $shopClosed) disabled @endif>
                                         <i class="fas fa-calendar-check me-2"></i>@lang('messages.book_table')
                                     </button>
                                 </div>

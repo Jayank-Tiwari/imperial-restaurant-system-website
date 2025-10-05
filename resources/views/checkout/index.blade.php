@@ -20,6 +20,13 @@
                         <div class="alert alert-danger text-center">{{ session('error') }}</div>
                     @endif
 
+                    @if (!empty($shopClosed) && $shopClosed)
+                        <div class="alert alert-warning text-center">
+                            <strong>@lang('messages.shop_closed_title')</strong>
+                            <div>@lang('messages.shop_closed_message')</div>
+                        </div>
+                    @endif
+
                     <ul class="nav nav-tabs nav-fill mb-4" id="checkoutTabs" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active fw-semibold" id="dinein-tab" data-bs-toggle="tab" data-bs-target="#dinein"
@@ -147,6 +154,11 @@
                             <h5 class="mb-0"><i class="fas fa-receipt me-2"></i>@lang('messages.bill_summary')</h5>
                         </div>
                         <div class="card-body">
+                            @if (!empty($shopClosed) && $shopClosed)
+                                <div class="mb-3 text-center">
+                                    <span class="badge bg-warning text-dark">@lang('messages.shop_closed_badge')</span>
+                                </div>
+                            @endif
                             <div class="d-flex justify-content-between mb-2">
                                 <span>@lang('messages.subtotal'):</span>
                                 <span id="subtotal">{{ __('messages.currency') }}{{ number_format($subtotal ?? 0, 2) }}</span>
@@ -328,6 +340,12 @@
                 updateDeliveryButton();
                 updateDineinButton();
                 updateSummaryForTab('dinein');
+
+                // If shop is closed, disable submit buttons and form controls
+                if ({{ !empty($shopClosed) && $shopClosed ? 'true' : 'false' }}) {
+                    document.querySelectorAll('button[type="submit"]').forEach(b => b.setAttribute('disabled', 'disabled'));
+                    document.querySelectorAll('input, textarea, select').forEach(el => el.setAttribute('disabled', 'disabled'));
+                }
             });
         </script>
     @endsection

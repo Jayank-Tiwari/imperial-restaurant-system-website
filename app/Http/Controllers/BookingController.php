@@ -14,7 +14,8 @@ class BookingController extends Controller
     // Show booking form for users
     public function homeindex()
     {
-        return view('booking');
+        $shopClosed = now()->isWednesday();
+        return view('booking', compact('shopClosed'));
     }
 
     // Store booking
@@ -22,6 +23,11 @@ class BookingController extends Controller
     {
         if (!Auth::check()) {
             return redirect()->route('login')->with('error', 'You must be logged in to book a table.');
+        }
+
+        // Prevent bookings on Wednesdays
+        if (now()->isWednesday()) {
+            return redirect()->back()->with('error', 'We are closed on Wednesdays. Reservations cannot be made today.');
         }
 
         $request->validate([

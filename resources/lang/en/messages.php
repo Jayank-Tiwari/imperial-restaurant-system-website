@@ -110,6 +110,10 @@ return [
     'delivery_area_note' => 'Delivery available within select areas only.',
     'proceed_to_payment' => 'Proceed to Payment',
     'delivery_charge' => 'Delivery Charge',
+    // Shop closed notices
+    'shop_closed_title' => 'We are closed on Wednesdays.',
+    'shop_closed_message' => 'Orders cannot be placed today. Please come back tomorrow.',
+    'shop_closed_badge' => 'We are closed today — orders disabled',
 
     // User Dashboard
     'my_reservations' => 'My Reservations',
@@ -230,6 +234,8 @@ return [
     'flexible_cancellation_policy' => 'Flexible cancellation policy',
     'party_size_description' => 'For parties of 8 or more, please call us directly.',
     'advance_booking_description' => 'Reservations can be made up to 30 days in advance.',
+    'reservation_closed_title' => 'Reservations are not accepted on Wednesdays.',
+    'reservation_closed_message' => 'Our restaurant is closed on Wednesdays. Please choose another day to book.',
     'reservation_success' => 'Reservation successful! We look forward to welcoming you.',
     'reservation_error' => 'There was an error with your reservation. Please try again.',
     'welcome_back' => 'Welcome back! Please sign in to your account.',
