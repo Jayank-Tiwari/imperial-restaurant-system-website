@@ -216,7 +216,7 @@
                 
                 // Delivery charges mapping
                 const deliveryCharges = {
-                    '08880': 0.00,
+                    '08880': 3.00,
                     '08800': 0.00,
                     '08812': 2.00,
                     '08870': 4.00
