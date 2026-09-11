@@ -31,7 +31,7 @@ class CheckoutController extends Controller
     $shopClosed = now()->isWednesday();
 
         if ($isEligibleForDiscount) {
-            $discountPercentage = session('discount_percentage', rand(15, 20));
+            $discountPercentage = session('discount_percentage', 20);
             session(['discount_percentage' => $discountPercentage]); // Ensure it's set
             $discountAmount = (($subtotal + $deliveryFee) * $discountPercentage) / 100;
             $finalTotal = ($subtotal + $deliveryFee) - $discountAmount;
@@ -157,15 +157,16 @@ class CheckoutController extends Controller
         $discountPercentage = null;
 
         if (!$user->has_one_time_discount) {
-            $discountPercentage = rand(15, 20);
+            $discountPercentage = 20;
             $discountAmount = ($total * $discountPercentage) / 100;
             $total -= $discountAmount;
-
-            $user->has_one_time_discount = true;
-            $user->save();
         }
 
         if ($request->payment_method === 'cash') {
+            if ($discountPercentage) {
+                $user->has_one_time_discount = true;
+                $user->save();
+            }
             $order = Order::create([
                 'user_id' => $user->id,
                 'payment_status' => 'pending',
@@ -245,6 +246,11 @@ class CheckoutController extends Controller
             'delivery_address' => $data['address'],
             'delivery_fee' => $data['delivery_fee'],
         ]);
+
+        if (isset($data['discount_percentage']) && $data['discount_percentage'] > 0) {
+            $user->has_one_time_discount = true;
+            $user->save();
+        }
 
         foreach ($cartItems as $item) {
             $order->orderItems()->create([

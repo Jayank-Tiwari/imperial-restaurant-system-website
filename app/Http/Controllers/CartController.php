@@ -28,7 +28,7 @@ class CartController extends Controller
         // Use session to keep discount percentage consistent
         if ($isEligibleForDiscount) {
             if (!session()->has('discount_percentage')) {
-                session(['discount_percentage' => rand(15, 20)]);
+                session(['discount_percentage' => 20]);
             }
             $discountPercentage = session('discount_percentage');
         } else {

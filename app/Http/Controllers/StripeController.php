@@ -34,7 +34,7 @@ class StripeController extends Controller
                     'price_data' => [
                         'currency' => 'eur',
                         'product_data' => ['name' => 'Imperial Spice Delivery Order'],
-                        'unit_amount' => $data['total'] * 100, // Amount in cents
+                        'unit_amount' => round($data['total'] * 100), // Amount in cents
                     ],
                     'quantity' => 1,
                 ]
