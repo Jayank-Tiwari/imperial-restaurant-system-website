@@ -6,6 +6,12 @@
         font-size: 0.75rem;
         padding: 0.35em 0.5em;
     }
+    .nav-link.active {
+        background-color: #d35400 !important;
+        color: white !important;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(211, 84, 0, 0.2);
+    }
 </style>
 <ul class="nav flex-column">
     <li class="nav-item">
