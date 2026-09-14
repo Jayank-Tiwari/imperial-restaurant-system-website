@@ -53,17 +53,36 @@
         -ms-overflow-style: none; /* IE/Edge */
     }
 
-    /* Desktop centering and wrapping */
+    /* Remove desktop centering to prevent left-side clipping on overflow */
     @media (min-width: 992px) {
         .filter-buttons-wrapper {
-            justify-content: center;
-            flex-wrap: wrap;
-            overflow-x: visible;
+            justify-content: flex-start;
+            /* Padding to align with container on desktop */
+            padding-left: 15px;
+            padding-right: 15px;
         }
     }
 
     .filter-buttons-wrapper::-webkit-scrollbar {
-        display: none; /* Chrome/Safari */
+        height: 6px; /* Show a thin scrollbar */
+        display: none; /* Hide on mobile by default */
+    }
+
+    @media (min-width: 992px) {
+        .filter-buttons-wrapper::-webkit-scrollbar {
+            display: block; /* Show on desktop */
+        }
+        .filter-buttons-wrapper::-webkit-scrollbar-track {
+            background: #f1f3f5;
+            border-radius: 10px;
+        }
+        .filter-buttons-wrapper::-webkit-scrollbar-thumb {
+            background: #ced4da;
+            border-radius: 10px;
+        }
+        .filter-buttons-wrapper::-webkit-scrollbar-thumb:hover {
+            background: #adb5bd;
+        }
     }
 
     .filter-buttons-wrapper .btn {
