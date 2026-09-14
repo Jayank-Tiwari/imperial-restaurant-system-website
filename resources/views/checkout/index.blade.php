@@ -519,33 +519,54 @@
         if (takeawayCardRadio) takeawayCardRadio.addEventListener('change', updateTakeawayButton);
         if (takeawayCashRadio) takeawayCashRadio.addEventListener('change', updateTakeawayButton);
 
-        // Listen for Order Type (Tab) Changes and Manually Toggle Panes
-        document.querySelectorAll('input[name="order_type"]').forEach(radio => {
-            radio.addEventListener('change', function() {
-                // 1. Hide all tab panes
-                document.querySelectorAll('.tab-pane').forEach(pane => {
-                    pane.classList.remove('show', 'active');
-                });
+        // Ultra Foolproof Tab Switching Logic
+        const orderRadios = document.querySelectorAll('input[name="order_type"]');
+        
+        function handleTabSwitch(radio) {
+            try {
+                // 1. Force hide all panes via CSS display
+                const panes = document.querySelectorAll('.tab-pane');
+                for (let i = 0; i < panes.length; i++) {
+                    panes[i].classList.remove('show', 'active');
+                    panes[i].style.display = 'none';
+                }
                 
-                // 2. Show the target tab pane
-                const targetId = this.getAttribute('data-target');
-                const targetPane = document.querySelector(targetId);
-                if (targetPane) {
-                    targetPane.classList.add('show', 'active');
+                // 2. Force show target pane
+                const targetId = radio.getAttribute('data-target');
+                if (targetId) {
+                    const targetPane = document.querySelector(targetId);
+                    if (targetPane) {
+                        targetPane.classList.add('show', 'active');
+                        targetPane.style.display = 'block';
+                    }
                 }
 
-                // 3. Update logic
-                if (this.id === 'type_delivery') {
-                    updateSummaryForTab('delivery');
-                    updateDeliveryButton();
-                } else if (this.id === 'type_dinein') {
-                    updateSummaryForTab('dinein');
-                    updateDineinButton();
-                } else if (this.id === 'type_takeaway') {
-                    updateSummaryForTab('takeaway');
-                    updateTakeawayButton();
+                // 3. Safely execute update logic
+                if (radio.id === 'type_delivery') {
+                    if (typeof updateSummaryForTab === 'function') updateSummaryForTab('delivery');
+                    if (typeof updateDeliveryButton === 'function') updateDeliveryButton();
+                } else if (radio.id === 'type_dinein') {
+                    if (typeof updateSummaryForTab === 'function') updateSummaryForTab('dinein');
+                    if (typeof updateDineinButton === 'function') updateDineinButton();
+                } else if (radio.id === 'type_takeaway') {
+                    if (typeof updateSummaryForTab === 'function') updateSummaryForTab('takeaway');
+                    if (typeof updateTakeawayButton === 'function') updateTakeawayButton();
                 }
-            });
+            } catch (err) {
+                console.error("Tab switch error: ", err);
+            }
+        }
+
+        orderRadios.forEach(radio => {
+            radio.addEventListener('change', function() { handleTabSwitch(this); });
+            radio.addEventListener('click', function() { handleTabSwitch(this); });
+        });
+        
+        // Initial setup for default checked radio
+        orderRadios.forEach(radio => {
+            if (radio.checked) {
+                handleTabSwitch(radio);
+            }
         });
 
         postalCodeInput?.addEventListener('input', function () {
