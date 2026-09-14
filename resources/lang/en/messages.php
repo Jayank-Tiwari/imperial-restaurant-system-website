@@ -652,4 +652,5 @@ return [
     'login_to_add_cart' => 'Please log in to add items to the cart.',
     'error_adding_cart' => 'Error adding item to cart',
 
+    'premium_dining_experience' => 'Premium Dining Experience',
 ];

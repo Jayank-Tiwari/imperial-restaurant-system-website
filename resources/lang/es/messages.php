@@ -644,4 +644,5 @@ return [
     'login_to_add_cart' => 'Por favor, inicie sesión para añadir artículos al carrito.',
     'error_adding_cart' => 'Error al añadir el artículo al carrito',
 
+    'premium_dining_experience' => 'Experiencia Gastronómica Premium',
 ];

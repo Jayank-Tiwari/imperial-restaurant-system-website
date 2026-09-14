@@ -317,7 +317,7 @@
                         <div class="accent-bg text-center text-white py-4 px-3" style="border-radius: 16px 16px 0 0;">
                             <i class="fas fa-utensils fs-1 mb-3 opacity-75"></i>
                             <h4 class="fw-bold mb-0">Imperial Spice</h4>
-                            <p class="mb-0 text-white-50 small mt-1">Premium Dining Experience</p>
+                            <p class="mb-0 text-white-50 small mt-1">@lang('messages.premium_dining_experience')</p>
                         </div>
                         
                         <div class="booking-card-body flex-fill d-flex flex-column gap-4">
