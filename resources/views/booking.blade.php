@@ -267,10 +267,10 @@
                                                 <option value="" disabled selected></option>
                                                 @php
                                                     $occasionOptions = [
-                                                        'birthday' => __('messages.birthday'),
-                                                        'anniversary' => __('messages.anniversary'),
-                                                        'business' => __('messages.business'),
-                                                        'other' => __('messages.other'),
+                                                        'birthday' => __('messages.occasion_options.birthday'),
+                                                        'anniversary' => __('messages.occasion_options.anniversary'),
+                                                        'business' => __('messages.occasion_options.business'),
+                                                        'other' => __('messages.occasion_options.other'),
                                                     ];
                                                 @endphp
                                                 @foreach ($occasionOptions as $occasion => $label)
