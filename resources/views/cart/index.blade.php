@@ -241,7 +241,10 @@
                                 @foreach ($cartItems as $item)
                                     <div class="row align-items-center cart-item-row" id="cart-item-{{ $item->id }}">
                                         <div class="col-3 col-md-2 mb-3 mb-md-0">
-                                            <img src="{{ asset($item->menuItem->image) }}" class="cart-item-img" alt="{{ $item->menuItem->name }}">
+                                            <img src="{{ asset($item->menuItem->image) }}" 
+                                                 class="cart-item-img" 
+                                                 alt="{{ $item->menuItem->name }}"
+                                                 onerror="this.onerror=null; this.src='https://placehold.co/400x400/f8f9fa/d35400?text={{ urlencode($item->menuItem->name) }}';">
                                         </div>
                                         <div class="col-9 col-md-4 mb-3 mb-md-0">
                                             <h6 class="fw-bold text-dark mb-1">{{ $item->menuItem->name }}</h6>
