@@ -109,25 +109,26 @@
         </div>
     </div>
 
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Desktop Sidebar -->
-            <nav class="col-md-3 col-lg-2 d-none d-md-block sidebar user-sidebar">
-                <div class="position-sticky pt-0">
-                    <div class="user-sidebar-brand d-none d-md-block">
-                        <h4><i class="fas fa-utensils"></i> Imperial Spice</h4>
-                    </div>
-                    <div class="pt-2">
-                        @include('user.sidebar-menu')
-                    </div>
+    <!-- Page Wrapper -->
+    <div class="d-flex flex-column flex-md-row min-vh-100 mt-5 mt-md-0">
+        
+        <!-- Desktop Sidebar -->
+        <nav class="d-none d-md-block user-sidebar flex-shrink-0">
+            <div class="position-sticky top-0 vh-100 overflow-y-auto">
+                <div class="user-sidebar-brand d-none d-md-block">
+                    <h4><i class="fas fa-utensils"></i> Imperial Spice</h4>
                 </div>
-            </nav>
+                <div class="pt-2">
+                    @include('user.sidebar-menu')
+                </div>
+            </div>
+        </nav>
 
-            <!-- Main Content -->
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                @yield('content')
-            </main>
+        <!-- Main Content Area -->
+        <div class="flex-grow-1 w-100">
+            @yield('content')
         </div>
+
     </div>
 
     @include('user.footer')

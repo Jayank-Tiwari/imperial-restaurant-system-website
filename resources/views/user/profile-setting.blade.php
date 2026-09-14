@@ -121,10 +121,11 @@
         background-color: #f8f9fa;
         min-height: 100vh;
         padding-bottom: 3rem;
+        margin-left: 0 !important;
     }
 </style>
 
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 pt-4 main-wrapper">
+<main class="p-3 p-md-4 p-lg-5 main-wrapper w-100">
     
     <!-- Header -->
     <div class="dashboard-header">
