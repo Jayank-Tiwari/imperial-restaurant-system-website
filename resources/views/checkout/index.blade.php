@@ -19,6 +19,8 @@
         border: 1px solid #ced4da;
         border-radius: 8px;
         height: calc(3.5rem + 2px);
+    }
+    .form-floating > .form-control {
         padding: 1rem 0.75rem;
     }
     .form-floating > .form-control:focus,
@@ -209,13 +211,13 @@
                 
                 <!-- Compact Segmented Control Tabs -->
                 <div class="segmented-control mb-5" role="tablist">
-                    <input type="radio" class="btn-check" name="order_type" id="type_dinein" data-bs-toggle="tab" data-bs-target="#dinein" checked>
+                    <input type="radio" class="btn-check" name="order_type" id="type_dinein" data-target="#dinein" checked>
                     <label for="type_dinein"><i class="fas fa-chair me-2"></i>@lang('messages.dine_in')</label>
                     
-                    <input type="radio" class="btn-check" name="order_type" id="type_takeaway" data-bs-toggle="tab" data-bs-target="#takeaway">
+                    <input type="radio" class="btn-check" name="order_type" id="type_takeaway" data-target="#takeaway">
                     <label for="type_takeaway"><i class="fas fa-shopping-bag me-2"></i>Takeaway</label>
                     
-                    <input type="radio" class="btn-check" name="order_type" id="type_delivery" data-bs-toggle="tab" data-bs-target="#delivery">
+                    <input type="radio" class="btn-check" name="order_type" id="type_delivery" data-target="#delivery">
                     <label for="type_delivery"><i class="fas fa-truck me-2"></i>@lang('messages.delivery')</label>
                 </div>
 
@@ -517,9 +519,22 @@
         if (takeawayCardRadio) takeawayCardRadio.addEventListener('change', updateTakeawayButton);
         if (takeawayCashRadio) takeawayCashRadio.addEventListener('change', updateTakeawayButton);
 
-        // Listen for Order Type (Tab) Changes using standard BS5 tab events
+        // Listen for Order Type (Tab) Changes and Manually Toggle Panes
         document.querySelectorAll('input[name="order_type"]').forEach(radio => {
             radio.addEventListener('change', function() {
+                // 1. Hide all tab panes
+                document.querySelectorAll('.tab-pane').forEach(pane => {
+                    pane.classList.remove('show', 'active');
+                });
+                
+                // 2. Show the target tab pane
+                const targetId = this.getAttribute('data-target');
+                const targetPane = document.querySelector(targetId);
+                if (targetPane) {
+                    targetPane.classList.add('show', 'active');
+                }
+
+                // 3. Update logic
                 if (this.id === 'type_delivery') {
                     updateSummaryForTab('delivery');
                     updateDeliveryButton();
