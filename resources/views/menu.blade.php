@@ -5,116 +5,214 @@
 
 @push('styles')
 <style>
-    /* Menu Item Card Styling */
-    .menu-item-card {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* Hero section overlay for better text readability */
+    .hero-section {
+        position: relative;
+        height: 40vh;
+        min-height: 300px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.7) 100%);
+        z-index: 1;
+    }
+
+    .hero-section .container {
+        position: relative;
+        z-index: 2;
+    }
+
+    /* Sticky Navigation */
+    .sticky-nav-container {
+        position: sticky;
+        top: 70px; /* Adjust based on your main navbar height */
+        z-index: 1020;
+        background: #fff;
+        border-bottom: 1px solid #e9ecef;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    .filter-buttons-wrapper {
+        display: flex;
+        overflow-x: auto;
+        overflow-y: hidden;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        padding: 1rem 0;
+        gap: 1rem;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE/Edge */
+    }
+
+    /* Desktop centering */
+    @media (min-width: 992px) {
+        .filter-buttons-wrapper {
+            justify-content: center;
+        }
+    }
+
+    .filter-buttons-wrapper::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
+    }
+
+    .filter-buttons-wrapper .btn {
+        border-radius: 30px;
+        padding: 0.6rem 1.5rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        white-space: nowrap;
+        transition: all 0.3s ease;
         border: none;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        color: #495057;
+        background: #f8f9fa;
+        flex-shrink: 0;
+    }
+
+    .filter-buttons-wrapper .btn:hover {
+        background: #e2e6ea;
+        color: #212529;
+    }
+
+    .filter-buttons-wrapper .btn.active {
+        background: var(--primary-color, #d35400);
+        color: white;
+        box-shadow: 0 4px 10px rgba(211, 84, 0, 0.3);
+    }
+
+    /* Horizontal Menu Cards (Modern App Style) */
+    .category-section {
+        padding-top: 2rem;
+        padding-bottom: 1rem;
+        scroll-margin-top: 140px; /* Accounts for navbar + sticky nav */
+    }
+
+    .category-title {
+        font-weight: 700;
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        position: relative;
+        display: inline-block;
+        padding-bottom: 0.5rem;
+    }
+    
+    .category-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: var(--primary-color, #d35400);
+        border-radius: 2px;
+    }
+
+    .menu-item-card {
+        display: flex;
+        flex-direction: row;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden;
+        border: 1px solid #f1f3f5;
+        height: 100%;
     }
 
     .menu-item-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.12);
     }
 
-    .menu-item-card .card-img-top {
-        height: 200px;
+    .menu-item-img-container {
+        width: 140px;
+        min-width: 140px;
+        position: relative;
+    }
+
+    .menu-item-card .card-img-left {
+        width: 100%;
+        height: 100%;
         object-fit: cover;
-        border-radius: 0.375rem 0.375rem 0 0;
     }
 
-    .menu-item-card .card-body {
-        padding: 1.5rem;
+    .menu-item-content {
+        padding: 1.25rem;
         display: flex;
         flex-direction: column;
-        min-height: 180px;
+        flex-grow: 1;
+        justify-content: space-between;
     }
 
     .menu-item-card .card-title {
-        font-size: 1.25rem;
-        font-weight: 600;
-        margin-bottom: 0.75rem;
-        color: var(--primary-color, #d35400);
+        font-size: 1.15rem;
+        font-weight: 700;
+        margin-bottom: 0.4rem;
+        color: #2b2b2b;
     }
 
     .menu-item-card .card-text {
         font-size: 0.9rem;
         color: #6c757d;
-        line-height: 1.5;
+        line-height: 1.4;
         margin-bottom: 1rem;
-        flex-grow: 1;
         display: -webkit-box;
-        -webkit-line-clamp: 3;
+        -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
 
-    .menu-item-card .price-section {
+    .price-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         margin-top: auto;
-        padding-top: 1rem;
-        border-top: 1px solid #f8f9fa;
     }
 
     .menu-item-card .price {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
         font-weight: 700;
-        color: var(--primary-color, #d35400);
+        color: #2b2b2b;
     }
 
     .add-to-cart {
-        border-radius: 25px;
-        padding: 0.5rem 1.25rem;
+        border-radius: 50px;
+        padding: 0.4rem 1.2rem;
         font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        transition: all 0.3s ease;
+        font-size: 0.9rem;
+        background: var(--primary-color, #d35400);
+        color: white;
+        border: none;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
     }
 
     .add-to-cart:hover {
+        background: #b54600;
         transform: scale(1.05);
     }
 
-    /* Filter button styling */
-    .filter-buttons-wrapper {
-        display: flex;
-        justify-content: center;
-        gap: 0.5rem;
-        max-width: 100%;
-        flex-wrap: wrap;
-    }
-
-    .filter-buttons-wrapper .btn {
-        border-radius: 25px;
-        padding: 0.5rem 1.5rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        white-space: nowrap;
-        transition: all 0.3s ease;
-        border: 2px solid var(--primary-color);
-        color: var(--primary-color);
-        background: white;
-        flex-shrink: 0;
-    }
-
-    .filter-buttons-wrapper .btn:hover {
-        background: var(--primary-color);
-        color: white;
-        transform: translateY(-2px);
-    }
-
-    .filter-buttons-wrapper .btn.active {
-        background: var(--primary-color);
-        color: white;
-        border-color: var(--primary-color);
+    .add-to-cart:active {
+        transform: scale(0.95);
     }
 
     /* Animation styles */
-    .fade-in { 
-        animation: fadeIn 0.5s ease-in; 
+    .fade-in-up { 
+        animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
     }
     
-    @keyframes fadeIn {
+    @keyframes fadeInUp {
         from { 
             opacity: 0; 
             transform: translateY(20px); 
@@ -125,74 +223,24 @@
         }
     }
 
-    /* Hero section overlay for better text readability */
-    .hero-section {
-        position: relative;
-    }
-
-    .hero-section::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.4);
-        z-index: 1;
-    }
-
-    .hero-section .container {
-        position: relative;
-        z-index: 2;
-    }
-
     /* Responsive adjustments */
-    @media (max-width: 768px) {
-        .menu-item-card .card-img-top {
-            height: 180px;
+    @media (max-width: 576px) {
+        .menu-item-img-container {
+            width: 110px;
+            min-width: 110px;
         }
         
-        .menu-item-card .card-body {
-            min-height: 160px;
-            padding: 1.25rem;
+        .menu-item-content {
+            padding: 1rem;
         }
-
-        /* Mobile filter buttons - horizontal scroll */
-        .filter-buttons-wrapper {
-            display: flex;
-            overflow-x: auto;
-            overflow-y: hidden;
-            flex-wrap: nowrap;
-            justify-content: flex-start;
-            padding: 0 1rem;
-            gap: 0.75rem;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE/Edge */
+        
+        .menu-item-card .card-title {
+            font-size: 1.05rem;
         }
-
-        .filter-buttons-wrapper::-webkit-scrollbar {
-            display: none; /* Chrome/Safari */
-        }
-
-        .filter-buttons-wrapper .btn {
-            padding: 0.5rem 1rem;
+        
+        .add-to-cart {
+            padding: 0.3rem 0.8rem;
             font-size: 0.85rem;
-            letter-spacing: 0.3px;
-            min-width: max-content;
-            flex-shrink: 0;
-        }
-
-        /* Add padding to container for mobile scroll */
-        .py-4.bg-white.sticky-top {
-            padding-left: 0 !important;
-            padding-right: 0 !important;
-        }
-    }
-
-    @media (max-width: 576px) {
-        .filter-buttons-wrapper .btn {
-            padding: 0.4rem 0.8rem;
-            font-size: 0.8rem;
         }
     }
 </style>
@@ -201,27 +249,26 @@
 @section('content')
 
 <!-- Hero Section -->
-<section class="hero-section py-5 mt-5" style="background-image: url('{{ asset('assets/img/home.webp') }}'); background-size: cover; background-position: center;">
+<section class="hero-section mt-5" style="background-image: url('{{ asset('assets/img/home.webp') }}'); background-size: cover; background-position: center;">
     <div class="container text-center">
-        <h1 class="display-4 fw-bold text-white">@lang('messages.our_menu')</h1>
-        <p class="lead text-white">@lang('messages.discover_our_dishes')</p>
+        <h1 class="display-3 fw-bold text-white mb-3 fade-in-up" style="animation-delay: 0.1s">@lang('messages.our_menu')</h1>
+        <p class="lead text-white fade-in-up" style="animation-delay: 0.3s">@lang('messages.discover_our_dishes')</p>
     </div>
 </section>
 
-<!-- Filter Buttons -->
-<section class="py-4 bg-white sticky-top shadow-sm">
-    <div class="container text-center">
+<!-- Sticky Filter/Nav Buttons -->
+<section class="sticky-nav-container">
+    <div class="container">
         <div class="filter-buttons-wrapper" id="menuFilter">
-            <button type="button" class="btn btn-outline-primary active" data-filter="all">@lang('messages.all_items')</button>
-            @foreach($menuItems->keys() as $cat)
+            @foreach($menuItems->keys() as $index => $cat)
                 @php
-                    // Split category name by " // " separator
                     $parts = explode('//', $cat);
                     $displayName = (app()->getLocale() == 'es' && isset($parts[1])) 
-                        ? trim($parts[1])  // Spanish name
-                        : trim($parts[0]); // English name (default)
+                        ? trim($parts[1])  
+                        : trim($parts[0]); 
+                    $safeId = Str::slug($cat);
                 @endphp
-                <button type="button" class="btn btn-outline-primary" data-filter="{{ $cat }}">
+                <button type="button" class="btn {{ $index === 0 ? 'active' : '' }}" data-target="{{ $safeId }}">
                     {{ $displayName }}
                 </button>
             @endforeach
@@ -229,118 +276,165 @@
     </div>
 </section>
 
-<!-- Menu Items -->
-<section class="py-5">
+<!-- Menu Items Sections -->
+<section class="py-5 bg-light">
     <div class="container">
-        <div class="row g-4" id="menuItems">
-            @forelse($menuItems as $category => $items)
-                @foreach($items as $item)
-                    <div class="col-lg-4 col-md-6 menu-item" data-category="{{ $category }}" data-id="{{ $item->id }}">
-                        <div class="card menu-item-card h-100">
-                            <img src="{{ $item->image ? asset($item->image) : asset('assets/img/placeholder.jpg') }}" 
-                                 class="card-img-top" 
-                                 alt="{{ $item->name }}"
-                                 loading="lazy">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $item->name }}</h5>
-                                <p class="card-text">{{ $item->description }}</p>
-                                <div class="price-section d-flex justify-content-between align-items-center">
-                                    <span class="price">€{{ number_format($item->price, 2) }}</span>
-                                    <button class="btn btn-primary add-to-cart">
-                                        <i class="fas fa-plus me-1"></i>@lang('messages.add_to_cart')
-                                    </button>
+        @forelse($menuItems as $category => $items)
+            @php
+                $parts = explode('//', $category);
+                $displayName = (app()->getLocale() == 'es' && isset($parts[1])) 
+                    ? trim($parts[1])  
+                    : trim($parts[0]); 
+                $safeId = Str::slug($category);
+            @endphp
+            
+            <div id="{{ $safeId }}" class="category-section">
+                <h2 class="category-title fade-in-up">{{ $displayName }}</h2>
+                <div class="row g-4 mt-2">
+                    @foreach($items as $index => $item)
+                        <div class="col-lg-6 fade-in-up" style="animation-delay: {{ 0.1 * ($index % 10) }}s">
+                            <div class="menu-item-card" data-id="{{ $item->id }}">
+                                <div class="menu-item-img-container">
+                                    <img src="{{ $item->image ? asset($item->image) : asset('assets/img/placeholder.jpg') }}" 
+                                         class="card-img-left" 
+                                         alt="{{ $item->name }}"
+                                         loading="lazy">
+                                </div>
+                                <div class="menu-item-content">
+                                    <div>
+                                        <h5 class="card-title">{{ $item->name }}</h5>
+                                        <p class="card-text">{{ $item->description }}</p>
+                                    </div>
+                                    <div class="price-row">
+                                        <span class="price">€{{ number_format($item->price, 2) }}</span>
+                                        <button class="add-to-cart">
+                                            <i class="fas fa-plus"></i> @lang('messages.add_to_cart')
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
-            @empty
-                <div class="col-12">
-                    <div class="text-center py-5">
-                        <i class="fas fa-utensils fa-3x text-muted mb-3"></i>
-                        <h4 class="text-muted">No menu items available</h4>
-                        <p class="text-muted">Please check back later for our delicious offerings.</p>
-                    </div>
+                    @endforeach
                 </div>
-            @endforelse
-        </div>
+            </div>
+        @empty
+            <div class="col-12">
+                <div class="text-center py-5 bg-white rounded shadow-sm fade-in-up">
+                    <i class="fas fa-utensils fa-3x text-muted mb-3"></i>
+                    <h4 class="text-muted">No menu items available</h4>
+                    <p class="text-muted">Please check back later for our delicious offerings.</p>
+                </div>
+            </div>
+        @endforelse
     </div>
 </section>
 
 <script>
-    // Wait for DOM to be fully loaded
     document.addEventListener('DOMContentLoaded', function() {
         
-        // Filter functionality
-        document.querySelectorAll('#menuFilter button').forEach(button => {
-            button.addEventListener('click', function () {
-                document.querySelectorAll('#menuFilter button').forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
+        // --- Smooth Scrolling & Scrollspy ---
+        const navButtons = document.querySelectorAll('#menuFilter button');
+        const sections = document.querySelectorAll('.category-section');
+        let isClickScrolling = false;
 
-                const filter = this.dataset.filter;
-                document.querySelectorAll('.menu-item').forEach(item => {
-                    const match = filter === 'all' || item.dataset.category === filter;
-                    item.style.display = match ? 'block' : 'none';
-                    if (match) {
-                        item.classList.add('fade-in');
-                    }
-                });
+        // Click to scroll
+        navButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('data-target');
+                const targetSection = document.getElementById(targetId);
+                
+                if (targetSection) {
+                    isClickScrolling = true;
+                    
+                    // Update active class immediately
+                    navButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Center the button in the scrollable wrapper (for mobile)
+                    const wrapper = document.getElementById('menuFilter');
+                    wrapper.scrollTo({
+                        left: this.offsetLeft - (wrapper.clientWidth / 2) + (this.clientWidth / 2),
+                        behavior: 'smooth'
+                    });
+
+                    // Scroll to section
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+
+                    // Release scroll flag after animation
+                    setTimeout(() => {
+                        isClickScrolling = false;
+                    }, 800);
+                }
             });
         });
 
-        // Function to update cart count in header with better error handling
-        function updateCartCount(count) {
-            console.log('Attempting to update cart count to:', count);
-            
-            // Wait a bit for DOM to be ready
-            setTimeout(() => {
-                const cartCountElement = document.getElementById('cart-count');
+        // Scrollspy: update active nav button based on scroll position
+        window.addEventListener('scroll', function() {
+            if (isClickScrolling) return; // Don't interfere during smooth click scrolling
+
+            let currentSection = '';
+            // Accounts for navbar + sticky nav height
+            const scrollPosition = window.scrollY + 160; 
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
                 
-                console.log('Cart count element found:', cartCountElement);
-                
-                if (cartCountElement) {
-                    try {
-                        cartCountElement.textContent = count;
-                        
-                        // Add animation effect
-                        cartCountElement.style.transform = 'scale(1.3)';
-                        cartCountElement.style.transition = 'transform 0.2s ease';
-                        
-                        setTimeout(() => {
-                            cartCountElement.style.transform = 'scale(1)';
-                        }, 200);
-                        
-                        console.log('Cart count updated successfully');
-                    } catch (error) {
-                        console.error('Error updating cart count:', error);
-                    }
-                } else {
-                    console.warn('Cart count element not found');
-                    // Try alternative approach - reload page
-                    setTimeout(() => {
-                        location.reload();
-                    }, 1000);
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    currentSection = section.getAttribute('id');
                 }
-            }, 100);
+            });
+
+            if (currentSection) {
+                navButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.getAttribute('data-target') === currentSection) {
+                        btn.classList.add('active');
+                        
+                        // Optionally center button on scroll too (nice for mobile)
+                        const wrapper = document.getElementById('menuFilter');
+                        wrapper.scrollTo({
+                            left: btn.offsetLeft - (wrapper.clientWidth / 2) + (btn.clientWidth / 2),
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            }
+        });
+
+
+        // --- Add to Cart Functionality ---
+        function updateCartCount(count) {
+            const cartCountElement = document.getElementById('cart-count');
+            if (cartCountElement) {
+                try {
+                    cartCountElement.textContent = count;
+                    cartCountElement.style.transform = 'scale(1.3)';
+                    cartCountElement.style.transition = 'transform 0.2s ease';
+                    setTimeout(() => { cartCountElement.style.transform = 'scale(1)'; }, 200);
+                } catch (error) {
+                    console.error('Error updating cart count:', error);
+                }
+            }
         }
 
-        // Add to cart functionality
         document.querySelectorAll('.add-to-cart').forEach(button => {
             button.addEventListener('click', function () {
-                const itemDiv = this.closest('.menu-item');
-                const menuItemId = itemDiv.dataset.id;
+                const cardDiv = this.closest('.menu-item-card');
+                const menuItemId = cardDiv.dataset.id;
                 const originalText = this.innerHTML;
 
-                // Check if user is logged in first
                 @guest
                     alert('Please log in to add items to the cart.');
                     window.location.href = '{{ route('login') }}';
                     return;
                 @endguest
 
-                // Disable button during request
                 this.disabled = true;
-                this.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Adding...';
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
                 fetch('{{ route('cart.add') }}', {
                     method: 'POST',
@@ -354,36 +448,27 @@
                     })
                 })
                 .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                     return response.json();
                 })
                 .then(data => {
-                    console.log('Cart response:', data);
-                    
                     if (data.success) {
-                        // Success - show confirmation
-                        this.innerHTML = '<i class="fas fa-check me-1"></i>Added!';
-                        this.classList.replace('btn-primary', 'btn-success');
-
-                        // Update cart count in header
+                        this.innerHTML = '<i class="fas fa-check"></i>';
+                        this.style.background = '#28a745';
+                        
                         if (data.cart_count !== undefined) {
                             if (window.updateCartCount && window.updateCartCount(data.cart_count)) {
-                                console.log('Cart count updated via global function');
+                                // Handled globally
                             } else {
-                                console.log('Falling back to local update');
                                 updateCartCount(data.cart_count);
                             }
                         }
 
-                        // Show success message
                         showToast('Item added to cart successfully!', 'success');
 
-                        // Reset button after 2 seconds
                         setTimeout(() => {
                             this.innerHTML = originalText;
-                            this.classList.replace('btn-success', 'btn-primary');
+                            this.style.background = '';
                             this.disabled = false;
                         }, 2000);
                     } else {
@@ -392,36 +477,28 @@
                 })
                 .catch(error => {
                     console.error('Cart error:', error);
-                    
                     if (error.message.includes('401') || error.message.includes('Unauthenticated')) {
-                        this.innerHTML = '<i class="fas fa-exclamation me-1"></i>Login Required';
                         showToast('Please log in to add items to the cart.', 'error');
                     } else {
-                        this.innerHTML = '<i class="fas fa-exclamation me-1"></i>Error';
                         showToast('Error adding item to cart', 'error');
                     }
-                    
-                    this.classList.replace('btn-primary', 'btn-danger');
-                    
+                    this.innerHTML = '<i class="fas fa-exclamation"></i>';
+                    this.style.background = '#dc3545';
                     setTimeout(() => {
                         this.innerHTML = originalText;
-                        this.classList.replace('btn-danger', 'btn-primary');
+                        this.style.background = '';
                         this.disabled = false;
                     }, 3000);
                 });
             });
         });
 
-        // Simple toast notification function
         function showToast(message, type = 'info') {
-            // Remove existing toasts
             const existingToasts = document.querySelectorAll('.custom-toast');
             existingToasts.forEach(toast => toast.remove());
 
-            // Create toast element
             const toast = document.createElement('div');
-            toast.className = `custom-toast alert alert-${type === 'error' ? 'danger' : type === 'success' ? 'success' : 'info'} 
-                              position-fixed`;
+            toast.className = `custom-toast alert alert-${type === 'error' ? 'danger' : type === 'success' ? 'success' : 'info'} position-fixed`;
             toast.style.cssText = `
                 top: 20px;
                 right: 20px;
@@ -435,11 +512,10 @@
                 <div class="d-flex align-items-center">
                     <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'} me-2"></i>
                     <span>${message}</span>
-                    <button type="button" class="btn-close ms-auto" onclick="this.parentElement.parentElement.remove()"></button>
+                    <button type="button" class="btn-close ms-auto" onclick="this.parentElement.remove()"></button>
                 </div>
             `;
             
-            // Add CSS for animation
             if (!document.getElementById('toast-styles')) {
                 const style = document.createElement('style');
                 style.id = 'toast-styles';
@@ -452,10 +528,8 @@
                 document.head.appendChild(style);
             }
             
-            // Add to page
             document.body.appendChild(toast);
             
-            // Remove after 4 seconds
             setTimeout(() => {
                 if (toast.parentNode) {
                     toast.style.animation = 'slideIn 0.3s ease-out reverse';
@@ -463,9 +537,6 @@
                 }
             }, 4000);
         }
-
-        // Debug cart count element
-        console.log('Cart count element on load:', document.getElementById('cart-count'));
     });
 </script>
 
