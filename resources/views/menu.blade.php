@@ -65,27 +65,40 @@
     }
 
     .filter-buttons-wrapper .btn {
-        border-radius: 30px;
-        padding: 0.6rem 1.5rem;
+        border-radius: 50px;
+        padding: 0.7rem 1.75rem;
         font-weight: 600;
-        letter-spacing: 0.5px;
+        font-size: 0.95rem;
+        letter-spacing: 0.3px;
         white-space: nowrap;
-        transition: all 0.3s ease;
-        border: none;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid #e9ecef;
         color: #495057;
-        background: #f8f9fa;
+        background: #fff;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         flex-shrink: 0;
+        position: relative;
+        overflow: hidden;
     }
 
     .filter-buttons-wrapper .btn:hover {
-        background: #e2e6ea;
-        color: #212529;
+        border-color: #ced4da;
+        color: var(--primary-color, #d35400);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+        background: #f8f9fa;
     }
 
     .filter-buttons-wrapper .btn.active {
         background: var(--primary-color, #d35400);
         color: white;
-        box-shadow: 0 4px 10px rgba(211, 84, 0, 0.3);
+        border-color: var(--primary-color, #d35400);
+        box-shadow: 0 6px 15px rgba(211, 84, 0, 0.35);
+        transform: translateY(-2px);
+    }
+    
+    .filter-buttons-wrapper .btn:active {
+        transform: translateY(0);
     }
 
     /* Horizontal Menu Cards (Modern App Style) */
