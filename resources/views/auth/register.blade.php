@@ -20,7 +20,7 @@
         }
         .auth-image {
             flex: 1;
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url("{{ asset('assets/img/chef.jpg') }}") center/cover no-repeat;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url("{{ asset('assets/img/home.webp') }}") center/cover no-repeat;
             display: none;
             position: relative;
         }
