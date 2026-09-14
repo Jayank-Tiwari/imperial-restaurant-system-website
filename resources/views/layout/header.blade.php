@@ -62,7 +62,8 @@
     }
 
     .btn-login-nav:hover {
-        background-color: #c0392b;
+        background-color: #c0392b !important;
+        color: white !important;
         transform: translateY(-2px);
         box-shadow: 0 6px 15px rgba(211, 84, 0, 0.3);
     }
@@ -78,7 +79,7 @@
     }
 
     .btn-dashboard-nav:hover {
-        background-color: #d35400;
+        background-color: #d35400 !important;
         color: white !important;
     }
 
