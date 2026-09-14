@@ -635,4 +635,13 @@ return [
     'adding' => 'Añadiendo...',
 
 
+
+    'serving' => 'Sirviendo',
+    'since' => 'Desde',
+    'top_rated' => 'Mejor Valorado',
+    'explore_full_menu' => 'Explorar Menú Completo',
+    'added_to_cart_success' => '¡Añadido al carrito con éxito!',
+    'login_to_add_cart' => 'Por favor, inicie sesión para añadir artículos al carrito.',
+    'error_adding_cart' => 'Error al añadir el artículo al carrito',
+
 ];

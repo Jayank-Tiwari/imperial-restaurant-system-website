@@ -338,7 +338,7 @@
                     <div class="col-lg-4 col-md-6" data-aos="fade-up">
                         <div class="card menu-item-card">
                             <div class="card-img-wrapper">
-                                <span class="badge-featured">Top Rated</span>
+                                <span class="badge-featured">@lang('messages.top_rated')</span>
                                 <img src="{{ $dish->image ? asset($dish->image) : 'https://placehold.co/400x400/f8f9fa/d35400?text=Imperial+Spice' }}" 
                                      class="card-img-top" 
                                      alt="{{ $dish->name }}" 
@@ -351,7 +351,7 @@
                                 <div class="price-section">
                                     <span class="price">@lang('messages.currency'){{ number_format($dish->price, 2) }}</span>
                                     <button class="btn add-to-cart shadow-sm" data-id="{{ $dish->id }}">
-                                        <i class="fas fa-shopping-basket me-1"></i> Add
+                                        <i class="fas fa-shopping-basket me-1"></i> @lang('messages.cart')
                                     </button>
                                 </div>
                             </div>
@@ -362,7 +362,7 @@
 
             <div class="text-center">
                 <a href="{{ url('/menu') }}" class="btn btn-premium shadow-sm">
-                    <i class="fas fa-compass me-2"></i> Explore Full Menu
+                    <i class="fas fa-compass me-2"></i> @lang('messages.explore_full_menu')
                 </a>
             </div>
         </div>
@@ -412,7 +412,7 @@
                         <div class="position-absolute bottom-0 start-0 translate-middle-x mb-4 ms-4 d-none d-md-block">
                             <div class="bg-white p-4 rounded-4 shadow-lg text-center" style="border-left: 4px solid var(--primary-orange);">
                                 <h3 class="fw-bold text-dark mb-0">2021</h3>
-                                <p class="text-muted small fw-bold text-uppercase mb-0">Serving<br>Since</p>
+                                <p class="text-muted small fw-bold text-uppercase mb-0">@lang('messages.serving')<br>@lang('messages.since')</p>
                             </div>
                         </div>
                     </div>
@@ -555,7 +555,7 @@
 
                     // Check if user is logged in first
                     @guest
-                        showToast('Please log in to add items to the cart.', 'error');
+                        showToast('{{ __('messages.login_to_add_cart') }}', 'error');
                         setTimeout(() => {
                             window.location.href = '{{ route('login') }}';
                         }, 1500);
@@ -564,7 +564,7 @@
 
                     // Disable button during request
                     this.disabled = true;
-                    this.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>...';
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>{{ __('messages.adding') }}';
 
                     fetch('{{ route('cart.add') }}', {
                         method: 'POST',
@@ -586,7 +586,7 @@
                     .then(data => {
                         if (data.success) {
                             // Success - show confirmation
-                            this.innerHTML = '<i class="fas fa-check me-1"></i>Added';
+                            this.innerHTML = '<i class="fas fa-check me-1"></i>{{ __('messages.added') }}';
                             this.classList.add('bg-success', 'text-white');
                             this.classList.remove('btn-primary'); // in case it had it
                             this.style.backgroundColor = '#2e7d32';
@@ -598,7 +598,7 @@
                             }
 
                             // Show success notification
-                            showToast('Added to cart successfully!', 'success');
+                            showToast('{{ __('messages.added_to_cart_success') }}', 'success');
 
                             // Reset button after 2 seconds
                             setTimeout(() => {
@@ -616,11 +616,11 @@
                         console.error('Cart error:', error);
                         
                         if (error.message.includes('401') || error.message.includes('Unauthenticated')) {
-                            this.innerHTML = '<i class="fas fa-exclamation me-1"></i>Login';
-                            showToast('Please log in to add items to the cart.', 'error');
+                            this.innerHTML = '<i class="fas fa-exclamation me-1"></i>{{ __('messages.login') }}';
+                            showToast('{{ __('messages.login_to_add_cart') }}', 'error');
                         } else {
                             this.innerHTML = '<i class="fas fa-exclamation me-1"></i>Error';
-                            showToast('Error adding item to cart', 'error');
+                            showToast('{{ __('messages.error_adding_cart') }}', 'error');
                         }
                         
                         this.style.backgroundColor = '#d32f2f';

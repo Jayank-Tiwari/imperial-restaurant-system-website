@@ -643,4 +643,13 @@ return [
     'enter_password' => 'Enter Password',
     'added' => 'Added',
     'adding' => 'Adding...',
+
+    'serving' => 'Serving',
+    'since' => 'Since',
+    'top_rated' => 'Top Rated',
+    'explore_full_menu' => 'Explore Full Menu',
+    'added_to_cart_success' => 'Added to cart successfully!',
+    'login_to_add_cart' => 'Please log in to add items to the cart.',
+    'error_adding_cart' => 'Error adding item to cart',
+
 ];
