@@ -202,7 +202,8 @@
     }
 
 </style>
-@endpush
+
+@endsection
 
 @section('content')
 
@@ -337,9 +338,7 @@
         </div>
     </section>
 
-@endsection
 
-@push('scripts')
     <script>
         function updateCartCount(count) {
             const cartCountElement = document.getElementById('cart-count');
@@ -443,4 +442,5 @@
             });
         });
     </script>
-@endpush
+
+@endsection

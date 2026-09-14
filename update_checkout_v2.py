@@ -1,4 +1,8 @@
-@extends('layout.app')
+import os
+
+filepath = 'resources/views/checkout/index.blade.php'
+
+content = """@extends('layout.app')
 
 @section('title', __('messages.checkout_title'))
 
@@ -19,8 +23,6 @@
         border: 1px solid #ced4da;
         border-radius: 8px;
         height: calc(3.5rem + 2px);
-    }
-    .form-floating > .form-control {
         padding: 1rem 0.75rem;
     }
     .form-floating > .form-control:focus,
@@ -47,55 +49,6 @@
     .custom-selector:hover {
         border-color: #ced4da;
         background: #f8f9fa;
-    }
-
-    .icon-box {
-        width: 50px;
-        height: 50px;
-        background-color: #f8f9fa;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #6c757d;
-        transition: all 0.2s ease;
-    }
-
-    .btn-check:checked + .custom-selector .icon-box {
-        background-color: var(--primary-orange);
-        color: #fff;
-    }
-
-    .text-transparent { color: transparent; }
-    .btn-check:checked + .custom-selector .check-mark {
-        color: var(--primary-orange) !important;
-    }
-
-    /* --- Segmented Control for Tabs --- */
-    .segmented-control {
-        display: flex;
-        background-color: #f1f3f5;
-        border-radius: 12px;
-        padding: 6px;
-    }
-    .segmented-control label {
-        flex: 1;
-        text-align: center;
-        padding: 12px 0;
-        border-radius: 8px;
-        color: #6c757d;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        margin: 0;
-    }
-    .segmented-control label:hover {
-        color: #495057;
-    }
-    .segmented-control .btn-check:checked + label {
-        background-color: #fff;
-        color: var(--primary-orange);
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
 
     .btn-check:checked + .custom-selector {
@@ -184,8 +137,7 @@
         font-weight: 800;
     }
 </style>
-
-@endsection
+@endpush
 
 @section('content')
 <section class="py-5 mt-5">
@@ -210,16 +162,29 @@
                 
                 <h5 class="fw-bold mb-3 fs-6 text-muted text-uppercase tracking-wide">1. Order Type</h5>
                 
-                <!-- Compact Segmented Control Tabs -->
-                <div class="segmented-control mb-5" role="tablist">
-                    <input type="radio" class="btn-check" name="order_type" id="type_dinein" data-target="#dinein" checked>
-                    <label for="type_dinein"><i class="fas fa-chair me-2"></i>@lang('messages.dine_in')</label>
-                    
-                    <input type="radio" class="btn-check" name="order_type" id="type_takeaway" data-target="#takeaway">
-                    <label for="type_takeaway"><i class="fas fa-shopping-bag me-2"></i>Takeaway</label>
-                    
-                    <input type="radio" class="btn-check" name="order_type" id="type_delivery" data-target="#delivery">
-                    <label for="type_delivery"><i class="fas fa-truck me-2"></i>@lang('messages.delivery')</label>
+                <!-- Custom Radio Tabs -->
+                <div class="row g-3 mb-5" role="tablist">
+                    <div class="col-4">
+                        <input type="radio" class="btn-check" name="order_type" id="type_dinein" data-bs-toggle="tab" data-bs-target="#dinein" checked>
+                        <label class="custom-selector w-100 p-3 h-100 text-center" for="type_dinein">
+                            <i class="fas fa-chair fs-4 mb-2 d-block"></i>
+                            <span class="fw-bold d-block" style="font-size: 0.9rem;">@lang('messages.dine_in')</span>
+                        </label>
+                    </div>
+                    <div class="col-4">
+                        <input type="radio" class="btn-check" name="order_type" id="type_takeaway" data-bs-toggle="tab" data-bs-target="#takeaway">
+                        <label class="custom-selector w-100 p-3 h-100 text-center" for="type_takeaway">
+                            <i class="fas fa-shopping-bag fs-4 mb-2 d-block"></i>
+                            <span class="fw-bold d-block" style="font-size: 0.9rem;">Takeaway</span>
+                        </label>
+                    </div>
+                    <div class="col-4">
+                        <input type="radio" class="btn-check" name="order_type" id="type_delivery" data-bs-toggle="tab" data-bs-target="#delivery">
+                        <label class="custom-selector w-100 p-3 h-100 text-center" for="type_delivery">
+                            <i class="fas fa-truck fs-4 mb-2 d-block"></i>
+                            <span class="fw-bold d-block" style="font-size: 0.9rem;">@lang('messages.delivery')</span>
+                        </label>
+                    </div>
                 </div>
 
                 <!-- Tab Content Forms -->
@@ -411,7 +376,9 @@
     </div>
 </section>
 
+@endsection
 
+@push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const typeDineInRadio = document.getElementById('type_dinein');
@@ -518,54 +485,20 @@
         if (takeawayCardRadio) takeawayCardRadio.addEventListener('change', updateTakeawayButton);
         if (takeawayCashRadio) takeawayCashRadio.addEventListener('change', updateTakeawayButton);
 
-        // Ultra Foolproof Tab Switching Logic
-        const orderRadios = document.querySelectorAll('input[name="order_type"]');
-        
-        function handleTabSwitch(radio) {
-            try {
-                // 1. Force hide all panes via CSS display
-                const panes = document.querySelectorAll('.tab-pane');
-                for (let i = 0; i < panes.length; i++) {
-                    panes[i].classList.remove('show', 'active');
-                    panes[i].style.display = 'none';
+        // Listen for Order Type (Tab) Changes using standard BS5 tab events
+        document.querySelectorAll('input[name="order_type"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.id === 'type_delivery') {
+                    updateSummaryForTab('delivery');
+                    updateDeliveryButton();
+                } else if (this.id === 'type_dinein') {
+                    updateSummaryForTab('dinein');
+                    updateDineinButton();
+                } else if (this.id === 'type_takeaway') {
+                    updateSummaryForTab('takeaway');
+                    updateTakeawayButton();
                 }
-                
-                // 2. Force show target pane
-                const targetId = radio.getAttribute('data-target');
-                if (targetId) {
-                    const targetPane = document.querySelector(targetId);
-                    if (targetPane) {
-                        targetPane.classList.add('show', 'active');
-                        targetPane.style.display = 'block';
-                    }
-                }
-
-                // 3. Safely execute update logic
-                if (radio.id === 'type_delivery') {
-                    if (typeof updateSummaryForTab === 'function') updateSummaryForTab('delivery');
-                    if (typeof updateDeliveryButton === 'function') updateDeliveryButton();
-                } else if (radio.id === 'type_dinein') {
-                    if (typeof updateSummaryForTab === 'function') updateSummaryForTab('dinein');
-                    if (typeof updateDineinButton === 'function') updateDineinButton();
-                } else if (radio.id === 'type_takeaway') {
-                    if (typeof updateSummaryForTab === 'function') updateSummaryForTab('takeaway');
-                    if (typeof updateTakeawayButton === 'function') updateTakeawayButton();
-                }
-            } catch (err) {
-                console.error("Tab switch error: ", err);
-            }
-        }
-
-        orderRadios.forEach(radio => {
-            radio.addEventListener('change', function() { handleTabSwitch(this); });
-            radio.addEventListener('click', function() { handleTabSwitch(this); });
-        });
-        
-        // Initial setup for default checked radio
-        orderRadios.forEach(radio => {
-            if (radio.checked) {
-                handleTabSwitch(radio);
-            }
+            });
         });
 
         postalCodeInput?.addEventListener('input', function () {
@@ -578,5 +511,10 @@
         updateDineinButton();
     });
 </script>
+@endpush
+"""
 
-@endsection
+with open(filepath, 'w', encoding='utf-8') as f:
+    f.write(content)
+
+print("Checkout page entirely rewritten for Shopify-like professional style.")
