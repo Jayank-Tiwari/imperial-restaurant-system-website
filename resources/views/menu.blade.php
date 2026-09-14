@@ -54,7 +54,7 @@
     
     #mobileCategorySidebar .nav-link.active {
         background-color: var(--primary-color, #d35400);
-        color: white;
+        color: white !important;
         box-shadow: 0 4px 10px rgba(211, 84, 0, 0.3);
     }
 
@@ -98,7 +98,7 @@
     
     .sticky-sidebar .nav-link.active {
         background-color: var(--primary-color, #d35400);
-        color: white;
+        color: white !important;
         box-shadow: 0 4px 10px rgba(211, 84, 0, 0.3);
     }
 
