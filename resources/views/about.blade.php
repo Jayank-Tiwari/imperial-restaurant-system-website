@@ -326,12 +326,12 @@
                     
                     <div class="d-flex gap-4">
                         <div class="stat-box flex-fill">
-                            <div class="counter-value" data-count="4">0</div>
+                            <div class="counter-value" data-count="4">4</div>
                             <h6 class="fw-bold text-dark mb-1">@lang('messages.years_of_excellence')</h6>
                             <small class="text-muted fw-semibold text-uppercase">@lang('messages.serving_since') 2021</small>
                         </div>
                         <div class="stat-box flex-fill">
-                            <div class="counter-value" data-count="10000">0</div>
+                            <div class="counter-value" data-count="10000">10000</div>
                             <h6 class="fw-bold text-dark mb-1">@lang('messages.happy_guests')</h6>
                             <small class="text-muted fw-semibold text-uppercase">@lang('messages.creating_memories')</small>
                         </div>
@@ -543,26 +543,18 @@
         </div>
     </section>
 
-@endsection
-
-@push('scripts')
-    <script>
-        AOS.init({
-            duration: 800,
-            once: true,
-            offset: 100
-        });
-    </script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const counters = document.querySelectorAll('.counter-value');
-            const speed = 200; 
+            const speed = 50; 
 
             const observer = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         const counter = entry.target;
+                        counter.innerText = '0'; // start from 0 when JS kicks in
+                        
                         const updateCount = () => {
                             const target = +counter.getAttribute('data-count');
                             const count = +counter.innerText;
@@ -570,9 +562,9 @@
 
                             if (count < target) {
                                 counter.innerText = Math.min(count + increment, target);
-                                setTimeout(updateCount, 25);
+                                setTimeout(updateCount, 40);
                             } else {
-                                counter.innerText = target.toLocaleString() + (target >= 1000 ? '+' : '');
+                                counter.innerText = target.toLocaleString() + (target >= 10000 ? '+' : '');
                             }
                         };
                         updateCount();
@@ -580,7 +572,7 @@
                     }
                 });
             }, {
-                threshold: 0.5 
+                threshold: 0.1 
             });
 
             counters.forEach(counter => {
@@ -588,4 +580,5 @@
             });
         });
     </script>
-@endpush
+@endsection
+
