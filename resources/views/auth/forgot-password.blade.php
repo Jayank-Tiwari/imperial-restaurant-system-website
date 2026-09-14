@@ -144,7 +144,7 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ route('password.email') }}">
+                <form method="POST" action="{{ route('password.verify') }}">
                     @csrf
 
                     <div class="position-relative mb-4">
