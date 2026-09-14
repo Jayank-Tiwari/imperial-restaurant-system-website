@@ -123,6 +123,50 @@
         transform: translateY(0);
     }
 
+    /* Desktop Sidebar Layout */
+    .sticky-sidebar {
+        position: sticky;
+        top: 100px;
+        max-height: calc(100vh - 120px);
+        overflow-y: auto;
+    }
+    
+    .sticky-sidebar::-webkit-scrollbar {
+        width: 6px;
+    }
+    .sticky-sidebar::-webkit-scrollbar-thumb {
+        background-color: #ced4da;
+        border-radius: 10px;
+    }
+    
+    .sticky-sidebar .nav-link {
+        color: #495057;
+        font-weight: 600;
+        border-radius: 12px;
+        padding: 0.85rem 1.25rem;
+        margin-bottom: 0.4rem;
+        transition: all 0.2s ease;
+        text-transform: capitalize;
+        border: 1px solid transparent;
+        background: transparent;
+        text-align: left;
+        width: 100%;
+        font-size: 1.05rem;
+    }
+    
+    .sticky-sidebar .nav-link:hover {
+        background-color: #fff;
+        color: var(--primary-color, #d35400);
+        border-color: #e9ecef;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+    
+    .sticky-sidebar .nav-link.active {
+        background-color: var(--primary-color, #d35400);
+        color: white;
+        box-shadow: 0 4px 10px rgba(211, 84, 0, 0.3);
+    }
+
     /* Horizontal Menu Cards (Modern App Style) */
     .category-section {
         padding-top: 2rem;
@@ -317,8 +361,8 @@
     </div>
 </section>
 
-<!-- Sticky Filter/Nav Buttons -->
-<section class="sticky-nav-container">
+<!-- Sticky Filter/Nav Buttons (Mobile Only) -->
+<section class="sticky-nav-container d-lg-none">
     <div class="container">
         <div class="filter-buttons-wrapper" id="menuFilter">
             @foreach($menuItems->keys() as $index => $cat)
@@ -340,6 +384,30 @@
 <!-- Menu Items Sections -->
 <section class="py-5 bg-light">
     <div class="container">
+        <div class="row">
+            <!-- Desktop Sidebar (Hidden on Mobile) -->
+            <div class="col-lg-3 d-none d-lg-block">
+                <div class="sticky-sidebar pe-3">
+                    <h4 class="mb-4 fw-bold" style="color: #2b2b2b;">@lang('messages.categories')</h4>
+                    <div class="nav flex-column" id="desktopMenuFilter">
+                        @foreach($menuItems->keys() as $index => $cat)
+                            @php
+                                $parts = explode('//', $cat);
+                                $displayName = (app()->getLocale() == 'es' && isset($parts[1])) 
+                                    ? trim($parts[1])  
+                                    : trim($parts[0]); 
+                                $safeId = Str::slug($cat);
+                            @endphp
+                            <button type="button" class="nav-link {{ $index === 0 ? 'active' : '' }}" data-target="{{ $safeId }}">
+                                {{ $displayName }}
+                            </button>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Items -->
+            <div class="col-lg-9">
         @forelse($menuItems as $category => $items)
             @php
                 $parts = explode('//', $category);
@@ -388,6 +456,8 @@
                 </div>
             </div>
         @endforelse
+            </div> <!-- End col-lg-9 -->
+        </div> <!-- End row -->
     </div>
 </section>
 
@@ -395,7 +465,9 @@
     document.addEventListener('DOMContentLoaded', function() {
         
         // --- Smooth Scrolling & Scrollspy ---
-        const navButtons = document.querySelectorAll('#menuFilter button');
+        const mobileNavButtons = document.querySelectorAll('#menuFilter button');
+        const desktopNavButtons = document.querySelectorAll('#desktopMenuFilter button');
+        const navButtons = [...mobileNavButtons, ...desktopNavButtons];
         const sections = document.querySelectorAll('.category-section');
         let isClickScrolling = false;
 
@@ -414,11 +486,13 @@
                     this.classList.add('active');
                     
                     // Center the button in the scrollable wrapper (for mobile)
-                    const wrapper = document.getElementById('menuFilter');
-                    wrapper.scrollTo({
-                        left: this.offsetLeft - (wrapper.clientWidth / 2) + (this.clientWidth / 2),
-                        behavior: 'smooth'
-                    });
+                    if (this.closest('#menuFilter')) {
+                        const wrapper = document.getElementById('menuFilter');
+                        wrapper.scrollTo({
+                            left: this.offsetLeft - (wrapper.clientWidth / 2) + (this.clientWidth / 2),
+                            behavior: 'smooth'
+                        });
+                    }
 
                     // Scroll to section
                     targetSection.scrollIntoView({
@@ -457,11 +531,13 @@
                         btn.classList.add('active');
                         
                         // Optionally center button on scroll too (nice for mobile)
-                        const wrapper = document.getElementById('menuFilter');
-                        wrapper.scrollTo({
-                            left: btn.offsetLeft - (wrapper.clientWidth / 2) + (btn.clientWidth / 2),
-                            behavior: 'smooth'
-                        });
+                        if (btn.closest('#menuFilter')) {
+                            const wrapper = document.getElementById('menuFilter');
+                            wrapper.scrollTo({
+                                left: btn.offsetLeft - (wrapper.clientWidth / 2) + (btn.clientWidth / 2),
+                                behavior: 'smooth'
+                            });
+                        }
                     }
                 });
             }
