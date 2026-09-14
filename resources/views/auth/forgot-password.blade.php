@@ -156,7 +156,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-brand py-3 rounded-3 fs-5 shadow w-100">
-                        @lang('messages.send_password_reset_link') <i class="fas fa-paper-plane ms-2"></i>
+                        @lang('messages.send_reset_link') <i class="fas fa-paper-plane ms-2"></i>
                     </button>
                 </form>
 
