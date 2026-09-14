@@ -219,6 +219,85 @@ class CheckoutController extends Controller
     }
 
 
+    // Store takeaway order
+    public function storeTakeaway(Request $request)
+    {
+        $request->validate([
+            'payment_method' => 'required|in:card,cash',
+        ]);
+
+        // Block takeaway orders if shop is closed
+        if (now()->isWednesday()) {
+            return back()->with('error', 'We are closed on Wednesdays. Takeaway orders cannot be placed today.');
+        }
+
+        $user = Auth::user();
+        $cartItems = CartItem::where('user_id', $user->id)->with('menuItem')->get();
+
+        if ($cartItems->isEmpty()) {
+            return back()->with('error', 'Cart is empty');
+        }
+
+        $subtotal = $cartItems->sum(fn($item) => $item->menuItem->price * $item->quantity);
+        $total = $subtotal; // No delivery fee
+
+        $discountPercentage = null;
+
+        if (!$user->has_one_time_discount) {
+            $discountPercentage = 20;
+            $discountAmount = ($total * $discountPercentage) / 100;
+            $total -= $discountAmount;
+        }
+
+        if ($request->payment_method === 'cash') {
+            if ($discountPercentage) {
+                $user->has_one_time_discount = true;
+                $user->save();
+            }
+            $order = Order::create([
+                'user_id' => $user->id,
+                'payment_status' => 'pending',
+                'payment_method' => 'cash',
+                'order_status' => 'confirmed',
+                'total_amount' => $total,
+                'discount_percentage' => $discountPercentage,
+                'delivery_type' => 'pickup',
+            ]);
+
+            foreach ($cartItems as $item) {
+                $order->orderItems()->create([
+                    'menu_item_id' => $item->menu_item_id,
+                    'quantity' => $item->quantity,
+                    'price' => $item->menuItem->price,
+                ]);
+            }
+
+            try {
+                Mail::to(env('RESTAURANT_EMAIL', 'restaurant@imperialspice.com'))
+                    ->send(new OrderPlaced($order));
+            } catch (\Exception $e) {
+                \Log::error('Failed to send order notification email: ' . $e->getMessage());
+            }
+
+            CartItem::where('user_id', $user->id)->delete();
+
+            return redirect()->route('user.dashboard')->with('success', 'Your takeaway order has been placed successfully!');
+        } else {
+            Session::put('delivery_order', [
+                'user_id' => $user->id,
+                'subtotal' => $subtotal,
+                'delivery_fee' => 0,
+                'total' => $total,
+                'discount_percentage' => $discountPercentage,
+                'address' => null,
+                'postal_code' => null,
+                'delivery_type' => 'pickup',
+            ]);
+
+            return redirect()->route('stripe.checkout');
+        }
+    }
+
     // Stripe calls this after successful payment
     public function paymentSuccess()
     {
@@ -241,10 +320,10 @@ class CheckoutController extends Controller
             'payment_method' => 'card',
             'order_status' => 'confirmed',
             'total_amount' => $data['total'],
-            'discount_percentage' => $data['discount_percentage'] ?? null, // <-- Add this line
-            'delivery_type' => 'delivery',
-            'delivery_address' => $data['address'],
-            'delivery_fee' => $data['delivery_fee'],
+            'discount_percentage' => $data['discount_percentage'] ?? null,
+            'delivery_type' => $data['delivery_type'] ?? 'delivery',
+            'delivery_address' => $data['address'] ?? null,
+            'delivery_fee' => $data['delivery_fee'] ?? 0,
         ]);
 
         if (isset($data['discount_percentage']) && $data['discount_percentage'] > 0) {

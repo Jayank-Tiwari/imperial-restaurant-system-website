@@ -546,9 +546,10 @@ return [
     'payment_method_cash' => 'Efectivo',
     'payment_method_unknown' => 'Desconocido',
 
-    // Delivery Type
-    'delivery_type_delivery' => 'Entrega',
-    'delivery_type_dinein' => 'Comer en el lugar',
+    // Tipo de Entrega
+    'delivery_type_delivery' => 'A domicilio',
+    'delivery_type_dinein' => 'En el local',
+    'delivery_type_pickup' => 'Para llevar',
     'payment_due_on_delivery' => 'Pago debido al momento de la entrega',
     'payment_due_at_restaurant' => 'Pago debido en el restaurante',
     'share_otp_with_delivery_person' => 'Comparte este OTP con la persona de entrega',

@@ -559,6 +559,7 @@ return [
     // Delivery Type
     'delivery_type_delivery' => 'Delivery',
     'delivery_type_dinein' => 'Dine In',
+    'delivery_type_pickup' => 'Takeaway',
 
     'payment_due_on_delivery' => 'Payment due when order is delivered',
     'payment_due_at_restaurant' => 'Payment due at restaurant',

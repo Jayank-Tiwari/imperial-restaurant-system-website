@@ -75,9 +75,10 @@ class StripeController extends Controller
             'payment_method' => 'card',
             'order_status' => 'confirmed',
             'total_amount' => $data['total'],
-            'delivery_type' => 'delivery',
-            'delivery_address' => $data['address'],
-            'delivery_fee' => $data['delivery_fee'],
+            'discount_percentage' => $data['discount_percentage'] ?? null,
+            'delivery_type' => $data['delivery_type'] ?? 'delivery',
+            'delivery_address' => $data['address'] ?? null,
+            'delivery_fee' => $data['delivery_fee'] ?? 0,
         ]);
 
         // ✅ Create order items
@@ -87,6 +88,14 @@ class StripeController extends Controller
                 'quantity' => $item->quantity,
                 'price' => $item->menuItem->price,
             ]);
+        }
+
+        if (isset($data['discount_percentage']) && $data['discount_percentage'] > 0) {
+            $user = \Illuminate\Support\Facades\Auth::user();
+            if ($user) {
+                $user->has_one_time_discount = true;
+                $user->save();
+            }
         }
 
         // ✅ Store payment in payments table

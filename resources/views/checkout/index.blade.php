@@ -35,6 +35,12 @@
                             </button>
                         </li>
                         <li class="nav-item" role="presentation">
+                            <button class="nav-link fw-semibold" id="takeaway-tab" data-bs-toggle="tab" data-bs-target="#takeaway"
+                                type="button" role="tab">
+                                <i class="fas fa-shopping-bag me-1"></i> Takeaway
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
                             <button class="nav-link fw-semibold" id="delivery-tab" data-bs-toggle="tab" data-bs-target="#delivery"
                                 type="button" role="tab">
                                 <i class="fas fa-truck me-1"></i> @lang('messages.delivery')
@@ -87,6 +93,48 @@
                                         <div class="text-end">
                                             <button type="submit" class="btn btn-success px-4" id="dinein-submit-btn">
                                                 <i class="fas fa-check-circle me-1"></i><span id="dinein-btn-text">@lang('messages.place_dinein_order')</span>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="takeaway" role="tabpanel">
+                            <div class="card border-0">
+                                <div class="card-header bg-warning text-dark">
+                                    <i class="fas fa-shopping-bag me-1"></i> Takeaway Details
+                                </div>
+                                <div class="card-body">
+                                    <form method="POST" action="{{ route('checkout.takeaway') }}">
+                                        @csrf
+                                        
+                                        <!-- Payment Method Selection for Takeaway -->
+                                        <div class="mb-4">
+                                            <label class="form-label fw-semibold">@lang('messages.payment_method')</label>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="payment_method" id="takeaway_card" value="card" checked>
+                                                        <label class="form-check-label" for="takeaway_card">
+                                                            <i class="fas fa-credit-card me-2"></i>@lang('messages.card_payment')
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="payment_method" id="takeaway_cash" value="cash">
+                                                        <label class="form-check-label" for="takeaway_cash">
+                                                            <i class="fas fa-money-bill-wave me-2"></i>Cash on Pickup
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="text-end">
+                                            <button type="submit" class="btn btn-warning px-4" id="takeaway-submit-btn">
+                                                <i class="fas fa-credit-card me-1"></i><span id="takeaway-btn-text">@lang('messages.proceed_to_payment')</span>
                                             </button>
                                         </div>
                                     </form>
@@ -204,12 +252,16 @@
                 const deliveryBtnText = document.getElementById('delivery-btn-text');
                 const dineinSubmitBtn = document.getElementById('dinein-submit-btn');
                 const dineinBtnText = document.getElementById('dinein-btn-text');
+                const takeawaySubmitBtn = document.getElementById('takeaway-submit-btn');
+                const takeawayBtnText = document.getElementById('takeaway-btn-text');
                 
                 // Payment method radio buttons
                 const deliveryCardRadio = document.getElementById('delivery_card');
                 const deliveryCashRadio = document.getElementById('delivery_cash');
                 const dineinCardRadio = document.getElementById('dinein_card');
                 const dineinCashRadio = document.getElementById('dinein_cash');
+                const takeawayCardRadio = document.getElementById('takeaway_card');
+                const takeawayCashRadio = document.getElementById('takeaway_cash');
                 
                 const initialTotal = {{ $total ?? 0 }};
                 const currencySymbol = '{{ __("messages.currency") }}';
@@ -241,6 +293,16 @@
                     } else {
                         dineinBtnText.textContent = '@lang("messages.proceed_to_payment")';
                         dineinSubmitBtn.querySelector('i').className = 'fas fa-credit-card me-1';
+                    }
+                }
+
+                function updateTakeawayButton() {
+                    if (takeawayCashRadio && takeawayCashRadio.checked) {
+                        takeawayBtnText.textContent = '@lang("messages.place_order")';
+                        takeawaySubmitBtn.querySelector('i').className = 'fas fa-check-circle me-1';
+                    } else {
+                        takeawayBtnText.textContent = '@lang("messages.proceed_to_payment")';
+                        takeawaySubmitBtn.querySelector('i').className = 'fas fa-credit-card me-1';
                     }
                 }
 
@@ -294,6 +356,11 @@
                     dineinCashRadio.addEventListener('change', updateDineinButton);
                 }
 
+                if (takeawayCardRadio && takeawayCashRadio) {
+                    takeawayCardRadio.addEventListener('change', updateTakeawayButton);
+                    takeawayCashRadio.addEventListener('change', updateTakeawayButton);
+                }
+
                 deliveryTab.addEventListener('shown.bs.tab', function () {
                     updateSummaryForTab('delivery');
                     updateDeliveryButton();
@@ -303,6 +370,14 @@
                     updateSummaryForTab('dinein');
                     updateDineinButton();
                 });
+
+                const takeawayTab = document.getElementById('takeaway-tab');
+                if (takeawayTab) {
+                    takeawayTab.addEventListener('shown.bs.tab', function () {
+                        updateSummaryForTab('takeaway');
+                        updateTakeawayButton();
+                    });
+                }
 
                 // Update delivery fee dynamically based on postal code
                 postalCodeInput?.addEventListener('input', function () {
@@ -339,6 +414,7 @@
                 // Initialize button states
                 updateDeliveryButton();
                 updateDineinButton();
+                updateTakeawayButton();
                 updateSummaryForTab('dinein');
 
                 // If shop is closed, disable submit buttons and form controls

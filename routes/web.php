@@ -114,6 +114,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/checkout', [CheckoutController::class, 'show'])->name('checkout');
 Route::post('/checkout/dinein', [CheckoutController::class, 'storeDineIn'])->name('checkout.dinein');
 Route::post('/checkout/delivery', [CheckoutController::class, 'storeDelivery'])->name('checkout.delivery');
+Route::post('/checkout/takeaway', [CheckoutController::class, 'storeTakeaway'])->name('checkout.takeaway');
 Route::match(['get', 'post'], 'checkout/payment-success', [StripeController::class, 'paymentSuccess'])->name('checkout.payment.success');
 Route::get('/stripe/checkout', [StripeController::class, 'checkout'])->name('stripe.checkout');
 

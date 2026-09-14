@@ -24,7 +24,11 @@
                             <tr>
                                 <td><strong>#{{ $order->id }}</strong></td>
                                 <td>
-                                    {{ ucfirst($order->delivery_type ?? 'N/A') }}
+                                    @if($order->delivery_type)
+                                        @lang('messages.delivery_type_' . $order->delivery_type)
+                                    @else
+                                        N/A
+                                    @endif
                                 </td>
                                 <td><strong>{{ __('messages.currency') }}{{ number_format($order->total_amount, 2) }}</strong>
                                 </td>

@@ -102,6 +102,8 @@
             <p><strong>Order Type:</strong> 
                 @if($order->delivery_type === 'dinein')
                     🏪 Dine In (Table #{{ $order->table_no }})
+                @elseif($order->delivery_type === 'pickup')
+                    🛍️ Takeaway / Pickup
                 @else
                     🚚 Delivery
                 @endif
