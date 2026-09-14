@@ -57,16 +57,12 @@
         border: 1px solid #e9ecef;
         border-radius: 12px;
         background-color: #f8f9fa;
-        height: calc(3.5rem + 2px);
     }
     .form-floating > .form-control:focus,
     .form-floating > .form-select:focus {
-        border-color: var(--primary-orange);
-        box-shadow: 0 0 0 0.25rem rgba(211, 84, 0, 0.15);
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.25rem rgba(255, 107, 53, 0.15);
         background-color: #fff;
-    }
-    .form-floating > label {
-        color: #6c757d;
     }
     .info-card {
         border: none;
@@ -83,8 +79,8 @@
         width: 40px;
         height: 40px;
         border-radius: 10px;
-        background: rgba(211, 84, 0, 0.1);
-        color: var(--primary-orange);
+        background: rgba(255, 107, 53, 0.1);
+        color: var(--primary-color);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -92,7 +88,7 @@
         margin-bottom: 1rem;
     }
     .accent-bg {
-        background-color: var(--primary-orange);
+        background-color: var(--primary-color);
         color: #fff;
     }
     .accent-bg .info-icon {
@@ -109,7 +105,7 @@
         color: #495057;
     }
     .why-book-list li i {
-        color: var(--primary-orange);
+        color: var(--primary-color);
         margin-right: 10px;
         font-size: 1.1rem;
     }
@@ -304,7 +300,7 @@
 
                                 {{-- Submit --}}
                                 <div class="mt-4 pt-2">
-                                    <button type="submit" class="btn-brand w-100 py-3 rounded-3 fs-5" @if(!empty($shopClosed) && $shopClosed) disabled @endif>
+                                    <button type="submit" class="btn btn-brand w-100 py-3 rounded-3 fs-5" @if(!empty($shopClosed) && $shopClosed) disabled @endif>
                                         @lang('messages.book_table') <i class="fas fa-arrow-right ms-2"></i>
                                     </button>
                                 </div>
