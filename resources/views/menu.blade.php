@@ -224,10 +224,35 @@
     }
 
     /* Responsive adjustments */
+    @media (max-width: 768px) {
+        /* Switch to vertical cards on smaller tablets and mobile for better readability */
+        .menu-item-card {
+            flex-direction: column;
+        }
+        
+        .menu-item-img-container {
+            width: 100%;
+            min-width: 100%;
+            height: 200px;
+        }
+        
+        .menu-item-content {
+            padding: 1.25rem;
+        }
+
+        .hero-section {
+            height: 30vh;
+            min-height: 250px;
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+        }
+    }
+
     @media (max-width: 576px) {
         .menu-item-img-container {
-            width: 110px;
-            min-width: 110px;
+            height: 180px;
         }
         
         .menu-item-content {
@@ -235,12 +260,12 @@
         }
         
         .menu-item-card .card-title {
-            font-size: 1.05rem;
+            font-size: 1.1rem;
         }
         
         .add-to-cart {
-            padding: 0.3rem 0.8rem;
-            font-size: 0.85rem;
+            padding: 0.4rem 1rem;
+            font-size: 0.9rem;
         }
     }
 </style>
