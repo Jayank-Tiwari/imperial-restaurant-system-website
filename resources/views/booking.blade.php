@@ -310,37 +310,66 @@
                 </div>
 
                 <!-- Right Sidebar Column -->
-                <div class="col-lg-4">
-                    <div class="row g-4 mt-lg-0 mt-2">
-                        <!-- Dining Hours -->
-                        <div class="col-12 col-md-6 col-lg-12">
-                            <div class="info-card accent-bg shadow-sm">
-                                <div class="info-icon"><i class="fas fa-clock"></i></div>
-                                <h6 class="fw-bold mb-3">@lang('messages.dining_hours')</h6>
-                                <p class="mb-1"><strong class="opacity-75">@lang('messages.daily_lunch'):</strong><br> 12:30 PM - 4:30 PM</p>
-                                <p class="mb-0"><strong class="opacity-75">@lang('messages.daily_dinner'):</strong><br> 6:30 PM - 11:00 PM</p>
-                            </div>
+                <div class="col-lg-4 d-flex">
+                    <div class="booking-card flex-fill d-flex flex-column">
+                        
+                        <!-- Rich Header -->
+                        <div class="accent-bg text-center text-white py-4 px-3" style="border-radius: 16px 16px 0 0;">
+                            <i class="fas fa-utensils fs-1 mb-3 opacity-75"></i>
+                            <h4 class="fw-bold mb-0">Imperial Spice</h4>
+                            <p class="mb-0 text-white-50 small mt-1">Premium Dining Experience</p>
                         </div>
-
-                        <!-- Contact Info -->
-                        <div class="col-12 col-md-6 col-lg-12">
-                            <div class="info-card shadow-sm">
-                                <div class="info-icon"><i class="fas fa-phone-alt"></i></div>
-                                <h6 class="fw-bold mb-3">Need Help?</h6>
-                                <p class="text-muted small mb-2">@lang('messages.advance_booking_description')</p>
-                                <a href="tel:+34602189306" class="text-dark fw-bold text-decoration-none fs-5">+34 602 18 93 06</a>
+                        
+                        <div class="booking-card-body flex-fill d-flex flex-column gap-4">
+                            
+                            <!-- Dining Hours -->
+                            <div class="d-flex align-items-start">
+                                <div class="info-icon bg-light text-primary me-3 flex-shrink-0 rounded-circle" style="width: 45px; height: 45px; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; color: var(--primary-color) !important;">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold mb-1 text-dark">@lang('messages.dining_hours')</h6>
+                                    <p class="mb-1 text-muted small"><strong class="text-dark">@lang('messages.daily_lunch'):</strong> 12:30 PM - 4:30 PM</p>
+                                    <p class="mb-0 text-muted small"><strong class="text-dark">@lang('messages.daily_dinner'):</strong> 6:30 PM - 11:00 PM</p>
+                                </div>
                             </div>
-                        </div>
+                            
+                            <hr class="text-muted opacity-25 my-0">
 
-                        <!-- Why Book -->
-                        <div class="col-12">
-                            <div class="info-card shadow-sm">
-                                <h6 class="fw-bold mb-4 pb-2 border-bottom">@lang('messages.why_book_with_us')</h6>
-                                <ul class="list-unstyled why-book-list mb-0">
-                                    <li><i class="fas fa-check-circle"></i> @lang('messages.guaranteed_seating')</li>
-                                    <li><i class="fas fa-check-circle"></i> @lang('messages.priority_service')</li>
-                                    <li><i class="fas fa-check-circle"></i> @lang('messages.special_occasion_arrangements')</li>
-                                    <li><i class="fas fa-check-circle"></i> @lang('messages.flexible_cancellation_policy')</li>
+                            <!-- Contact Info -->
+                            <div class="d-flex align-items-start">
+                                <div class="info-icon bg-light text-primary me-3 flex-shrink-0 rounded-circle" style="width: 45px; height: 45px; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; color: var(--primary-color) !important;">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold mb-1 text-dark">Need Help?</h6>
+                                    <p class="mb-2 text-muted small">@lang('messages.advance_booking_description')</p>
+                                    <a href="tel:+34602189306" class="text-dark fw-bold text-decoration-none" style="font-size: 1.1rem; color: var(--primary-color) !important;">
+                                        +34 602 18 93 06
+                                    </a>
+                                </div>
+                            </div>
+
+                            <hr class="text-muted opacity-25 my-0">
+
+                            <!-- Why Book -->
+                            <div>
+                                <h6 class="fw-bold mb-3 text-dark">
+                                    <i class="fas fa-star text-warning me-2"></i>@lang('messages.why_book_with_us')
+                                </h6>
+                                <ul class="list-unstyled why-book-list mb-0 small text-muted">
+                                    <li class="mb-2 d-flex align-items-center">
+                                        <i class="fas fa-check-circle me-2" style="color: var(--primary-color);"></i> @lang('messages.guaranteed_seating')
+                                    </li>
+                                    <li class="mb-2 d-flex align-items-center">
+                                        <i class="fas fa-check-circle me-2" style="color: var(--primary-color);"></i> @lang('messages.priority_service')
+                                    </li>
+                                    <li class="mb-2 d-flex align-items-center">
+                                        <i class="fas fa-check-circle me-2" style="color: var(--primary-color);"></i> @lang('messages.special_occasion_arrangements')
+                                    </li>
+                                    <li class="mb-0 d-flex align-items-center">
+                                        <i class="fas fa-check-circle me-2" style="color: var(--primary-color);"></i> @lang('messages.flexible_cancellation_policy')
+                                    </li>
                                 </ul>
                             </div>
                         </div>
