@@ -411,8 +411,8 @@
                             style="border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.15);" alt="Restaurant Ambiance">
                         <div class="position-absolute bottom-0 start-0 translate-middle-x mb-4 ms-4 d-none d-md-block">
                             <div class="bg-white p-4 rounded-4 shadow-lg text-center" style="border-left: 4px solid var(--primary-orange);">
-                                <h3 class="fw-bold text-dark mb-0">15+</h3>
-                                <p class="text-muted small fw-bold text-uppercase mb-0">Years of<br>Excellence</p>
+                                <h3 class="fw-bold text-dark mb-0">2021</h3>
+                                <p class="text-muted small fw-bold text-uppercase mb-0">Serving<br>Since</p>
                             </div>
                         </div>
                     </div>
