@@ -53,10 +53,12 @@
         -ms-overflow-style: none; /* IE/Edge */
     }
 
-    /* Desktop centering */
+    /* Desktop centering and wrapping */
     @media (min-width: 992px) {
         .filter-buttons-wrapper {
             justify-content: center;
+            flex-wrap: wrap;
+            overflow-x: visible;
         }
     }
 
@@ -71,6 +73,7 @@
         font-size: 0.95rem;
         letter-spacing: 0.3px;
         white-space: nowrap;
+        text-transform: capitalize;
         transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         border: 1px solid #e9ecef;
         color: #495057;
@@ -115,6 +118,7 @@
         position: relative;
         display: inline-block;
         padding-bottom: 0.5rem;
+        text-transform: capitalize;
     }
     
     .category-title::after {
