@@ -172,21 +172,25 @@
         .timeline-container.left { left: 0; }
         .timeline-container.right { left: 50%; }
 
-        .timeline-container::after {
-            content: '';
+        .timeline-icon {
             position: absolute;
-            width: 24px;
-            height: 24px;
-            right: -12px;
+            width: 50px;
+            height: 50px;
+            right: -25px;
             background-color: #fff;
             border: 4px solid var(--primary-orange);
-            top: 30px;
+            top: 25px;
             border-radius: 50%;
-            z-index: 1;
-            box-shadow: 0 4px 10px rgba(211, 84, 0, 0.3);
+            z-index: 2;
+            box-shadow: 0 4px 10px rgba(211, 84, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-orange);
+            font-size: 1.2rem;
         }
 
-        .timeline-container.right::after { left: -12px; }
+        .timeline-container.right .timeline-icon { left: -25px; }
 
         .timeline-content {
             padding: 2rem;
@@ -283,14 +287,21 @@
         .cta-btn:hover {
             transform: translateY(-3px) scale(1.02);
             box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-            color: #d35400;
+            color: #d35400 !important;
+            background-color: #fff !important;
         }
+
+        .timeline-container.left .timeline-content { text-align: right; }
+        .timeline-container.right .timeline-content { text-align: left; }
 
         @media screen and (max-width: 768px) {
             .timeline::after { left: 31px; }
             .timeline-container { width: 100%; padding-left: 70px; padding-right: 25px; }
             .timeline-container.right { left: 0%; }
-            .timeline-container::after { left: 21px; }
+            .timeline-container.left .timeline-icon, 
+            .timeline-container.right .timeline-icon { left: 6px; }
+            .timeline-container.left .timeline-content, 
+            .timeline-container.right .timeline-content { text-align: left; }
         }
     </style>
 @endpush
@@ -361,7 +372,7 @@
                 <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
                     <div class="premium-card">
                         <div class="philosophy-icon-box">
-                            <i class="fas fa-fire-burner"></i>
+                            <i class="fas fa-fire"></i>
                         </div>
                         <h4 class="fw-bold text-dark mb-3">@lang('messages.modern_interpretation')</h4>
                         <p class="text-muted mb-0" style="line-height: 1.7;">@lang('messages.modern_interpretation_description')</p>
@@ -381,28 +392,32 @@
     </section>
 
     {{-- Our Journey Timeline Section --}}
-    <section class="py-5 bg-white">
-        <div class="container py-5">
+    <section class="py-5 bg-white position-relative" style="background-image: radial-gradient(#d35400 1px, transparent 1px); background-size: 40px 40px; background-position: 0 0; background-color: #ffffff;">
+        <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.95)); z-index: 0;"></div>
+        <div class="container py-5 position-relative z-1">
             <div class="text-center mb-5 pb-3">
-                <h2 class="section-title">@lang('messages.our_journey')</h2>
+                <h2 class="section-title bg-white px-4">@lang('messages.our_journey')</h2>
                 <p class="text-muted mt-3 fs-5">@lang('messages.our_journey_description')</p>
             </div>
             <div class="timeline">
-                <div class="timeline-container left" data-aos="fade-right">
+                <div class="timeline-container left position-relative z-1" data-aos="fade-right">
+                    <div class="timeline-icon"><i class="fas fa-store"></i></div>
                     <div class="timeline-content">
                         <div class="timeline-year">2021</div>
                         <h4 class="fw-bold text-dark mb-2">@lang('messages.grand_opening')</h4>
                         <p class="text-muted mb-0">@lang('messages.grand_opening_description')</p>
                     </div>
                 </div>
-                <div class="timeline-container right" data-aos="fade-left">
+                <div class="timeline-container right position-relative z-1" data-aos="fade-left">
+                    <div class="timeline-icon"><i class="fas fa-utensils"></i></div>
                     <div class="timeline-content">
                         <div class="timeline-year">2023</div>
                         <h4 class="fw-bold text-dark mb-2">@lang('messages.menu_expansion')</h4>
                         <p class="text-muted mb-0">@lang('messages.menu_expansion_description')</p>
                     </div>
                 </div>
-                <div class="timeline-container left" data-aos="fade-right">
+                <div class="timeline-container left position-relative z-1" data-aos="fade-right">
+                    <div class="timeline-icon"><i class="fas fa-glass-cheers"></i></div>
                     <div class="timeline-content">
                         <div class="timeline-year">2024</div>
                         <h4 class="fw-bold text-dark mb-2">@lang('messages.refreshed_ambiance')</h4>
