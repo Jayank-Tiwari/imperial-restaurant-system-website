@@ -126,7 +126,7 @@
         <!-- Left Image Section -->
         <div class="auth-image shadow-lg">
             <h1 class="mb-3">Imperial Spice</h1>
-            <p>Join us today and discover our carefully crafted dishes made with the finest ingredients.</p>
+            <p>@lang('messages.join_us_today')</p>
         </div>
 
         <!-- Right Form Section -->
@@ -138,7 +138,7 @@
                         <i class="fas fa-utensils me-2"></i>Imperial Spice
                     </a>
                     <h2 class="fw-bold mb-2">Create Account</h2>
-                    <p class="text-muted">Fill in your details below to get started</p>
+                    <p class="text-muted">@lang('messages.fill_in_details')</p>
                 </div>
 
                 {{-- Error message --}}
@@ -201,8 +201,8 @@
 
                     <div class="position-relative mb-4">
                         <div class="form-floating">
-                            <input type="password" name="password_confirmation" class="form-control shadow-sm" id="password_confirmation" placeholder="Confirm Password" required>
-                            <label for="password_confirmation">Confirm Password</label>
+                            <input type="password" name="password_confirmation" class="form-control shadow-sm" id="password_confirmation" placeholder="@lang('messages.confirm_password')" required>
+                            <label for="password_confirmation">@lang('messages.confirm_password')</label>
                         </div>
                         <i class="fas fa-lock input-icon"></i>
                     </div>

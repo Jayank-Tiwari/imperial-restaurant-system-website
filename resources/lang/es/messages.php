@@ -645,4 +645,11 @@ return [
     'error_adding_cart' => 'Error al añadir el artículo al carrito',
 
     'premium_dining_experience' => 'Experiencia Gastronómica Premium',
+    'sign_in_to_continue' => 'Inicia sesión en tu cuenta para continuar',
+    'join_us_today' => 'Únete a nosotros hoy y descubre nuestros platos cuidadosamente elaborados con los mejores ingredientes.',
+    'fill_in_details' => 'Rellena tus datos a continuación para empezar',
+    'dont_worry_recover' => 'No te preocupes, te ayudaremos a recuperar tu cuenta en un abrir y cerrar de ojos.',
+    'back_to' => 'Volver a',
+    'set_new_password' => 'Establece una nueva contraseña para volver a entrar en tu cuenta de forma segura.',
+    'create_strong_password' => 'Crea una contraseña nueva y segura',
 ];

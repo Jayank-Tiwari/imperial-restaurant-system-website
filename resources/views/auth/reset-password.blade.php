@@ -126,7 +126,7 @@
         <!-- Left Image Section -->
         <div class="auth-image shadow-lg">
             <h1 class="mb-3">Imperial Spice</h1>
-            <p>Set a new password to get back into your account securely.</p>
+            <p>@lang('messages.set_new_password')</p>
         </div>
 
         <!-- Right Form Section -->
@@ -138,7 +138,7 @@
                         <i class="fas fa-utensils me-2"></i>Imperial Spice
                     </a>
                     <h2 class="fw-bold mb-2">@lang('messages.reset_password')</h2>
-                    <p class="text-muted">Create a strong, new password</p>
+                    <p class="text-muted">@lang('messages.create_strong_password')</p>
                 </div>
 
                 {{-- Error Message --}}
@@ -179,8 +179,8 @@
                     
                     <div class="position-relative mb-4">
                         <div class="form-floating">
-                            <input type="password" name="password_confirmation" class="form-control shadow-sm" id="password_confirmation" placeholder="Confirm Password" required>
-                            <label for="password_confirmation">Confirm Password</label>
+                            <input type="password" name="password_confirmation" class="form-control shadow-sm" id="password_confirmation" placeholder="@lang('messages.confirm_password')" required>
+                            <label for="password_confirmation">@lang('messages.confirm_password')</label>
                         </div>
                         <i class="fas fa-lock input-icon"></i>
                     </div>

@@ -110,7 +110,7 @@
         <!-- Left Image Section -->
         <div class="auth-image shadow-lg">
             <h1 class="mb-3">Imperial Spice</h1>
-            <p>Don't worry, we'll help you get back into your account in no time.</p>
+            <p>@lang('messages.dont_worry_recover')</p>
         </div>
 
         <!-- Right Form Section -->
@@ -162,7 +162,7 @@
 
                 <div class="text-center mt-5 pt-3 border-top">
                     <a href="{{ route('login') }}" class="text-decoration-none fw-bold text-muted d-inline-flex align-items-center hover-primary">
-                        <i class="fas fa-arrow-left me-2"></i> Back to @lang('messages.login')
+                        <i class="fas fa-arrow-left me-2"></i> @lang('messages.back_to') @lang('messages.login')
                     </a>
                 </div>
                 

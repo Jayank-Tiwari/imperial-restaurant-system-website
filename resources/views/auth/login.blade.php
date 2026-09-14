@@ -138,7 +138,7 @@
                         <i class="fas fa-utensils me-2"></i>Imperial Spice
                     </a>
                     <h2 class="fw-bold mb-2">@lang('messages.welcome_back')</h2>
-                    <p class="text-muted">Sign in to your account to continue</p>
+                    <p class="text-muted">@lang('messages.sign_in_to_continue')</p>
                 </div>
 
                 {{-- Error message --}}

@@ -653,4 +653,11 @@ return [
     'error_adding_cart' => 'Error adding item to cart',
 
     'premium_dining_experience' => 'Premium Dining Experience',
+    'sign_in_to_continue' => 'Sign in to your account to continue',
+    'join_us_today' => 'Join us today and discover our carefully crafted dishes made with the finest ingredients.',
+    'fill_in_details' => 'Fill in your details below to get started',
+    'dont_worry_recover' => 'Don\'t worry, we\'ll help you get back into your account in no time.',
+    'back_to' => 'Back to',
+    'set_new_password' => 'Set a new password to get back into your account securely.',
+    'create_strong_password' => 'Create a strong, new password',
 ];
