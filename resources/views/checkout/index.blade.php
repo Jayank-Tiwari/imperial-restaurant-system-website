@@ -185,7 +185,7 @@
     }
 </style>
 
-@endsection
+
 
 @section('content')
 <section class="py-5 mt-5">
@@ -578,5 +578,6 @@
         updateDineinButton();
     });
 </script>
+
 
 @endsection

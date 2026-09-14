@@ -203,7 +203,7 @@
 
 </style>
 
-@endsection
+
 
 @section('content')
 
@@ -442,5 +442,6 @@
             });
         });
     </script>
+
 
 @endsection
