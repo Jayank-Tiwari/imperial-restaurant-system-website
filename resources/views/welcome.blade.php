@@ -185,11 +185,11 @@
                 @foreach ($dishes as $dish)
                     <div class="col-lg-4 col-md-6" data-aos="fade-up">
                         <div class="card menu-item-card h-100">
-                            <img src="{{ $dish->image ? asset($dish->image) : asset('assets/img/placeholder.jpg') }}" 
-                                 class="card-img-top"
-                                 alt="{{ $dish->name }}"
+                            <img src="{{ $dish->image ? asset($dish->image) : 'https://placehold.co/400x400/f8f9fa/d35400?text=Imperial+Spice' }}" 
+                                 class="card-img-top" 
+                                 alt="{{ $dish->name }}" 
                                  loading="lazy"
-                                 onerror="this.src='{{ asset('assets/img/placeholder.jpg') }}'">
+                                 onerror="this.onerror=null; this.src='https://placehold.co/400x400/f8f9fa/d35400?text=Imperial+Spice';">
                             <div class="card-body">
                                 <h5 class="card-title fw-bold">{{ $dish->name }}</h5>
                                 <p class="card-text text-muted small">{{ $dish->description }}</p>

@@ -337,9 +337,10 @@
                         <div class="col-lg-6 fade-in-up" style="animation-delay: {{ 0.1 * ($index % 10) }}s">
                             <div class="menu-item-card" data-id="{{ $item->id }}">
                                 <div class="menu-item-img-container">
-                                    <img src="{{ $item->image ? asset($item->image) : asset('assets/img/placeholder.jpg') }}" 
+                                    <img src="{{ $item->image ? asset($item->image) : 'https://placehold.co/400x400/f8f9fa/d35400?text=Imperial+Spice' }}" 
                                          class="card-img-left" 
                                          alt="{{ $item->name }}"
+                                         onerror="this.onerror=null; this.src='https://placehold.co/400x400/f8f9fa/d35400?text=Imperial+Spice';"
                                          loading="lazy">
                                 </div>
                                 <div class="menu-item-content">
