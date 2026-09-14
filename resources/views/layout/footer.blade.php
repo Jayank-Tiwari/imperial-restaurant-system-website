@@ -85,6 +85,16 @@
         margin-right: 15px;
         font-size: 1.1rem;
     }
+
+    .contact-info a {
+        color: #adb5bd;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+    .contact-info a:hover {
+        color: #d35400;
+    }
     
     .footer-bottom {
         border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -103,13 +113,8 @@
                 <a href="{{ route('home') }}" class="footer-brand text-decoration-none">
                     <i class="fas fa-utensils"></i>Imperial Spice
                 </a>
-                <p class="text-muted mb-4 pe-lg-4" style="line-height: 1.7;">@lang('messages.experience_culinary_excellence')</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-tripadvisor"></i></a>
-                </div>
+                <p class="text-white-50 mb-4 pe-lg-4" style="line-height: 1.7;">@lang('messages.experience_culinary_excellence')</p>
+
             </div>
 
             <div class="col-lg-2">
@@ -131,11 +136,11 @@
                     </li>
                     <li>
                         <i class="fas fa-phone-alt"></i>
-                        <span>+34 602 18 93 06</span>
+                        <span><a href="tel:+34602189306">+34 602 18 93 06</a></span>
                     </li>
                     <li>
                         <i class="fas fa-envelope"></i>
-                        <span>Imperialspice50@gmail.com</span>
+                        <span><a href="mailto:Imperialspice50@gmail.com">Imperialspice50@gmail.com</a></span>
                     </li>
                 </ul>
             </div>

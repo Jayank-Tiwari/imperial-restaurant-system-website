@@ -131,7 +131,7 @@ return [
     'opening_hours_fri_sat' => 'Fri - Sat: 11:00 AM - 11:00 PM',
     'opening_hours_sunday' => 'Sunday: 12:00 PM - 9:00 PM',
     'follow_us' => 'Follow Us',
-    'copyright' => '© 2024 Imperial Spice. All rights reserved.',
+    'copyright' => 'All rights reserved.',
     'about_us' => 'About Us',
     'our_mission' => 'Our Mission',
     'our_vision' => 'Our Vision',
