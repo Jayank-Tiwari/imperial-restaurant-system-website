@@ -31,96 +31,31 @@
         z-index: 2;
     }
 
-    /* Sticky Navigation */
-    .sticky-nav-container {
-        position: sticky;
-        top: 70px; /* Adjust based on your main navbar height */
-        z-index: 1020;
-        background: #fff;
-        border-bottom: 1px solid #e9ecef;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-    }
-
-    .filter-buttons-wrapper {
-        display: flex;
-        overflow-x: auto;
-        overflow-y: hidden;
-        flex-wrap: nowrap;
-        justify-content: flex-start;
-        padding: 1rem 0;
-        gap: 1rem;
-        scrollbar-width: none; /* Firefox */
-        -ms-overflow-style: none; /* IE/Edge */
-    }
-
-    /* Remove desktop centering to prevent left-side clipping on overflow */
-    @media (min-width: 992px) {
-        .filter-buttons-wrapper {
-            justify-content: flex-start;
-            /* Padding to align with container on desktop */
-            padding-left: 15px;
-            padding-right: 15px;
-        }
-    }
-
-    .filter-buttons-wrapper::-webkit-scrollbar {
-        height: 6px; /* Show a thin scrollbar */
-        display: none; /* Hide on mobile by default */
-    }
-
-    @media (min-width: 992px) {
-        .filter-buttons-wrapper::-webkit-scrollbar {
-            display: block; /* Show on desktop */
-        }
-        .filter-buttons-wrapper::-webkit-scrollbar-track {
-            background: #f1f3f5;
-            border-radius: 10px;
-        }
-        .filter-buttons-wrapper::-webkit-scrollbar-thumb {
-            background: #ced4da;
-            border-radius: 10px;
-        }
-        .filter-buttons-wrapper::-webkit-scrollbar-thumb:hover {
-            background: #adb5bd;
-        }
-    }
-
-    .filter-buttons-wrapper .btn {
-        border-radius: 50px;
-        padding: 0.7rem 1.75rem;
-        font-weight: 600;
-        font-size: 0.95rem;
-        letter-spacing: 0.3px;
-        white-space: nowrap;
-        text-transform: capitalize;
-        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        border: 1px solid #e9ecef;
+    /* Mobile Offcanvas Sidebar */
+    #mobileCategorySidebar .nav-link {
         color: #495057;
-        background: #fff;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-        flex-shrink: 0;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .filter-buttons-wrapper .btn:hover {
-        border-color: #ced4da;
-        color: var(--primary-color, #d35400);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 12px rgba(0,0,0,0.05);
-        background: #f8f9fa;
-    }
-
-    .filter-buttons-wrapper .btn.active {
-        background: var(--primary-color, #d35400);
-        color: white;
-        border-color: var(--primary-color, #d35400);
-        box-shadow: 0 6px 15px rgba(211, 84, 0, 0.35);
-        transform: translateY(-2px);
+        font-weight: 600;
+        border-radius: 12px;
+        padding: 0.85rem 1.25rem;
+        margin-bottom: 0.4rem;
+        transition: all 0.2s ease;
+        text-transform: capitalize;
+        border: 1px solid transparent;
+        background: transparent;
+        text-align: left;
+        width: 100%;
+        font-size: 1.05rem;
     }
     
-    .filter-buttons-wrapper .btn:active {
-        transform: translateY(0);
+    #mobileCategorySidebar .nav-link:hover {
+        background-color: #f8f9fa;
+        color: var(--primary-color, #d35400);
+    }
+    
+    #mobileCategorySidebar .nav-link.active {
+        background-color: var(--primary-color, #d35400);
+        color: white;
+        box-shadow: 0 4px 10px rgba(211, 84, 0, 0.3);
     }
 
     /* Desktop Sidebar Layout */
@@ -361,25 +296,36 @@
     </div>
 </section>
 
-<!-- Sticky Filter/Nav Buttons (Mobile Only) -->
-<section class="sticky-nav-container d-lg-none">
-    <div class="container">
-        <div class="filter-buttons-wrapper" id="menuFilter">
-            @foreach($menuItems->keys() as $index => $cat)
-                @php
-                    $parts = explode('//', $cat);
-                    $displayName = (app()->getLocale() == 'es' && isset($parts[1])) 
-                        ? trim($parts[1])  
-                        : trim($parts[0]); 
-                    $safeId = Str::slug($cat);
-                @endphp
-                <button type="button" class="btn {{ $index === 0 ? 'active' : '' }}" data-target="{{ $safeId }}">
-                    {{ $displayName }}
-                </button>
-            @endforeach
-        </div>
+<!-- Floating Categories Button (Mobile Only) -->
+<div class="d-lg-none position-fixed bottom-0 start-50 translate-middle-x mb-4" style="z-index: 1040;">
+    <button class="btn btn-primary rounded-pill px-4 py-2 shadow-lg fw-bold" style="background: var(--primary-color, #d35400); border: none;" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileCategorySidebar" aria-controls="mobileCategorySidebar">
+        <i class="fas fa-list-ul me-2"></i> @lang('messages.categories')
+    </button>
+</div>
+
+<!-- Mobile Offcanvas Sidebar -->
+<div class="offcanvas offcanvas-start d-lg-none" tabindex="-1" id="mobileCategorySidebar" aria-labelledby="mobileCategorySidebarLabel">
+  <div class="offcanvas-header border-bottom">
+    <h5 class="offcanvas-title fw-bold" id="mobileCategorySidebarLabel" style="color: #2b2b2b;">@lang('messages.categories')</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="nav flex-column" id="menuFilter">
+        @foreach($menuItems->keys() as $index => $cat)
+            @php
+                $parts = explode('//', $cat);
+                $displayName = (app()->getLocale() == 'es' && isset($parts[1])) 
+                    ? trim($parts[1])  
+                    : trim($parts[0]); 
+                $safeId = Str::slug($cat);
+            @endphp
+            <button type="button" class="nav-link {{ $index === 0 ? 'active' : '' }}" data-target="{{ $safeId }}" data-bs-dismiss="offcanvas">
+                <i class="fas fa-utensils me-2 opacity-50"></i> {{ $displayName }}
+            </button>
+        @endforeach
     </div>
-</section>
+  </div>
+</div>
 
 <!-- Menu Items Sections -->
 <section class="py-5 bg-light">
@@ -484,15 +430,6 @@
                     // Update active class immediately
                     navButtons.forEach(btn => btn.classList.remove('active'));
                     this.classList.add('active');
-                    
-                    // Center the button in the scrollable wrapper (for mobile)
-                    if (this.closest('#menuFilter')) {
-                        const wrapper = document.getElementById('menuFilter');
-                        wrapper.scrollTo({
-                            left: this.offsetLeft - (wrapper.clientWidth / 2) + (this.clientWidth / 2),
-                            behavior: 'smooth'
-                        });
-                    }
 
                     // Scroll to section
                     targetSection.scrollIntoView({
@@ -530,14 +467,8 @@
                     if (btn.getAttribute('data-target') === currentSection) {
                         btn.classList.add('active');
                         
-                        // Optionally center button on scroll too (nice for mobile)
-                        if (btn.closest('#menuFilter')) {
-                            const wrapper = document.getElementById('menuFilter');
-                            wrapper.scrollTo({
-                                left: btn.offsetLeft - (wrapper.clientWidth / 2) + (btn.clientWidth / 2),
-                                behavior: 'smooth'
-                            });
-                        }
+                        // Remove active state from all buttons and add to current
+                        btn.classList.add('active');
                     }
                 });
             }
