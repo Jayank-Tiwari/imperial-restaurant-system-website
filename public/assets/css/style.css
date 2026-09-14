@@ -24,6 +24,11 @@
     box-sizing: border-box;
 }
 
+html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+}
+
 body {
     font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;

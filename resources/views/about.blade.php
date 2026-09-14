@@ -58,7 +58,7 @@
             background-image: url('{{ asset('assets/img/whyus.webp') }}');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
+            /* background-attachment: fixed removed for mobile compatibility */
             padding: 120px 0 80px;
             min-height: 50vh;
             display: flex;
@@ -294,6 +294,7 @@
         .timeline-container.left .timeline-content { text-align: right; }
         .timeline-container.right .timeline-content { text-align: left; }
 
+        html, body { overflow-x: hidden; width: 100%; position: relative; }
         @media screen and (max-width: 768px) {
             .display-3 { font-size: 2.2rem !important; }
             .display-4 { font-size: 1.8rem !important; }
