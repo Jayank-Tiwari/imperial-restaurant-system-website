@@ -295,6 +295,10 @@
         .timeline-container.right .timeline-content { text-align: left; }
 
         @media screen and (max-width: 768px) {
+            .display-3 { font-size: 2.2rem !important; }
+            .display-4 { font-size: 1.8rem !important; }
+            .section-title, .section-title-left { font-size: 2rem !important; }
+            
             .timeline::after { left: 31px; }
             .timeline-container { width: 100%; padding-left: 70px; padding-right: 25px; }
             .timeline-container.right { left: 0%; }
@@ -335,7 +339,7 @@
                     <p class="mt-4 mb-3 text-secondary fs-5" style="line-height: 1.8;"><strong>The Imperial Spice</strong> @lang('messages.is_a_celebrated_indian_restaurant')</p>
                     <p class="mb-5 text-muted" style="line-height: 1.7;">@lang('messages.is_a_celebrated_indian_restaurant2')</p>
                     
-                    <div class="d-flex gap-4">
+                    <div class="d-flex flex-column flex-sm-row gap-4">
                         <div class="stat-box flex-fill">
                             <div class="counter-value" data-count="4">4</div>
                             <h6 class="fw-bold text-dark mb-1">@lang('messages.years_of_excellence')</h6>
