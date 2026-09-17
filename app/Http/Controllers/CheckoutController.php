@@ -106,7 +106,7 @@ class CheckoutController extends Controller
 
         // Send email notification to restaurant
         try {
-            Mail::to(env('RESTAURANT_EMAIL', 'restaurant@imperialspice.com'))
+            Mail::to(config('mail.restaurant_email'))
                 ->send(new OrderPlaced($order));
         } catch (\Exception $e) {
             \Log::error('Failed to send order notification email: ' . $e->getMessage());
@@ -189,7 +189,7 @@ class CheckoutController extends Controller
 
             // Send email notification to restaurant
             try {
-                Mail::to(env('RESTAURANT_EMAIL', 'restaurant@imperialspice.com'))
+                Mail::to(config('mail.restaurant_email'))
                     ->send(new OrderPlaced($order));
             } catch (\Exception $e) {
                 \Log::error('Failed to send order notification email: ' . $e->getMessage());
@@ -273,7 +273,7 @@ class CheckoutController extends Controller
             }
 
             try {
-                Mail::to(env('RESTAURANT_EMAIL', 'restaurant@imperialspice.com'))
+                Mail::to(config('mail.restaurant_email'))
                     ->send(new OrderPlaced($order));
             } catch (\Exception $e) {
                 \Log::error('Failed to send order notification email: ' . $e->getMessage());
@@ -340,7 +340,7 @@ class CheckoutController extends Controller
         }
 
         try {
-            Mail::to(env('RESTAURANT_EMAIL', 'restaurant@imperialspice.com'))
+            Mail::to(config('mail.restaurant_email'))
                 ->send(new OrderPlaced($order));
         } catch (\Exception $e) {
             \Log::error('Failed to send order notification email: ' . $e->getMessage());

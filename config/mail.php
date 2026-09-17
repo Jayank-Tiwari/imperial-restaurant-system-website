@@ -16,6 +16,8 @@ return [
 
     'default' => env('MAIL_MAILER', 'log'),
 
+    'restaurant_email' => env('RESTAURANT_EMAIL', 'restaurant@imperialspice.com'),
+
     /*
     |--------------------------------------------------------------------------
     | Mailer Configurations

@@ -109,7 +109,7 @@ class StripeController extends Controller
 
         // Send email notification to restaurant
         try {
-            Mail::to(config('mail.restaurant_email', env('RESTAURANT_EMAIL')))
+            Mail::to(config('mail.restaurant_email'))
                 ->send(new OrderPlaced($order));
         } catch (\Exception $e) {
             \Log::error('Failed to send order notification email: ' . $e->getMessage());
